@@ -1,0 +1,99 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.kotlin_version = '1.2.51'
+
+    ext.build = [
+            major:              0,
+            minor:              0,
+            patch:              1,
+    ]
+
+
+    ext.versions = [
+            versionName:            "$build.major.$build.minor.$build.patch",
+            versionCode:            build.major * 1_00_00 + build.minor * 1_00 + build.patch * 1,
+
+            minSdk:                 18,
+            targetSdk:              28,
+            sourceCompat:           JavaVersion.VERSION_1_8,
+            targetCompat:           JavaVersion.VERSION_1_8,
+            buildTools:             '3.3.0-alpha02',
+            kotlin:                 '1.2.51',
+
+            appCompat:              '1.0.0-beta01',
+            constraintLayout:       '2.0.0-alpha1',
+            glide:                  '4.8.0-SNAPSHOT',
+            material:               '1.0.0-alpha3',
+            ktx:                    '1.0.0-alpha1',
+            rxAndroid:              '2.0.2',
+            rxJava:                 '2.1.13',
+            rxKotlin:               '2.2.0',
+            timber:                 '4.7.1',
+
+            junit:                  '4.12',
+            espressoCore:           '3.1.0-alpha3',
+            testRunner:             '1.1.0-alpha3',
+    ]
+
+    ext.deps = [
+            android: [
+                    gradlePlugin:       "com.android.tools.build:gradle:$versions.buildTools",
+                    //design:             "com.android.support:design:$versions.support",
+            ],
+            androidX: [
+                    appCompat:          "androidx.appcompat:appcompat:$versions.appCompat",
+                    constraintLayout:   "androidx.constraintlayout:constraintlayout:$versions.constraintLayout",
+                    ktx:                "androidx.core:core-ktx:$versions.ktx",
+                    material:           "com.google.android.material:material:$versions.material",
+            ],
+            kotlin: [
+                    gradlePlugin:       "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
+                    stdlib:             "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin",
+            ],
+            other: [
+                    glide:              "com.github.bumptech.glide:glide:$versions.glide",
+                    glide_compiler:     "com.github.bumptech.glide:compiler:$versions.glide",
+                    timber:             "com.jakewharton.timber:timber:$versions.timber",
+            ],
+            rx: [
+                    android:            "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid",
+                    java:               "io.reactivex.rxjava2:rxjava:$versions.rxJava",
+                    kotlin:             "io.reactivex.rxjava2:rxkotlin:$versions.rxKotlin",
+            ],
+            test: [
+                    androidJunitRunner: "androidx.test.runner.AndroidJUnitRunner",
+                    junit:              "junit:junit:$versions.junit",
+                    espressoCore:       "androidx.test.espresso:espresso-core:$versions.espressoCore",
+                    testRunner:         "androidx.test:runner:$versions.testRunner",
+            ]
+    ]
+
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath deps.android.gradlePlugin
+        classpath deps.kotlin.gradlePlugin
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {
+            name 'glide-snapshot'
+            url 'http://oss.sonatype.org/content/repositories/snapshots'
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

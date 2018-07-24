@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MaterialBottomAppBar">
+
+        <attr name="hideFabOnScroll" format="boolean"/>
+
+        <attr name="leftCornerRadius" format="dimension" />
+        <attr name="leftCornerStyle" format="enum">
+            <enum name="round" value="0"/>
+            <enum name="cut" value="1"/>
+        </attr>
+
+        <attr name="relativeFabCradleDiameter" format="dimension"/>
+
+        <attr name="rightCornerRadius" format="dimension" />
+        <attr name="rightCornerStyle" format="enum">
+            <enum name="round" value="0"/>
+            <enum name="cut" value="1"/>
+        </attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="MaterialBottomDrawerLayout_Layout">
+
+    </declare-styleable>
+
+</resources>

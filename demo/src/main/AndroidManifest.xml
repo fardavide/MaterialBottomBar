@@ -1,0 +1,21 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="studio.forface.materialbottombar.demo">
+
+    <application tools:ignore="GoogleAppIndexingWarning"
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher_square"
+        android:roundIcon="@mipmap/ic_launcher_circle">
+
+        <activity android:name="studio.forface.demo.DemoActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>
