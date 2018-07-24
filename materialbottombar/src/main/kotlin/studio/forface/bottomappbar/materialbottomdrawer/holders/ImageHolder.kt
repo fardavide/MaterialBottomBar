@@ -1,4 +1,4 @@
-package studio.forface.bottomappbar.materialbottomdrawer.holder
+package studio.forface.bottomappbar.materialbottomdrawer.holders
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable

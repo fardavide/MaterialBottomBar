@@ -1,4 +1,4 @@
-package studio.forface.bottomappbar.materialbottomdrawer.holder
+package studio.forface.bottomappbar.materialbottomdrawer.holders
 
 import android.text.Spannable
 import android.widget.TextView

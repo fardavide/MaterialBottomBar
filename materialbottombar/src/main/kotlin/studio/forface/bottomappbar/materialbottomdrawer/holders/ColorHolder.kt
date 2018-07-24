@@ -1,9 +1,8 @@
 @file:Suppress("MemberVisibilityCanBePrivate")
 
-package studio.forface.bottomappbar.materialbottomdrawer.holder
+package studio.forface.bottomappbar.materialbottomdrawer.holders
 
 import android.content.Context
-import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageButton
@@ -12,7 +11,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.graphics.drawable.DrawableCompat
 import studio.forface.bottomappbar.utils.getColorCompat
-import studio.forface.bottomappbar.utils.setBackgroundColorRes
 import studio.forface.bottomappbar.utils.setTextColorRes
 
 class ColorHolder internal constructor(

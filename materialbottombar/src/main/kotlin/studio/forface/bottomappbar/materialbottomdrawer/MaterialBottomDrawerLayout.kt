@@ -20,14 +20,16 @@ import androidx.core.view.children
 import androidx.core.view.doOnNextLayout
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.shape.ShapePathModel
 import kotlinx.android.synthetic.main.drawer_header.view.*
 import studio.forface.bottomappbar.materialbottomappbar.MaterialBottomAppBar
+import studio.forface.bottomappbar.materialbottomdrawer.adapter.DrawerAdapter
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
-import studio.forface.bottomappbar.materialbottomdrawer.holder.ColorHolder
+import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
 import studio.forface.bottomappbar.utils.elevationCompat
 import studio.forface.bottomappbar.utils.findChild
 import studio.forface.materialbottombar.bottomappbar.R
@@ -49,7 +51,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     private val bottomAppBarInitialY by lazy { bottomAppBar?.y ?: height.toFloat() }
     private val matchDrawerY get() =
-        height - ( drawerHeader.height + drawerBody.height ).toFloat()
+        height - ( drawerHeader.height + drawerRecyclerView.height ).toFloat()
 
     private var viewsAnimator: Animator? = null
     private var drawerHeaderColorHolder: ColorHolder? = null
@@ -67,9 +69,15 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 drawerHeaderColorHolder = it.backgroundColor?.colorHolder
                 null
             }
+
+            drawerRecyclerView.layoutManager = LinearLayoutManager( context )
+            drawerRecyclerView.adapter = DrawerAdapter().apply {
+                this.items.addAll( this@run.items )
+                notifyDataSetChanged()
+            }
         }
 
-    private val drawerHeader: ConstraintLayout by lazy {
+    private val drawerHeader by lazy {
         LayoutInflater.from( context )
                 .inflate( R.layout.drawer_header,this, false )
                 .apply {
@@ -78,20 +86,11 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                     header_close.setOnClickListener { flyBar( Fly.BOTTOM ) }
                 } as ConstraintLayout
     }
-    private val drawerBody      by lazy {
-        LinearLayout( context, attrs, defStyleAttr ).apply {
-            fun textView( id: Int ) = TextView( context, attrs, defStyleAttr ).apply {
-                this.id = id
-                text = "I'm a menu item :)"
-                textSize = 30f
-                setPadding( 40, 20, 0, 0 )
 
-            }
-
-            setBackgroundColor( Color.WHITE )
-            orientation = LinearLayout.VERTICAL
-            for ( i in 0 until 10 ) addView( textView( i ) )
-        }
+    private val drawerRecyclerView by lazy {
+        LayoutInflater.from( context )
+                .inflate( R.layout.drawer_body,this, false )
+                as RecyclerView
     }
 
     private val drawerBottomBackground by lazy {
@@ -110,8 +109,8 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 addView( drawerHeader )
                 drawerHeader.layoutParams.height = bar.height
 
-                addView( drawerBody )
-                drawerBody.layoutParams.width = CoordinatorLayout.LayoutParams.MATCH_PARENT
+                addView( drawerRecyclerView )
+                drawerRecyclerView.layoutParams.width = CoordinatorLayout.LayoutParams.MATCH_PARENT
 
                 addView( drawerBottomBackground )
                 drawerBottomBackground.layoutParams.height = CoordinatorLayout.LayoutParams.MATCH_PARENT
@@ -150,7 +149,9 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         } ?: false
 
         fun dragBar( y: Float ) = bottomAppBar?.let {
-            val toY = Math.abs( bottomBarDownY - ( downY - y ) )
+            val toY = ( bottomBarDownY - ( downY - y ) )
+                    .coerceAtLeast(0f )
+                    .coerceAtMost( bottomAppBarInitialY )
             setViewsY( toY )
             false
         } ?: false
@@ -171,12 +172,12 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             else -> false
         }
 
-        return when( event.action ) {
+        when( event.action ) {
             MotionEvent.ACTION_DOWN -> onDown()
             MotionEvent.ACTION_MOVE -> onMove()
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> releaseBar()
-            else -> super.onInterceptTouchEvent( event )
         }
+        return super.onInterceptTouchEvent( event )
     }
 
     enum class Fly { TOP, BOTTOM, MATCH_DRAWER }
@@ -187,7 +188,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             val toY = when( fly ) {
                 Fly.TOP ->          0f
                 Fly.BOTTOM ->       bottomAppBarInitialY
-                Fly.MATCH_DRAWER -> height - ( drawerHeader.height + drawerBody.height ).toFloat()
+                Fly.MATCH_DRAWER -> height - ( drawerHeader.height + drawerRecyclerView.height ).toFloat()
             }
             animateViewsY( toY )
         }
@@ -217,8 +218,8 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private fun setViewsY( y: Float ) {
         bottomAppBar!!.y =  y
         drawerHeader.y =    y
-        drawerBody.y =      y + bottomAppBar!!.height
-        drawerBottomBackground.y = drawerBody.y + drawerBody.height
+        drawerRecyclerView.y =      y + bottomAppBar!!.height
+        drawerBottomBackground.y = drawerRecyclerView.y + drawerRecyclerView.height
 
         val height = height - bottomAppBar!!.height
 

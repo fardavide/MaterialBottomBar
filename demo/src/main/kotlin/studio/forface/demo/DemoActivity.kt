@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_demo.*
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
+import studio.forface.bottomappbar.materialbottomdrawer.draweritems.DrawerItem
+import studio.forface.bottomappbar.materialbottomdrawer.draweritems.PrimaryDrawerItem
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
 
@@ -25,17 +27,25 @@ class DemoActivity: AppCompatActivity() {
         setRecyclerView()
         setButtons()
 
-        val icon = MaterialDrawer.Header.Icon()
+        val icon = MaterialDrawer.Icon()
                 .withUrl( IMAGE_URL )
-        val title = MaterialDrawer.Header.Title()
+        val title = MaterialDrawer.Title()
                 .withText("Test")
-                .withColor( Color.RED )
-        val backgroundColor = MaterialDrawer.Header.BackgroundColor()
                 .withColor( Color.WHITE )
+        val backgroundColor = MaterialDrawer.BackgroundColor()
+                .withColor( Color.RED )
+
+        val items = mutableListOf<DrawerItem>(
+                PrimaryDrawerItem( MaterialDrawer.Title().withText("ciao" ) ),
+                PrimaryDrawerItem( MaterialDrawer.Title().withText("wow" ) ),
+                PrimaryDrawerItem( MaterialDrawer.Title().withText("super" ) ),
+                PrimaryDrawerItem( MaterialDrawer.Title().withText("yeah" ) ),
+                PrimaryDrawerItem( MaterialDrawer.Title().withText("yo" ) )
+        )
 
         val header = MaterialDrawer.Header( icon, title, backgroundColor )
 
-        drawerLayout.drawer = MaterialDrawer( header )
+        drawerLayout.drawer = MaterialDrawer( header, items )
     }
 
     private fun setRecyclerView() {
