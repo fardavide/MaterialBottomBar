@@ -12,12 +12,27 @@ import kotlinx.android.synthetic.main.activity_demo.*
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.DrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.PrimaryDrawerItem
+import studio.forface.bottomappbar.utils.times
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
+import java.util.*
 
 private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg"
 
+
 class DemoActivity: AppCompatActivity() {
+
+    private val TEXTS = arrayOf(
+            "ciao", "wow", "super", "yeah", "yo"
+    )
+
+    private val DRAWABLES = arrayOf(
+            R.drawable.ic_favorite_black_24dp,
+            R.drawable.ic_invert_colors_black_24dp,
+            R.drawable.ic_local_pharmacy_black_24dp,
+            R.drawable.ic_memory_black_24dp,
+            R.drawable.ic_sentiment_very_dissatisfied_black_24dp
+    )
 
     override fun onCreate( savedInstanceState: Bundle? ) {
         Timber.plant( Timber.DebugTree() )
@@ -35,17 +50,17 @@ class DemoActivity: AppCompatActivity() {
         val backgroundColor = MaterialDrawer.BackgroundColor()
                 .withColor( Color.RED )
 
-        val items = mutableListOf<DrawerItem>(
-                PrimaryDrawerItem( MaterialDrawer.Title().withText("ciao" ) ),
-                PrimaryDrawerItem( MaterialDrawer.Title().withText("wow" ) ),
-                PrimaryDrawerItem( MaterialDrawer.Title().withText("super" ) ),
-                PrimaryDrawerItem( MaterialDrawer.Title().withText("yeah" ) ),
-                PrimaryDrawerItem( MaterialDrawer.Title().withText("yo" ) )
+        fun randomItem() = PrimaryDrawerItem(
+                MaterialDrawer.Icon().withResource( DRAWABLES[Random().nextInt(5 )] ),
+                MaterialDrawer.Title().withText( TEXTS[Random().nextInt(5 )] )
         )
+
+        val items = arrayOfNulls<PrimaryDrawerItem>( 30 )
+                .map { randomItem() }
 
         val header = MaterialDrawer.Header( icon, title, backgroundColor )
 
-        drawerLayout.drawer = MaterialDrawer( header, items )
+        drawerLayout.drawer = MaterialDrawer( header, items.toMutableList() )
     }
 
     private fun setRecyclerView() {

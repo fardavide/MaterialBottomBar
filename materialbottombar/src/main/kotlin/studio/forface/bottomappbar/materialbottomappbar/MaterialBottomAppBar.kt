@@ -190,6 +190,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
                 coordinatorLayout: CoordinatorLayout, child: BottomAppBar, target: View,
                 dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int
         ) {
+            if ( target.id == R.id.drawer_recycler_view ) return
             if ( dyConsumed > 0 )       slideDown( child )
             else if ( dyConsumed < 0)   slideUp(child)
         }

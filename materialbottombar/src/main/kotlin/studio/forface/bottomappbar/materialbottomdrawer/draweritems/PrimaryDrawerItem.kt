@@ -3,5 +3,6 @@ package studio.forface.bottomappbar.materialbottomdrawer.draweritems
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
 
 data class PrimaryDrawerItem(
-    val title: MaterialDrawer.Title
+    val icon:   MaterialDrawer.Icon? =  null,
+    val title:  MaterialDrawer.Title? = null
 ): DrawerItem

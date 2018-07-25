@@ -10,7 +10,12 @@ class ItemViewHolder( itemView: View): RecyclerView.ViewHolder( itemView ) {
 
     fun bind( drawerItem: DrawerItem ) {
         when( drawerItem ) {
-            is PrimaryDrawerItem -> drawerItem.title.applyTo( itemView.item_title )
+            is PrimaryDrawerItem -> {
+                itemView.item_icon.alpha = 0.7f
+
+                drawerItem.title?.applyTo( itemView.item_title )
+                drawerItem.icon?.applyTo( itemView.item_icon )
+            }
         }
     }
 

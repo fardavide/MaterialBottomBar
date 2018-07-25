@@ -10,8 +10,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
@@ -50,8 +48,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     val topAppBar       get() = findChild<AppBarLayout>()
 
     private val bottomAppBarInitialY by lazy { bottomAppBar?.y ?: height.toFloat() }
-    private val matchDrawerY get() =
-        height - ( drawerHeader.height + drawerRecyclerView.height ).toFloat()
+    private val matchDrawerY get() = height / 3f
 
     private var viewsAnimator: Animator? = null
     private var drawerHeaderColorHolder: ColorHolder? = null
@@ -124,60 +121,89 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private var bottomBarDownY = 0f
     private var draggingBar = false
     override fun onInterceptTouchEvent( event: MotionEvent ): Boolean {
+        val actionDown = event.action == MotionEvent.ACTION_DOWN
+        val actionUp = event.action == MotionEvent.ACTION_UP ||
+                event.action == MotionEvent.ACTION_CANCEL
 
-        fun grabBar() = kotlin.run {
-            draggingBar = true
-            false
+        val inRange = downY in BOTTOM_BAR_RANGE || event.y in BOTTOM_BAR_RANGE
+
+        if ( actionDown ) downY = event.y
+
+        val direction = downY.compareTo( event.y )
+        val shouldScrollDrawerRecyclerView =
+                event.action == MotionEvent.ACTION_MOVE && bottomAppBar!!.y < 1 &&
+                        drawerRecyclerView.canScrollVertically( direction )
+
+        if ( ! shouldScrollDrawerRecyclerView && inRange )
+            onTouchEvent( event )
+        else if ( ! inRange )
+            flyBar( Fly.BOTTOM )
+
+        if ( actionUp ) downY = 0f
+
+        return false
+    }
+
+    override fun onTouchEvent( event: MotionEvent ): Boolean {
+
+        val direction = downY.compareTo( event.y )
+        val shouldScrollDrawerRecyclerView =
+                event.action == MotionEvent.ACTION_MOVE && bottomAppBar!!.y < 1 &&
+                        drawerRecyclerView.canScrollVertically( direction )
+
+        if ( shouldScrollDrawerRecyclerView ) return false
+
+        return when( event.action ) {
+            MotionEvent.ACTION_DOWN -> onDown( event )
+            MotionEvent.ACTION_MOVE -> onMove( event )
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> releaseBar( event )
+            else -> super.onTouchEvent( event )
         }
-        fun releaseBar() = bottomAppBar?.let {
+    }
+
+    fun grabBar() {
+        draggingBar = true
+    }
+    fun releaseBar( event: MotionEvent ) = bottomAppBar?.let {
+        if ( draggingBar ) {
             draggingBar = false
 
-            val inThreshold = Math.abs( event.y - downY ) > DRAG_THRESHOLD
+            val inThreshold = Math.abs(event.y - downY) > DRAG_THRESHOLD
 
-            if ( inThreshold ) {
+            if (inThreshold) {
                 val isDraggingUp = event.y < downY
 
                 val fly = if ( ! isDraggingUp ) Fly.BOTTOM
-                else if (event.y < matchDrawerY) Fly.TOP
+                else if (it.y < matchDrawerY) Fly.TOP
                 else Fly.MATCH_DRAWER
 
                 flyBar(fly)
 
-            } else flyBar( lastFly )
+            } else flyBar(lastFly)
 
-            false
-        } ?: false
+            true
 
-        fun dragBar( y: Float ) = bottomAppBar?.let {
-            val toY = ( bottomBarDownY - ( downY - y ) )
-                    .coerceAtLeast(0f )
-                    .coerceAtMost( bottomAppBarInitialY )
-            setViewsY( toY )
-            false
-        } ?: false
+        } else true
+
+    } ?: false
+
+    fun dragBar( y: Float ) = bottomAppBar?.let {
+        val toY = ( bottomBarDownY - ( downY - y ) )
+                .coerceAtLeast(0f )
+                .coerceAtMost( bottomAppBarInitialY )
+        setViewsY( toY )
+    }
+
+    fun onDown( event: MotionEvent ) = if ( event.y in BOTTOM_BAR_RANGE ) {
+        bottomBarDownY = bottomAppBar?.y ?: 0f
+        true
+    } else false
 
 
-        fun onDown() = when {
-            event.y in BOTTOM_BAR_RANGE -> {
-                downY = event.y
-                bottomBarDownY = bottomAppBar?.y ?: 0f
-                false
-            }
-            else -> false
-        }
-
-        fun onMove() = when {
-            draggingBar -> dragBar( event.y )
-            downY in BOTTOM_BAR_RANGE -> grabBar()
-            else -> false
-        }
-
-        when( event.action ) {
-            MotionEvent.ACTION_DOWN -> onDown()
-            MotionEvent.ACTION_MOVE -> onMove()
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> releaseBar()
-        }
-        return super.onInterceptTouchEvent( event )
+    fun onMove( event: MotionEvent ) = when {
+        draggingBar -> { dragBar( event.y ); true }
+        downY in BOTTOM_BAR_RANGE -> { grabBar(); true }
+        else -> false
     }
 
     enum class Fly { TOP, BOTTOM, MATCH_DRAWER }
@@ -188,7 +214,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             val toY = when( fly ) {
                 Fly.TOP ->          0f
                 Fly.BOTTOM ->       bottomAppBarInitialY
-                Fly.MATCH_DRAWER -> height - ( drawerHeader.height + drawerRecyclerView.height ).toFloat()
+                Fly.MATCH_DRAWER -> matchDrawerY
             }
             animateViewsY( toY )
         }
@@ -216,9 +242,11 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     private var bottomAppBarInitialColor: Int? = null
     private fun setViewsY( y: Float ) {
-        bottomAppBar!!.y =  y
-        drawerHeader.y =    y
-        drawerRecyclerView.y =      y + bottomAppBar!!.height
+        if ( y < 0f ) return
+
+        bottomAppBar!!.y =      y
+        drawerHeader.y =        y
+        drawerRecyclerView.y =  y + bottomAppBar!!.height
         drawerBottomBackground.y = drawerRecyclerView.y + drawerRecyclerView.height
 
         val height = height - bottomAppBar!!.height
@@ -228,8 +256,6 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         val bottomPercentage =  1f / ( ( height - matchDrawerY ) / ( y - matchDrawerY ).coerceAtLeast(0f ) )
 
         bottomAppBar!!.cornersInterpolation =   topPercentage
-
-        val isInitialState = y == bottomAppBarInitialY
 
         if ( bottomAppBarInitialColor == null ) bottomAppBarInitialColor =
                 ( bottomAppBar?.background as? MaterialShapeDrawable )?.tintList?.defaultColor
@@ -241,6 +267,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             )
             ColorHolder( color = blend ).applyToBackground( bottomAppBar!! )
         }
+
+        val isInitialState = y == bottomAppBarInitialY
+
+        if ( isInitialState ) drawerRecyclerView.scrollToPosition(0 )
 
         //drawerHeaderColorHolder?.applyToBackground( bottomAppBar!! )
         bottomAppBar!!.children.forEach {
