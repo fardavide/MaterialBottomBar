@@ -23,7 +23,7 @@ class ImageHolder internal constructor(
     val uri:                Uri? =      null,
     val url:                String? =   null
 ) {
-    internal var imageShape = ImageShape.ROUND
+    internal var imageShape = ImageShape.SQUARE
 
     fun applyTo( imageView: ImageView ) {
         val glide = Glide.with( imageView )

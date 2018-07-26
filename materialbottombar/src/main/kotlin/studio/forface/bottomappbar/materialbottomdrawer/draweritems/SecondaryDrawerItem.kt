@@ -10,8 +10,8 @@ class SecondaryDrawerItem: BaseDrawerItem() {
     override val iconMarginEndDp = 12f
     override val iconAlpha = 0.5f
 
-    override var titleTextSizeHolder =  TextSizeHolder( sp = 16f )
+    override var titleTextSizeHolder =  TextSizeHolder( sp = 14f )
 
     override var iconColorHolder =      ColorHolder()
-    override var iconSizeHolder =       IconSizeHolder( dp = 24f )
+    override var iconSizeHolder =       IconSizeHolder( dp = 20f )
 }

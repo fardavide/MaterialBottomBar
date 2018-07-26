@@ -11,12 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_demo.*
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.Divider
-import studio.forface.bottomappbar.materialbottomdrawer.draweritems.DrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.PrimaryDrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.SecondaryDrawerItem
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
-import java.util.*
 
 private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg"
 
@@ -36,10 +34,12 @@ class DemoActivity: AppCompatActivity() {
                 .withBackgroundColor( Color.RED )
                 .withTitleText("My drawer" )
                 .withTitleColor( Color.WHITE )
+                .withTitleBold()
 
         val chat = PrimaryDrawerItem()
                 .withTitleText("Messages" )
                 .withIconResource( R.drawable.ic_message_black_24dp )
+                .withTitleBold()
         val inbox = SecondaryDrawerItem()
                 .withTitleText("Inbox" )
                 .withIconResource( R.drawable.ic_inbox_black_24dp )
@@ -50,6 +50,7 @@ class DemoActivity: AppCompatActivity() {
         val contacts = PrimaryDrawerItem()
                 .withTitleText("Contacts" )
                 .withIconResource( R.drawable.ic_contacts_black_24dp )
+                .withTitleBold()
         val favorites = SecondaryDrawerItem()
                 .withTitleText("Favorites" )
                 .withIconResource( R.drawable.ic_star_black_24dp )
@@ -57,6 +58,7 @@ class DemoActivity: AppCompatActivity() {
         val labels = PrimaryDrawerItem()
                 .withTitleText("Labels" )
                 .withIconResource( R.drawable.ic_style_black_24dp )
+                .withTitleBold()
         val label1 = SecondaryDrawerItem()
                 .withTitleText("Label 1" )
                 .withIconResource( R.drawable.ic_label_black_24dp )
@@ -78,13 +80,15 @@ class DemoActivity: AppCompatActivity() {
                 .withIconResource( R.drawable.ic_label_black_24dp )
                 .withIconColor( Color.CYAN )
 
-        drawerLayout.drawer = MaterialDrawer( header, mutableListOf(
+        val body = MaterialDrawer.Body( listOf(
                 chat, inbox, work,
                 Divider(),
                 contacts, favorites,
                 Divider(),
                 labels, label1, label2, label3, label4, label5
-        ) )
+        ) ).withSelectionColor( Color.RED )
+
+        drawerLayout.drawer = MaterialDrawer( header, body )
     }
 
     private fun setRecyclerView() {

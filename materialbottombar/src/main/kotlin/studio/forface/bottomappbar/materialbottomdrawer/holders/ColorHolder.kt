@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.graphics.drawable.DrawableCompat
+import studio.forface.bottomappbar.utils.Drawables
 import studio.forface.bottomappbar.utils.getColorCompat
 import studio.forface.bottomappbar.utils.setTextColorRes
 
@@ -21,26 +22,28 @@ class ColorHolder internal constructor(
 
     fun applyToBackground( view: View ) {
         val color = resolveColor( view.context )
-        try {
-            DrawableCompat.setTint( view.background, color )
-        } catch ( e: NullPointerException ) {
-            view.setBackgroundColor( color )
+        color?.let {
+            try {
+                DrawableCompat.setTint( view.background, color )
+            } catch ( e: NullPointerException ) {
+                view.setBackgroundColor( color )
+            }
         }
     }
 
     fun applyToDrawable( context: Context, drawable: Drawable ) {
         val color = resolveColor( context )
-        DrawableCompat.setTint( drawable, color )
+        color?.let { DrawableCompat.setTint( drawable, color ) }
     }
 
     fun applyToDrawable( button: ImageButton ) {
         val color = resolveColor( button.context )
-        DrawableCompat.setTint( button.drawable, color )
+        color?.let { DrawableCompat.setTint( button.drawable, color ) }
     }
 
     fun applyToImageView( imageView: ImageView  ) {
-        colorRes?.let { imageView.setColorFilter( imageView.context.getColorCompat( it ) ); return }
-        color?.let {    imageView.setColorFilter( it );                                     return }
+        val color = resolveColor( imageView.context )
+        color?.let { imageView.setColorFilter( it ) }
     }
 
     fun applyToTextView( textView: TextView  ) {
@@ -51,7 +54,7 @@ class ColorHolder internal constructor(
     fun resolveColor( context: Context ) = when {
         colorRes != null -> context.getColorCompat( colorRes )
         color != null -> color
-        else -> throw IllegalStateException( "ColorHolder has no value" )
+        else -> null
     }
 
 }

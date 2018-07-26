@@ -4,7 +4,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
 
-interface BackgroundColor<T>: Param<T> {
+interface Background<T>: Param<T> {
     var backgroundColorHolder: ColorHolder
 
     fun withBackgroundColorRes( @ColorRes res: Int ) =

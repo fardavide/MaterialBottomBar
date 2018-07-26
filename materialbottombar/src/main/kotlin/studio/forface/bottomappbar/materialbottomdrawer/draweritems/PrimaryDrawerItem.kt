@@ -9,7 +9,7 @@ class PrimaryDrawerItem: BaseDrawerItem() {
     override val iconMarginEndDp = 24f
     override val iconAlpha = 0.7f
 
-    override var titleTextSizeHolder =  TextSizeHolder( sp = 20f )
+    override var titleTextSizeHolder =  TextSizeHolder( sp = 18f )
 
-    override var iconSizeHolder =       IconSizeHolder( dp = 32f )
+    override var iconSizeHolder =       IconSizeHolder( dp = 24f )
 }

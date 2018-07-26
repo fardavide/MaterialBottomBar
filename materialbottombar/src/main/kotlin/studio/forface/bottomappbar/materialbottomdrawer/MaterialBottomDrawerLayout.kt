@@ -28,6 +28,7 @@ import studio.forface.bottomappbar.materialbottomappbar.MaterialBottomAppBar
 import studio.forface.bottomappbar.materialbottomdrawer.adapter.DrawerAdapter
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
 import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
+import studio.forface.bottomappbar.utils.dpToPixels
 import studio.forface.bottomappbar.utils.elevationCompat
 import studio.forface.bottomappbar.utils.findChild
 import studio.forface.materialbottombar.bottomappbar.R
@@ -36,6 +37,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : CoordinatorLayout( context, attrs, defStyleAttr ) {
 
+    private val MIN_DRAG_THRESHOLD = dpToPixels(10f )
     private val DRAG_THRESHOLD by lazy { height / 10 }
 
     private val BOTTOM_BAR_RANGE get() =
@@ -64,13 +66,13 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 it.titleColorHolder.applyToDrawable( drawerHeader.header_close )
 
                 drawerHeaderColorHolder = it.backgroundColorHolder
-                null
             }
 
-            drawerRecyclerView.layoutManager = LinearLayoutManager( context )
-            drawerRecyclerView.adapter = DrawerAdapter().apply {
-                this.items.addAll( this@run.items )
-                notifyDataSetChanged()
+            body?.let {
+                drawerRecyclerView.layoutManager = LinearLayoutManager( context )
+                drawerRecyclerView.adapter = DrawerAdapter( it ).apply {
+                    notifyDataSetChanged()
+                }
             }
         }
 
@@ -120,6 +122,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private var downY = 0f
     private var bottomBarDownY = 0f
     private var draggingBar = false
+
+    var downTimestamp = 0L
+    var consumedTimestamp = 0L
+
     override fun onInterceptTouchEvent( event: MotionEvent ): Boolean {
         val actionDown = event.action == MotionEvent.ACTION_DOWN
         val actionUp = event.action == MotionEvent.ACTION_UP ||
@@ -127,19 +133,29 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
         val inRange = downY in BOTTOM_BAR_RANGE || event.y in BOTTOM_BAR_RANGE
 
-        if ( actionDown ) downY = event.y
+        if ( actionDown ) {
+            downY = event.y
+            downTimestamp = System.currentTimeMillis()
+        }
 
         val direction = downY.compareTo( event.y )
         val shouldScrollDrawerRecyclerView =
                 event.action == MotionEvent.ACTION_MOVE && bottomAppBar!!.y < 1 &&
                         drawerRecyclerView.canScrollVertically( direction )
 
-        if ( ! shouldScrollDrawerRecyclerView && inRange )
-            onTouchEvent( event )
-        else if ( ! inRange )
+        if ( ! shouldScrollDrawerRecyclerView && inRange ) {
+            if ( onTouchEvent(event) )
+                consumedTimestamp = System.currentTimeMillis()
+
+        } else if ( ! inRange )
             flyBar( Fly.BOTTOM )
 
-        if ( actionUp ) downY = 0f
+        if ( actionUp ) {
+            val moved = Math.abs( downY - event.y ) > MIN_DRAG_THRESHOLD
+
+            downY = 0f
+            return moved
+        }
 
         return false
     }
@@ -168,7 +184,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         if ( draggingBar ) {
             draggingBar = false
 
-            val inThreshold = Math.abs(event.y - downY) > DRAG_THRESHOLD
+            val inThreshold = Math.abs( event.y - downY ) > DRAG_THRESHOLD
 
             if (inThreshold) {
                 val isDraggingUp = event.y < downY
@@ -177,9 +193,9 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 else if (it.y < matchDrawerY) Fly.TOP
                 else Fly.MATCH_DRAWER
 
-                flyBar(fly)
+                flyBar( fly )
 
-            } else flyBar(lastFly)
+            } else flyBar( lastFly )
 
             true
 

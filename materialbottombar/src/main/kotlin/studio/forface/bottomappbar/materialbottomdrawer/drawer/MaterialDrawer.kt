@@ -1,30 +1,20 @@
 package studio.forface.bottomappbar.materialbottomdrawer.drawer
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.text.Spannable
-import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.DrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.holders.*
-import studio.forface.bottomappbar.materialbottomdrawer.params.BackgroundColor
+import studio.forface.bottomappbar.materialbottomdrawer.params.Background
 import studio.forface.bottomappbar.materialbottomdrawer.params.Icon
+import studio.forface.bottomappbar.materialbottomdrawer.params.Selection
 import studio.forface.bottomappbar.materialbottomdrawer.params.Title
-import java.io.File
 
 class MaterialDrawer(
     val header: Header? = null,
-    val items: MutableList<DrawerItem> = mutableListOf()
+    val body: Body? = null
 ) {
 
     class Header:
-            BackgroundColor<Header>,
+            Background<Header>,
             Title<Header>,
             Icon<Header>
     {
@@ -40,6 +30,27 @@ class MaterialDrawer(
         override var iconImageHolder =          ImageHolder()
         override var iconColorHolder =          ColorHolder()
         override var iconSizeHolder =           IconSizeHolder()
+
+        private var hasCustomShape = false
+
+        override fun withIconShape( imageShape: ImageShape ) {
+            super.withIconShape( imageShape )
+            hasCustomShape = true
+        }
+
+        override fun applyIconTo( imageView: ImageView ) {
+            if ( ! hasCustomShape ) iconImageHolder.imageShape = ImageShape.ROUND
+            super.applyIconTo( imageView )
+        }
+    }
+
+    class Body(
+        val items: List<DrawerItem> = mutableListOf()
+    ): Selection<Body> {
+        override val thisRef: Body get() = this
+
+        override var roundedCorners: Boolean = true
+        override var selectionColorHolder = ColorHolder()
     }
 
 }

@@ -32,7 +32,7 @@ interface Title<T>: Param<T> {
     fun withTitleSpannable( spannable: Spannable) =
             thisRef.apply { titleTextHolder = TextHolder( spannable = spannable ) }
 
-    fun withTitleBold( bold: Boolean ) =
+    fun withTitleBold( bold: Boolean = true ) =
             thisRef.apply { titleTextStyleHolder = TextStyleHolder( bold = bold ) }
 
     fun withTitlePixelSize( size: Float ) =
