@@ -58,12 +58,12 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             field = this
 
             header?.let {
-                it.icon?.applyTo( drawerHeader.header_icon )
-                it.title?.run {
-                    applyTo( drawerHeader.header_title )
-                    colorHolder.applyToDrawable( drawerHeader.header_close )
-                }
-                drawerHeaderColorHolder = it.backgroundColor?.colorHolder
+                it.applyIconTo( drawerHeader.header_icon )
+
+                it.applyTitleTo( drawerHeader.header_title )
+                it.titleColorHolder.applyToDrawable( drawerHeader.header_close )
+
+                drawerHeaderColorHolder = it.backgroundColorHolder
                 null
             }
 

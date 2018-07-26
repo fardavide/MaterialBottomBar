@@ -13,6 +13,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.DrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.holders.*
+import studio.forface.bottomappbar.materialbottomdrawer.params.BackgroundColor
+import studio.forface.bottomappbar.materialbottomdrawer.params.Icon
+import studio.forface.bottomappbar.materialbottomdrawer.params.Title
 import java.io.File
 
 class MaterialDrawer(
@@ -20,72 +23,23 @@ class MaterialDrawer(
     val items: MutableList<DrawerItem> = mutableListOf()
 ) {
 
-    class Header (
-        var icon:               Icon? =             null,
-        var title:              Title? =            null,
-        var backgroundColor:    BackgroundColor? =  null
-    )
+    class Header:
+            BackgroundColor<Header>,
+            Title<Header>,
+            Icon<Header>
+    {
+        override val thisRef: Header get() = this
 
-    class Icon {
-        internal var imageHolder = ImageHolder()
-        internal fun applyTo( imageView: ImageView ) { imageHolder.applyTo( imageView ) }
+        override var backgroundColorHolder =    ColorHolder()
 
-        fun withBitmap( bitmap: Bitmap ) =
-                apply { imageHolder = ImageHolder( bitmap = bitmap ) }
-        fun withDrawable( drawable: Drawable ) =
-                apply { imageHolder = ImageHolder( drawable = drawable ) }
-        fun withFIle( file: File ) =
-                apply { imageHolder = ImageHolder( file = file ) }
-        fun withResource( @DrawableRes res: Int ) =
-                apply { imageHolder = ImageHolder( res = res ) }
-        fun withUri( uri: Uri ) =
-                apply { imageHolder = ImageHolder( uri = uri ) }
-        fun withUrl( url: String ) =
-                apply { imageHolder = ImageHolder( url = url ) }
+        override var titleTextHolder =          TextHolder()
+        override var titleTextStyleHolder =     TextStyleHolder()
+        override var titleTextSizeHolder =      TextSizeHolder()
+        override var titleColorHolder =         ColorHolder()
 
-        fun withShape( imageShape: ImageShape ) {
-            imageHolder.imageShape = imageShape
-        }
-    }
-
-    class Title {
-        internal var textHolder = TextHolder()
-        internal var textStyleHolder = TextStyleHolder()
-        internal var colorHolder = ColorHolder()
-        internal fun applyTo( textView: TextView ) {
-            textHolder.applyTo( textView )
-            textStyleHolder.applyTo( textView )
-            colorHolder.applyToText( textView )
-        }
-
-        fun withStringRes( @StringRes res: Int ) =
-                apply { textHolder = TextHolder( stringRes = res) }
-        fun withTextRes( @StringRes res: Int ) =
-                apply { textHolder = TextHolder( textRes = res) }
-        fun withText( text: CharSequence ) =
-                apply { textHolder = TextHolder( text = text ) }
-        fun withSpannable( spannable: Spannable ) =
-                apply { textHolder = TextHolder( spannable = spannable ) }
-
-        fun withBold( bold: Boolean ) =
-                apply { textStyleHolder = TextStyleHolder( bold = bold ) }
-
-        fun withColorRes( @ColorRes res: Int ) =
-                apply { colorHolder = ColorHolder( colorRes = res ) }
-        fun withColor( @ColorInt color: Int ) =
-                apply { colorHolder = ColorHolder( color = color ) }
-    }
-
-    class BackgroundColor {
-        internal var colorHolder = ColorHolder()
-        internal fun applyTo( view: View ) {
-            colorHolder.applyToBackground( view )
-        }
-
-        fun withColorRes( @ColorRes res: Int ) =
-                apply { colorHolder = ColorHolder( colorRes = res ) }
-        fun withColor( @ColorInt color: Int ) =
-                apply { colorHolder = ColorHolder( color = color ) }
+        override var iconImageHolder =          ImageHolder()
+        override var iconColorHolder =          ColorHolder()
+        override var iconSizeHolder =           IconSizeHolder()
     }
 
 }

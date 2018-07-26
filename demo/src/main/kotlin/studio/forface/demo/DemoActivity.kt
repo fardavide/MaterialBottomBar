@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_demo.*
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
+import studio.forface.bottomappbar.materialbottomdrawer.draweritems.Divider
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.DrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.PrimaryDrawerItem
-import studio.forface.bottomappbar.utils.times
+import studio.forface.bottomappbar.materialbottomdrawer.draweritems.SecondaryDrawerItem
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
 import java.util.*
@@ -22,18 +23,6 @@ private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2
 
 class DemoActivity: AppCompatActivity() {
 
-    private val TEXTS = arrayOf(
-            "ciao", "wow", "super", "yeah", "yo"
-    )
-
-    private val DRAWABLES = arrayOf(
-            R.drawable.ic_favorite_black_24dp,
-            R.drawable.ic_invert_colors_black_24dp,
-            R.drawable.ic_local_pharmacy_black_24dp,
-            R.drawable.ic_memory_black_24dp,
-            R.drawable.ic_sentiment_very_dissatisfied_black_24dp
-    )
-
     override fun onCreate( savedInstanceState: Bundle? ) {
         Timber.plant( Timber.DebugTree() )
         super.onCreate( savedInstanceState )
@@ -42,25 +31,60 @@ class DemoActivity: AppCompatActivity() {
         setRecyclerView()
         setButtons()
 
-        val icon = MaterialDrawer.Icon()
-                .withUrl( IMAGE_URL )
-        val title = MaterialDrawer.Title()
-                .withText("Test")
-                .withColor( Color.WHITE )
-        val backgroundColor = MaterialDrawer.BackgroundColor()
-                .withColor( Color.RED )
+        val header = MaterialDrawer.Header()
+                .withIconUrl( IMAGE_URL )
+                .withBackgroundColor( Color.RED )
+                .withTitleText("My drawer" )
+                .withTitleColor( Color.WHITE )
 
-        fun randomItem() = PrimaryDrawerItem(
-                MaterialDrawer.Icon().withResource( DRAWABLES[Random().nextInt(5 )] ),
-                MaterialDrawer.Title().withText( TEXTS[Random().nextInt(5 )] )
-        )
+        val chat = PrimaryDrawerItem()
+                .withTitleText("Messages" )
+                .withIconResource( R.drawable.ic_message_black_24dp )
+        val inbox = SecondaryDrawerItem()
+                .withTitleText("Inbox" )
+                .withIconResource( R.drawable.ic_inbox_black_24dp )
+        val work = SecondaryDrawerItem()
+                .withTitleText("Work" )
+                .withIconResource( R.drawable.ic_work_black_24dp )
 
-        val items = arrayOfNulls<PrimaryDrawerItem>( 30 )
-                .map { randomItem() }
+        val contacts = PrimaryDrawerItem()
+                .withTitleText("Contacts" )
+                .withIconResource( R.drawable.ic_contacts_black_24dp )
+        val favorites = SecondaryDrawerItem()
+                .withTitleText("Favorites" )
+                .withIconResource( R.drawable.ic_star_black_24dp )
 
-        val header = MaterialDrawer.Header( icon, title, backgroundColor )
+        val labels = PrimaryDrawerItem()
+                .withTitleText("Labels" )
+                .withIconResource( R.drawable.ic_style_black_24dp )
+        val label1 = SecondaryDrawerItem()
+                .withTitleText("Label 1" )
+                .withIconResource( R.drawable.ic_label_black_24dp )
+                .withIconColor( Color.RED )
+        val label2 = SecondaryDrawerItem()
+                .withTitleText("Label 2" )
+                .withIconResource( R.drawable.ic_label_black_24dp )
+                .withIconColor( Color.GREEN )
+        val label3 = SecondaryDrawerItem()
+                .withTitleText("Label 3" )
+                .withIconResource( R.drawable.ic_label_black_24dp )
+                .withIconColor( Color.BLUE )
+        val label4 = SecondaryDrawerItem()
+                .withTitleText("Label 4" )
+                .withIconResource( R.drawable.ic_label_black_24dp )
+                .withIconColor( Color.MAGENTA )
+        val label5 = SecondaryDrawerItem()
+                .withTitleText("Label 5" )
+                .withIconResource( R.drawable.ic_label_black_24dp )
+                .withIconColor( Color.CYAN )
 
-        drawerLayout.drawer = MaterialDrawer( header, items.toMutableList() )
+        drawerLayout.drawer = MaterialDrawer( header, mutableListOf(
+                chat, inbox, work,
+                Divider(),
+                contacts, favorites,
+                Divider(),
+                labels, label1, label2, label3, label4, label5
+        ) )
     }
 
     private fun setRecyclerView() {

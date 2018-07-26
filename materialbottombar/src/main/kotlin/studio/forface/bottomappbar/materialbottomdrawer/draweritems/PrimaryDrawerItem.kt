@@ -1,8 +1,15 @@
 package studio.forface.bottomappbar.materialbottomdrawer.draweritems
 
-import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
+import studio.forface.bottomappbar.materialbottomdrawer.holders.IconSizeHolder
+import studio.forface.bottomappbar.materialbottomdrawer.holders.TextSizeHolder
 
-data class PrimaryDrawerItem(
-    val icon:   MaterialDrawer.Icon? =  null,
-    val title:  MaterialDrawer.Title? = null
-): DrawerItem
+class PrimaryDrawerItem: BaseDrawerItem() {
+    override val thisRef get() = this
+    override val iconMarginStartDp = 24f
+    override val iconMarginEndDp = 24f
+    override val iconAlpha = 0.7f
+
+    override var titleTextSizeHolder =  TextSizeHolder( sp = 20f )
+
+    override var iconSizeHolder =       IconSizeHolder( dp = 32f )
+}

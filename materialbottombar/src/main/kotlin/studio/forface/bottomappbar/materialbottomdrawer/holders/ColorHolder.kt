@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
@@ -37,7 +38,12 @@ class ColorHolder internal constructor(
         DrawableCompat.setTint( button.drawable, color )
     }
 
-    fun applyToText( textView: TextView  ) {
+    fun applyToImageView( imageView: ImageView  ) {
+        colorRes?.let { imageView.setColorFilter( imageView.context.getColorCompat( it ) ); return }
+        color?.let {    imageView.setColorFilter( it );                                     return }
+    }
+
+    fun applyToTextView( textView: TextView  ) {
         colorRes?.let { textView.setTextColorRes( it );   return }
         color?.let {    textView.setTextColor( it );      return }
     }
