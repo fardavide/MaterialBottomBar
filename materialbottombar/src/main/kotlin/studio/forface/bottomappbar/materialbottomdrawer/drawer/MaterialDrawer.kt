@@ -1,17 +1,29 @@
 package studio.forface.bottomappbar.materialbottomdrawer.drawer
 
 import android.widget.ImageView
+import studio.forface.bottomappbar.materialbottomdrawer.draweritems.BaseDrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.DrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.holders.*
-import studio.forface.bottomappbar.materialbottomdrawer.params.Background
-import studio.forface.bottomappbar.materialbottomdrawer.params.Icon
-import studio.forface.bottomappbar.materialbottomdrawer.params.Selection
-import studio.forface.bottomappbar.materialbottomdrawer.params.Title
+import studio.forface.bottomappbar.materialbottomdrawer.params.*
+import java.util.*
 
 class MaterialDrawer(
-    val header: Header? = null,
-    val body: Body? = null
-) {
+    _header: Header? = null,
+    _body: Body? = null
+): Observable() {
+
+    var header = _header
+        set(value) {
+            field = value
+            setChanged()
+            notifyObservers()
+        }
+    var body = _body
+        set(value) {
+            field = value
+            setChanged()
+            notifyObservers()
+        }
 
     class Header:
             Background<Header>,
@@ -45,12 +57,30 @@ class MaterialDrawer(
     }
 
     class Body(
-        val items: List<DrawerItem> = mutableListOf()
-    ): Selection<Body> {
+        _items: List<DrawerItem> = listOf()
+    ): Observable(), Selection<Body> {
         override val thisRef: Body get() = this
 
         override var roundedCorners: Boolean = true
         override var selectionColorHolder = ColorHolder()
+
+        override var onItemClickListener: OnItemClickListener = { _, _ ->  }
+
+        var items = _items
+            set(value) {
+                field = value
+                setChanged()
+                notifyObservers()
+            }
+
+        fun setSelected( selectedId: Int ) {
+            items = items.map {
+                ( it as? BaseDrawerItem )?.run {
+                    selected = id == selectedId
+                }
+                it
+            }
+        }
     }
 
 }

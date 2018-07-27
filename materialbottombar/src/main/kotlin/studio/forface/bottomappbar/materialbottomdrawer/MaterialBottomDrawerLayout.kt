@@ -32,6 +32,8 @@ import studio.forface.bottomappbar.utils.dpToPixels
 import studio.forface.bottomappbar.utils.elevationCompat
 import studio.forface.bottomappbar.utils.findChild
 import studio.forface.materialbottombar.bottomappbar.R
+import timber.log.Timber
+import java.util.*
 
 class MaterialBottomDrawerLayout @JvmOverloads constructor (
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -57,7 +59,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     var drawer: MaterialDrawer = MaterialDrawer()
         set( value ) = value.run {
+            field.body?.deleteObservers()
             field = this
+
+            value.addObserver { _, _ -> drawer = value }
 
             header?.let {
                 it.applyIconTo( drawerHeader.header_icon )
@@ -70,9 +75,9 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
             body?.let {
                 drawerRecyclerView.layoutManager = LinearLayoutManager( context )
-                drawerRecyclerView.adapter = DrawerAdapter( it ).apply {
-                    notifyDataSetChanged()
-                }
+                val adapter = DrawerAdapter( it )
+                it.addObserver { _, _ -> adapter.notifyDataSetChanged() }
+                drawerRecyclerView.adapter = adapter
             }
         }
 

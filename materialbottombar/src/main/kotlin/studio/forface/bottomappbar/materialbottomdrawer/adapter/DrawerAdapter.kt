@@ -11,8 +11,9 @@ import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
 import studio.forface.bottomappbar.materialbottomdrawer.params.Selection
 import studio.forface.materialbottombar.bottomappbar.R
 
-class DrawerAdapter( private val body: MaterialDrawer.Body)
-    : RecyclerView.Adapter<ItemViewHolder>() {
+class DrawerAdapter(
+        internal val body: MaterialDrawer.Body
+) : RecyclerView.Adapter<ItemViewHolder>() {
 
     val items get() = body.items
 

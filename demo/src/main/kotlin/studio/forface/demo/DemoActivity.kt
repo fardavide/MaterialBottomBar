@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,55 +41,77 @@ class DemoActivity: AppCompatActivity() {
                 .withTitleText("Messages" )
                 .withIconResource( R.drawable.ic_message_black_24dp )
                 .withTitleBold()
+                .withId(1 )
         val inbox = SecondaryDrawerItem()
                 .withTitleText("Inbox" )
                 .withIconResource( R.drawable.ic_inbox_black_24dp )
+                .withId(2 )
         val work = SecondaryDrawerItem()
                 .withTitleText("Work" )
                 .withIconResource( R.drawable.ic_work_black_24dp )
+                .withId(3 )
 
         val contacts = PrimaryDrawerItem()
                 .withTitleText("Contacts" )
                 .withIconResource( R.drawable.ic_contacts_black_24dp )
                 .withTitleBold()
+                .withId(4 )
         val favorites = SecondaryDrawerItem()
                 .withTitleText("Favorites" )
                 .withIconResource( R.drawable.ic_star_black_24dp )
+                .withId(5 )
 
         val labels = PrimaryDrawerItem()
                 .withTitleText("Labels" )
                 .withIconResource( R.drawable.ic_style_black_24dp )
                 .withTitleBold()
+                .withId(6 )
         val label1 = SecondaryDrawerItem()
                 .withTitleText("Label 1" )
                 .withIconResource( R.drawable.ic_label_black_24dp )
                 .withIconColor( Color.RED )
+                .withId(7 )
         val label2 = SecondaryDrawerItem()
                 .withTitleText("Label 2" )
                 .withIconResource( R.drawable.ic_label_black_24dp )
                 .withIconColor( Color.GREEN )
+                .withId(8 )
         val label3 = SecondaryDrawerItem()
                 .withTitleText("Label 3" )
                 .withIconResource( R.drawable.ic_label_black_24dp )
                 .withIconColor( Color.BLUE )
+                .withId(9 )
         val label4 = SecondaryDrawerItem()
                 .withTitleText("Label 4" )
                 .withIconResource( R.drawable.ic_label_black_24dp )
                 .withIconColor( Color.MAGENTA )
+                .withId(10 )
         val label5 = SecondaryDrawerItem()
                 .withTitleText("Label 5" )
                 .withIconResource( R.drawable.ic_label_black_24dp )
                 .withIconColor( Color.CYAN )
+                .withId(11 )
 
-        val body = MaterialDrawer.Body( listOf(
+        val body = MaterialDrawer.Body()
+                .withSelectionColor( Color.RED )
+                .withItemClickListener { id, title ->
+                    Toast.makeText(this, "$title - $id clicked", Toast.LENGTH_SHORT ).show()
+                }
+
+        val drawer = MaterialDrawer()
+        drawerLayout.drawer = drawer
+
+        // Testing postponed changes
+        drawer.header = header
+        drawer.body = body
+
+        drawer.body?.apply { items = listOf(
                 chat, inbox, work,
                 Divider(),
                 contacts, favorites,
                 Divider(),
                 labels, label1, label2, label3, label4, label5
-        ) ).withSelectionColor( Color.RED )
-
-        drawerLayout.drawer = MaterialDrawer( header, body )
+        ) }
     }
 
     private fun setRecyclerView() {

@@ -14,8 +14,10 @@ import com.google.android.material.shape.ShapePathModel
 
 object Drawables {
 
-    fun getSelectableDrawableFor( color: Int, roundedCorners: Boolean = false ): Drawable {
-
+    fun getSelectableDrawableFor(
+            color: Int,
+            roundedCorners: Boolean = false
+    ): Drawable {
         if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP ) {
             val stateListDrawable = StateListDrawable()
             stateListDrawable.addState(
@@ -23,7 +25,7 @@ object Drawables {
                     ColorDrawable( color )
             )
             stateListDrawable.addState(
-                    intArrayOf(android.R.attr.state_focused),
+                    intArrayOf( android.R.attr.state_focused ),
                     ColorDrawable( color )
             )
             stateListDrawable.addState(
@@ -33,18 +35,20 @@ object Drawables {
             return stateListDrawable
 
         } else {
-            val pressedColor = ColorStateList.valueOf( color )
-            val defaultColor = ColorDrawable( Color.TRANSPARENT )
-            val rippleColor = getRippleColor( color, roundedCorners )
+            val colorList = ColorStateList.valueOf( color )
+            val content = ColorDrawable( Color.TRANSPARENT )
+            val mask = getRippleColor( color, roundedCorners )
             return RippleDrawable(
-                    pressedColor,
-                    defaultColor,
-                    rippleColor
+                    colorList,
+                    content,
+                    mask
             )
         }
     }
 
-    private fun getRippleColor( color: Int, roundedCorners: Boolean ): Drawable {
+    fun getRippleColor(
+            color: Int, roundedCorners: Boolean, shouldLighten: Boolean = false
+    ): Drawable {
         val shapedPathModel = ShapePathModel().apply {
             val corners = if ( roundedCorners ) dpToPixels(12f ) else 0f
             setAllCorners( RoundedCornerTreatment( corners ) )
@@ -52,6 +56,7 @@ object Drawables {
 
         return MaterialShapeDrawable( shapedPathModel ).apply {
             setTint( color )
+            if ( shouldLighten ) alpha = 50
         }
     }
 
