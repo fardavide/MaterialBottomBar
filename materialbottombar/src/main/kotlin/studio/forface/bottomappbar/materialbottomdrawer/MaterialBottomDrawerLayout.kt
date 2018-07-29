@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.drawer_header.view.*
 import studio.forface.bottomappbar.materialbottomappbar.MaterialBottomAppBar
 import studio.forface.bottomappbar.materialbottomdrawer.adapter.DrawerAdapter
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
+import studio.forface.bottomappbar.materialbottomdrawer.drawer.forEachBaseDrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
 import studio.forface.bottomappbar.utils.dpToPixels
 import studio.forface.bottomappbar.utils.elevationCompat
@@ -55,7 +56,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private val matchDrawerY get() = height / 3f
 
     private var viewsAnimator: Animator? = null
-    private var drawerHeaderColorHolder: ColorHolder? = null
+    private var drawerHeaderColor: Int? = null
 
     var drawer: MaterialDrawer = MaterialDrawer()
         set( value ) = value.run {
@@ -70,10 +71,15 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 it.applyTitleTo( drawerHeader.header_title )
                 it.titleColorHolder.applyToDrawable( drawerHeader.header_close )
 
-                drawerHeaderColorHolder = it.backgroundColorHolder
+                drawerHeaderColor = it.backgroundColorHolder.resolveColor( context )
             }
 
             body?.let {
+                if ( it.selectionColorHolder.resolveColor( context ) == null ) {
+                    val color = drawerHeaderColor ?: Color.GRAY
+                    it.withSelectionColor( color )
+                }
+
                 drawerRecyclerView.layoutManager = LinearLayoutManager( context )
                 val adapter = DrawerAdapter( it )
                 it.addObserver { _, _ -> adapter.notifyDataSetChanged() }
@@ -282,7 +288,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 ( bottomAppBar?.background as? MaterialShapeDrawable )?.tintList?.defaultColor
 
         bottomAppBarInitialColor?.let { blendFrom ->
-            val blendTo = drawerHeaderColorHolder?.resolveColor( context ) ?: blendFrom
+            val blendTo = drawerHeaderColor ?: blendFrom
             val blend = ColorUtils.blendARGB(
                     blendFrom, blendTo, 1f - bottomPercentage
             )

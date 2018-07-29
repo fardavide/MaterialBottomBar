@@ -74,13 +74,15 @@ class MaterialDrawer(
             }
 
         fun setSelected( selectedId: Int ) {
-            items = items.map {
-                ( it as? BaseDrawerItem )?.run {
-                    selected = id == selectedId
-                }
-                it
-            }
+            items = items.mapBaseDrawerItems { it.selected = it.id == selectedId && it.selectable }
         }
-    }
 
+    }
+}
+
+fun List<DrawerItem>.mapBaseDrawerItems( mapper: (BaseDrawerItem) -> Unit ) =
+        this.map { ( it as? BaseDrawerItem )?.apply { mapper( this ) } ?: it }
+
+fun List<DrawerItem>.forEachBaseDrawerItem( block: (BaseDrawerItem) -> Unit ) {
+    forEach { ( it as? BaseDrawerItem )?.run( block ) }
 }

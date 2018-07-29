@@ -14,7 +14,7 @@ interface Selection<T>: Param<T> {
 
     var onItemClickListener: OnItemClickListener
 
-    fun applyTo( view: View, selected: Boolean = false ) {
+    fun applySelectionTo( view: View, selected: Boolean = false ) {
         val color = selectionColorHolder.resolveColor( view.context )
         color?.let {
             val background = if ( selected )
@@ -34,7 +34,6 @@ interface Selection<T>: Param<T> {
     fun withSelectionColor( @ColorInt color: Int ) =
             thisRef.apply { selectionColorHolder = ColorHolder( color = color ) }
 
-    fun withSelectionRounderCorners(rounded: Boolean = true ) {
-        roundedCorners = rounded
-    }
+    fun withSelectionRounderCorners( rounded: Boolean = true ) =
+            this.apply { this@Selection.roundedCorners = roundedCorners }
 }

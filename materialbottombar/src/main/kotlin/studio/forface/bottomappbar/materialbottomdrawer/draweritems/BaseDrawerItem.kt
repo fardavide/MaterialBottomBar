@@ -26,5 +26,9 @@ abstract class BaseDrawerItem: DrawerItem,
 
     override var id = Int.MIN_VALUE
 
+    var selectable = true
     var selected = false
+
+    fun withSelectable( selectable: Boolean = true ) =
+            thisRef.apply { this.selectable = selectable }
 }

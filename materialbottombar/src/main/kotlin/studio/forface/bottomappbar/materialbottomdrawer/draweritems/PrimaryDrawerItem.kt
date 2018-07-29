@@ -3,7 +3,7 @@ package studio.forface.bottomappbar.materialbottomdrawer.draweritems
 import studio.forface.bottomappbar.materialbottomdrawer.holders.IconSizeHolder
 import studio.forface.bottomappbar.materialbottomdrawer.holders.TextSizeHolder
 
-class PrimaryDrawerItem: BaseDrawerItem() {
+open class PrimaryDrawerItem: BaseDrawerItem() {
     override val thisRef get() = this
     override val iconMarginStartDp = 24f
     override val iconMarginEndDp = 24f

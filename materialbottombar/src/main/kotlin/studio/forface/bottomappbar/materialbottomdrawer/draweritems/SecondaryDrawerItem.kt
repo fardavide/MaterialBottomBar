@@ -4,7 +4,7 @@ import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
 import studio.forface.bottomappbar.materialbottomdrawer.holders.IconSizeHolder
 import studio.forface.bottomappbar.materialbottomdrawer.holders.TextSizeHolder
 
-class SecondaryDrawerItem: BaseDrawerItem() {
+open class SecondaryDrawerItem: BaseDrawerItem() {
     override val thisRef get() = this
     override val iconMarginStartDp = 48f
     override val iconMarginEndDp = 12f

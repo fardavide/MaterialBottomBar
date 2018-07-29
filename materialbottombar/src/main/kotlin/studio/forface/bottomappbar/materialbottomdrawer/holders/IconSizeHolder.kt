@@ -1,7 +1,5 @@
 package studio.forface.bottomappbar.materialbottomdrawer.holders
 
-import android.util.DisplayMetrics
-import android.util.TypedValue
 import android.widget.ImageView
 import studio.forface.bottomappbar.utils.dpToPixels
 

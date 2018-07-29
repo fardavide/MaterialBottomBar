@@ -37,11 +37,16 @@ class DemoActivity: AppCompatActivity() {
                 .withTitleColor( Color.WHITE )
                 .withTitleBold()
 
+        class BoldDrawerItem: PrimaryDrawerItem() { init {
+            withTitleBold()
+        } }
+
         val chat = PrimaryDrawerItem()
                 .withTitleText("Messages" )
                 .withIconResource( R.drawable.ic_message_black_24dp )
                 .withTitleBold()
                 .withId(1 )
+                .withSelectable(false )
         val inbox = SecondaryDrawerItem()
                 .withTitleText("Inbox" )
                 .withIconResource( R.drawable.ic_inbox_black_24dp )
@@ -51,10 +56,10 @@ class DemoActivity: AppCompatActivity() {
                 .withIconResource( R.drawable.ic_work_black_24dp )
                 .withId(3 )
 
-        val contacts = PrimaryDrawerItem()
+        val contacts = BoldDrawerItem()
                 .withTitleText("Contacts" )
                 .withIconResource( R.drawable.ic_contacts_black_24dp )
-                .withTitleBold()
+                //.withTitleBold()
                 .withId(4 )
         val favorites = SecondaryDrawerItem()
                 .withTitleText("Favorites" )
@@ -93,7 +98,7 @@ class DemoActivity: AppCompatActivity() {
                 .withId(11 )
 
         val body = MaterialDrawer.Body()
-                .withSelectionColor( Color.RED )
+                .withSelectionColor( Color.BLUE )
                 .withItemClickListener { id, title ->
                     Toast.makeText(this, "$title - $id clicked", Toast.LENGTH_SHORT ).show()
                 }
@@ -112,6 +117,8 @@ class DemoActivity: AppCompatActivity() {
                 Divider(),
                 labels, label1, label2, label3, label4, label5
         ) }
+
+        drawer.body!!.setSelected( 6 )
     }
 
     private fun setRecyclerView() {

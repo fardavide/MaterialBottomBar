@@ -27,15 +27,20 @@ class ItemViewHolder internal constructor(
 
                 drawerItem.applyTitleTo( itemView.item_title )
                 drawerItem.applyIconTo( itemView.item_icon )
-                drawerBody.applyTo( itemView, drawerItem.selected )
+                drawerBody.applySelectionTo( itemView, drawerItem.selected )
 
-                itemView.setOnClickListener {
-                    drawerBody.onItemClickListener( drawerItem.id, itemView.item_title.text )
+                itemView.isEnabled = drawerItem.selectable
 
-                    Handler().postDelayed( {
-                        drawerItem.selected = true
-                        drawerBody.setSelected( drawerItem.id )
-                    },200 )
+                if ( drawerItem.selectable ) {
+                    itemView.setOnClickListener {
+                        drawerBody.onItemClickListener(drawerItem.id, itemView.item_title.text)
+
+                        Handler().postDelayed({
+                            drawerItem.selected = true
+                            drawerBody.setSelected(drawerItem.id)
+                        }, 200)
+                    }
+
                 }
             }
         }
