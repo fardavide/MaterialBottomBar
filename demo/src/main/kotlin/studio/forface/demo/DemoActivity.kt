@@ -14,6 +14,7 @@ import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.Divider
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.PrimaryDrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.SecondaryDrawerItem
+import studio.forface.bottomappbar.materialbottomdrawer.draweritems.badge.BadgeItem
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
 
@@ -37,16 +38,25 @@ class DemoActivity: AppCompatActivity() {
                 .withTitleColor( Color.WHITE )
                 .withTitleBold()
 
-        class BoldDrawerItem: PrimaryDrawerItem() { init {
+        val badgeItem = BadgeItem()
+                .withBackgroundColor( Color.RED )
+                .withTitleColor( Color.WHITE )
+                .withTitleBold()
+
+        class MyPrimaryDrawerItem: PrimaryDrawerItem() { init {
             withTitleBold()
+            withBadgeItem( badgeItem )
         } }
 
-        val chat = PrimaryDrawerItem()
+        class MySecondaryDrawerItem: SecondaryDrawerItem() { init {
+            withBadgeItem( badgeItem )
+        } }
+
+        val chat = MyPrimaryDrawerItem()
                 .withTitleText("Messages" )
                 .withIconResource( R.drawable.ic_message_black_24dp )
-                .withTitleBold()
                 .withId(1 )
-                .withSelectable(false )
+                .withBadgeContentText("3" )
         val inbox = SecondaryDrawerItem()
                 .withTitleText("Inbox" )
                 .withIconResource( R.drawable.ic_inbox_black_24dp )
@@ -56,31 +66,32 @@ class DemoActivity: AppCompatActivity() {
                 .withIconResource( R.drawable.ic_work_black_24dp )
                 .withId(3 )
 
-        val contacts = BoldDrawerItem()
+        val contacts = MyPrimaryDrawerItem()
                 .withTitleText("Contacts" )
                 .withIconResource( R.drawable.ic_contacts_black_24dp )
-                //.withTitleBold()
                 .withId(4 )
         val favorites = SecondaryDrawerItem()
                 .withTitleText("Favorites" )
                 .withIconResource( R.drawable.ic_star_black_24dp )
                 .withId(5 )
 
-        val labels = PrimaryDrawerItem()
+        val labels = MyPrimaryDrawerItem()
                 .withTitleText("Labels" )
                 .withIconResource( R.drawable.ic_style_black_24dp )
                 .withTitleBold()
                 .withId(6 )
+                .withBadgeContentText("12" )
         val label1 = SecondaryDrawerItem()
                 .withTitleText("Label 1" )
                 .withIconResource( R.drawable.ic_label_black_24dp )
                 .withIconColor( Color.RED )
                 .withId(7 )
-        val label2 = SecondaryDrawerItem()
+        val label2 = MySecondaryDrawerItem()
                 .withTitleText("Label 2" )
                 .withIconResource( R.drawable.ic_label_black_24dp )
                 .withIconColor( Color.GREEN )
                 .withId(8 )
+                .withBadgeContentText("12" )
         val label3 = SecondaryDrawerItem()
                 .withTitleText("Label 3" )
                 .withIconResource( R.drawable.ic_label_black_24dp )
@@ -118,7 +129,7 @@ class DemoActivity: AppCompatActivity() {
                 labels, label1, label2, label3, label4, label5
         ) }
 
-        drawer.body!!.setSelected( 6 )
+        drawer.body!!.setSelected( 5 )
     }
 
     private fun setRecyclerView() {

@@ -25,25 +25,29 @@ class ItemViewHolder internal constructor(
                 itemView.item_title.constraintParams.marginStart =
                         dpToPixels( drawerItem.iconMarginEndDp ).toInt()
 
-                drawerItem.applyTitleTo( itemView.item_title )
-                drawerItem.applyIconTo( itemView.item_icon )
+                drawerItem.applyTitleTo(    itemView.item_title )
+                drawerItem.applyIconTo(     itemView.item_icon )
+                drawerItem.applyBadgeTo(    itemView.item_badge )
+
                 drawerBody.applySelectionTo( itemView, drawerItem.selected )
 
                 itemView.isEnabled = drawerItem.selectable
 
                 if ( drawerItem.selectable ) {
-                    itemView.setOnClickListener {
-                        drawerBody.onItemClickListener(drawerItem.id, itemView.item_title.text)
-
-                        Handler().postDelayed({
-                            drawerItem.selected = true
-                            drawerBody.setSelected(drawerItem.id)
-                        }, 200)
-                    }
+                    itemView.setOnClickListener( itemClickListener( drawerItem ) )
 
                 }
             }
         }
     }
+
+    private val itemClickListener: (BaseDrawerItem) -> (View) -> Unit get() = { item -> {
+        drawerBody.onItemClickListener( item.id, itemView.item_title.text )
+
+        Handler().postDelayed({
+            item.selected = true
+            drawerBody.setSelected( item.id )
+        }, 200)
+    } }
 
 }

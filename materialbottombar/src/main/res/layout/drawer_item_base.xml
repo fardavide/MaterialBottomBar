@@ -35,4 +35,14 @@
 
         tools:text="ciaoooooo"/>
 
+    <TextView android:id="@+id/item_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="@id/item_title"
+        app:layout_constraintBottom_toTopOf="@id/item_title"
+        app:layout_constraintStart_toEndOf="@id/item_title"
+
+        tools:text="1"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
