@@ -31,9 +31,10 @@ abstract class BaseDrawerItem: DrawerItem,
     var selectable = true
     var selected = false
 
-    fun withSelectable( selectable: Boolean = true ) =
+    fun selectable(selectable: Boolean = true ) =
             apply { this.selectable = selectable }
 
     override var badgeItem =  BadgeItem()
     override var buttonItem = ButtonItem()
+    override var buttonStyle = ButtonStyle.COLOR
 }

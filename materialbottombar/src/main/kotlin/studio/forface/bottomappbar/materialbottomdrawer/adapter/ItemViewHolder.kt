@@ -20,25 +20,22 @@ class ItemViewHolder internal constructor(
         when( drawerItem ) {
             is BaseDrawerItem -> {
                 itemView.item_icon.alpha = drawerItem.iconAlpha
-                itemView.item_icon.constraintParams.marginStart =
+                itemView.item_icon.constraintParams!!.marginStart =
                         dpToPixels( drawerItem.iconMarginStartDp ).toInt()
-                itemView.item_title.constraintParams.marginStart =
+                itemView.item_title.constraintParams!!.marginStart =
                         dpToPixels( drawerItem.iconMarginEndDp ).toInt()
 
-                drawerItem.applyTitleTo(        itemView.item_title )
-                drawerItem.applyIconTo(         itemView.item_icon )
+                drawerItem.applyTitleTo(    itemView.item_title )
+                drawerItem.applyIconTo(     itemView.item_icon,true )
 
-                drawerItem.badgeItem.applyTo(   itemView.item_badge )
-                drawerItem.buttonItem.applyTo(  itemView.item_button )
+                drawerItem.applyBadgeTo(    itemView.item_badge )
+                drawerItem.applyButtonTo(   itemView.item_button )
 
                 drawerBody.applySelectionTo( itemView, drawerItem.selected )
 
                 itemView.isEnabled = drawerItem.selectable
+                itemView.setOnClickListener( itemClickListener( drawerItem ) )
 
-                if ( drawerItem.selectable ) {
-                    itemView.setOnClickListener( itemClickListener( drawerItem ) )
-
-                }
             }
         }
     }

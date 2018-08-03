@@ -1,6 +1,7 @@
 package studio.forface.bottomappbar.materialbottomdrawer.params
 
 import android.text.Spannable
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
@@ -10,6 +11,10 @@ internal interface Badge<T>: Param<T> {
     var badgeItem: BadgeItem
     fun badgeItem( badge: BadgeItem ) =
             thisRef.apply { badgeItem = badge.copy() }
+
+    fun applyBadgeTo( textView: TextView ) {
+        badgeItem.applyTo( textView )
+    }
 
     fun badgeContentStringRes( @StringRes res: Int ) =
             thisRef.apply { badgeItem.contentStringRes( res ) }
@@ -43,6 +48,6 @@ internal interface Badge<T>: Param<T> {
 
     fun badgeBackgroundCornerRadiiPixel( pixel: Float ) =
             thisRef.apply { badgeItem.backgroundCornerRadiusPixel( pixel ) }
-    fun badgeBackgroundCornerRadiiDp( dp: Float ) =
+    fun badgeBackgroundCornerRadiusDp(dp: Float ) =
             thisRef.apply { badgeItem.backgroundCornerRadiusDp( dp ) }
 }

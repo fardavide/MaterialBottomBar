@@ -3,6 +3,7 @@
 package studio.forface.bottomappbar.materialbottomdrawer.holders
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageButton
@@ -16,8 +17,9 @@ import studio.forface.bottomappbar.utils.getColorCompat
 import studio.forface.bottomappbar.utils.setTextColorRes
 
 class ColorHolder internal constructor(
-    @ColorRes   val colorRes:   Int? =          null,
-    @ColorInt   val color:      Int? =          null
+    @ColorRes   val colorRes:   Int? =      null,
+                val colorHex:   String? =   null,
+    @ColorInt   val color:      Int? =      null
 ) {
 
     fun applyToBackground( view: View ) {
@@ -47,13 +49,14 @@ class ColorHolder internal constructor(
     }
 
     fun applyToTextView( textView: TextView  ) {
-        colorRes?.let { textView.setTextColorRes( it );   return }
-        color?.let {    textView.setTextColor( it );      return }
+        val color = resolveColor( textView.context )
+        color?.let { textView.setTextColor( it ) }
     }
 
     fun resolveColor( context: Context ) = when {
-        colorRes != null -> context.getColorCompat( colorRes )
-        color != null -> color
+        colorRes    != null -> context.getColorCompat( colorRes )
+        colorHex    != null -> Color.parseColor( colorHex )
+        color       != null -> color
         else -> null
     }
 

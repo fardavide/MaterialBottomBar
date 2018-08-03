@@ -7,7 +7,7 @@ open class BadgeItem: SimpleExtraItem<BadgeItem>() {
     override fun newInstance() = BadgeItem()
 
     override var contentTextStyleHolder =           TextStyleHolder( bold = true )
-    override var contentTextSizeHolder =            TextSizeHolder( sp = 8f )
+    override var contentTextSizeHolder =            TextSizeHolder( sp = 9f )
 
     override var backgroundCornerRadiusSizeHolder = SizeHolder( dp = 6f )
 }

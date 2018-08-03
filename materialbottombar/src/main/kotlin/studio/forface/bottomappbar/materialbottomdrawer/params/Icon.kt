@@ -16,8 +16,12 @@ interface Icon<T>: Param<T> {
     var iconImageHolder: ImageHolder
     var iconColorHolder: ColorHolder
     var iconSizeHolder: SizeHolder
-    fun applyIconTo( imageView: ImageView) {
-        iconImageHolder.applyTo( imageView )
+
+    fun applyIconTo( imageView: ImageView, applyOrHide: Boolean = false ) {
+        if ( applyOrHide )
+            iconImageHolder.applyToOrHide( imageView )
+        else
+            iconImageHolder.applyTo( imageView )
         iconColorHolder.applyToImageView( imageView )
         iconSizeHolder.applyTo( imageView )
     }

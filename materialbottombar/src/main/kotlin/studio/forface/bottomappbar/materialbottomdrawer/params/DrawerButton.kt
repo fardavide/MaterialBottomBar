@@ -1,15 +1,23 @@
 package studio.forface.bottomappbar.materialbottomdrawer.params
 
 import android.text.Spannable
+import android.widget.Button
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.extra.ButtonItem
 
+typealias ButtonStyle = RippleBackgroundStyle
+
 internal interface DrawerButton<T>: Param<T> {
+    var buttonStyle: ButtonStyle
     var buttonItem: ButtonItem
     fun buttonItem( button: ButtonItem ) =
             thisRef.apply { buttonItem = button.copy() }
+
+    fun applyButtonTo( button: Button) {
+        buttonItem.applyTo( button, buttonStyle )
+    }
 
     fun buttonContentStringRes( @StringRes res: Int ) =
             thisRef.apply { buttonItem.contentStringRes( res ) }
@@ -41,8 +49,11 @@ internal interface DrawerButton<T>: Param<T> {
     fun buttonBackgroundColor( @ColorInt color: Int ) =
             thisRef.apply { buttonItem.backgroundColor( color ) }
 
-    fun buttonBackgroundCornerRadiiPixel( pixel: Float ) =
+    fun buttonBackgroundCornerRadiusPixel( pixel: Float ) =
             thisRef.apply { buttonItem.backgroundCornerRadiusPixel( pixel ) }
-    fun buttonBackgroundCornerRadiiDp( dp: Float ) =
+    fun buttonBackgroundCornerRadiusDp( dp: Float ) =
             thisRef.apply { buttonItem.backgroundCornerRadiusDp( dp ) }
+
+    fun buttonStyle( style: ButtonStyle ) =
+            thisRef.apply { buttonStyle = style }
 }

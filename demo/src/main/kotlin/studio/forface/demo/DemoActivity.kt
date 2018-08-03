@@ -14,7 +14,7 @@ import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.Divider
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.PrimaryDrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.SecondaryDrawerItem
-import studio.forface.bottomappbar.materialbottomdrawer.draweritems.extra.BadgeItem
+import studio.forface.bottomappbar.materialbottomdrawer.params.ButtonStyle
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
 
@@ -23,63 +23,91 @@ private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2
 
 class DemoActivity: AppCompatActivity() {
 
-    override fun onCreate( savedInstanceState: Bundle? ) {
-        Timber.plant( Timber.DebugTree() )
-        super.onCreate( savedInstanceState )
-        setContentView( R.layout.activity_demo )
-
-        setRecyclerView()
-        setButtons()
-
+    private val testDrawer: MaterialDrawer get() {
         val header = MaterialDrawer.Header()
                 .iconUrl( IMAGE_URL )
                 .backgroundColor( Color.RED )
-                .titleText("My drawer" )
+                .titleText("Test drawer" )
                 .titleColor( Color.WHITE )
                 .titleBold()
 
-        val badgeItem = BadgeItem()
-                .contentColor( Color.RED )
-
-        class MyPrimaryDrawerItem: PrimaryDrawerItem() { init {
-            titleBold()
-            badgeItem( badgeItem )
-        } }
-
-        class MySecondaryDrawerItem: SecondaryDrawerItem() { init {
-            badgeItem( badgeItem )
-        } }
-
-        val chat = MyPrimaryDrawerItem()
+        val chat = PrimaryDrawerItem()
                 .titleText("Messages" )
+                .withTitleSpSize(10f )
+                .titleColor( Color.MAGENTA )
                 .iconResource( R.drawable.ic_message_black_24dp )
                 .id(1 )
 
+                .badgeBackgroundColor( Color.CYAN )
+                .badgeBackgroundCornerRadiusDp(999f )
                 .badgeContentText("Banana" )
+                .badgeContentBold()
+                .badgeContentColor( Color.BLACK )
 
-                .buttonContentText("Options" )
-                .buttonContentColor( Color.WHITE )
-                .buttonBackgroundColor( Color.MAGENTA )
-        val inbox = SecondaryDrawerItem()
+                .buttonContentText("Edit" )
+                .buttonContentColor( Color.BLUE )
+                .buttonBackgroundColor( Color.BLUE )
+                .buttonBackgroundCornerRadiusDp(999f )
+                .buttonStyle( ButtonStyle.FLAT )
+
+        val inbox = PrimaryDrawerItem()
                 .titleText("Inbox" )
+                .titleBold()
                 .iconResource( R.drawable.ic_inbox_black_24dp )
                 .id(2 )
+
+                .badgeBackgroundColor( Color.TRANSPARENT )
+                .badgeBackgroundCornerRadiusDp(999f )
+                .badgeContentText("Banana" )
+                .badgeContentSpSize(14f )
+                .badgeContentColor( Color.GREEN )
+
+                .buttonContentText("Edit" )
+                .buttonContentColor( Color.BLACK )
+                .buttonContentSpSize( 8f )
+                .buttonContentBold()
+                .buttonBackgroundColor( Color.RED )
+                .buttonBackgroundCornerRadiusDp(10f )
+                .buttonStyle( ButtonStyle.FLAT )
+
         val work = SecondaryDrawerItem()
                 .titleText("Work" )
                 .iconResource( R.drawable.ic_work_black_24dp )
                 .id(3 )
-                .badgeContentText("3" )
 
-        val contacts = MyPrimaryDrawerItem()
+                .badgeBackgroundColor( Color.BLUE )
+                .badgeBackgroundCornerRadiusDp(999f )
+                .badgeContentText("3" )
+                .badgeContentSpSize(12f )
+                .badgeContentColor( Color.WHITE )
+
+                .buttonContentText("Edit" )
+                .buttonContentColor( Color.WHITE )
+                .buttonContentSpSize( 8f )
+                .buttonContentBold()
+                .buttonBackgroundColor( Color.RED )
+                .buttonBackgroundCornerRadiusDp(0f )
+                .buttonStyle( ButtonStyle.COLOR )
+
+        val contacts = PrimaryDrawerItem()
                 .titleText("Contacts" )
-                .iconResource( R.drawable.ic_contacts_black_24dp )
+                .titleBold()
                 .id(4 )
+
+                .selectable(false )
+
+                .badgeBackgroundColor( Color.BLUE )
+                .badgeBackgroundCornerRadiusDp(0f )
+                .badgeContentText("3" )
+                .badgeContentBold()
+                .badgeContentColor( Color.WHITE )
+
         val favorites = SecondaryDrawerItem()
                 .titleText("Favorites" )
                 .iconResource( R.drawable.ic_star_black_24dp )
                 .id(5 )
 
-        val labels = MyPrimaryDrawerItem()
+        val labels = PrimaryDrawerItem()
                 .titleText("Labels" )
                 .iconResource( R.drawable.ic_style_black_24dp )
                 .titleBold()
@@ -90,7 +118,7 @@ class DemoActivity: AppCompatActivity() {
                 .iconResource( R.drawable.ic_label_black_24dp )
                 .iconColor( Color.RED )
                 .id(7 )
-        val label2 = MySecondaryDrawerItem()
+        val label2 = SecondaryDrawerItem()
                 .titleText("Label 2" )
                 .iconResource( R.drawable.ic_label_black_24dp )
                 .iconColor( Color.GREEN )
@@ -114,30 +142,135 @@ class DemoActivity: AppCompatActivity() {
 
         val body = MaterialDrawer.Body()
                 .selectionColor( Color.BLUE )
+                .selectionCornerRadiusDp(16f )
+                .items( listOf(
+                        chat, inbox, work,
+                        Divider(),
+                        contacts, favorites,
+                        Divider(),
+                        labels, label1, label2, label3, label4, label5
+                ) )
+                .setSelected( 5 )
                 .itemClickListener { id, title ->
                     Toast.makeText(this, "$title - $id clicked", Toast.LENGTH_SHORT ).show()
                 }
 
-        val drawer = MaterialDrawer()
-        drawerLayout.drawer = drawer
+        return MaterialDrawer( header, body )
+    }
 
-        // Testing postponed changes
-        drawer.header = header
-        drawer.body = body
+    private val fancyDrawer: MaterialDrawer get() {
+        val header = MaterialDrawer.Header()
+                .iconUrl( IMAGE_URL )
+                .backgroundColorHex("#30D5C8" )
+                .titleText("Fancy drawer" )
+                .titleColor( Color.WHITE )
+                .titleBold()
 
-        drawer.body?.apply { items = listOf(
-                chat, inbox, work,
-                Divider(),
-                contacts, favorites,
-                Divider(),
-                labels, label1, label2, label3, label4, label5
-        ) }
+        class MyPrimaryItem: PrimaryDrawerItem() { init {
+            titleBold()
+        } }
 
-        drawer.body!!.setSelected( 5 )
+        val chat = MyPrimaryItem()
+                .titleText("Messages" )
+                .iconResource( R.drawable.ic_message_black_24dp )
+                .id(1 )
+
+                .badgeBackgroundColor( Color.RED )
+                .badgeBackgroundCornerRadiusDp(999f )
+                .badgeContentText("New" )
+                .badgeContentBold()
+                .badgeContentColor( Color.WHITE )
+        val inbox = SecondaryDrawerItem()
+                .titleText("Inbox" )
+                .iconResource( R.drawable.ic_inbox_black_24dp )
+                .id(2 )
+                .badgeBackgroundColor( Color.RED )
+                .badgeBackgroundCornerRadiusDp(999f )
+                .badgeContentText("8" )
+                .badgeContentBold()
+                .badgeContentColor( Color.WHITE )
+        val work = SecondaryDrawerItem()
+                .titleText("Work" )
+                .iconResource( R.drawable.ic_work_black_24dp )
+                .id(3 )
+
+        val contacts = MyPrimaryItem()
+                .titleText("Contacts" )
+                .iconResource( R.drawable.ic_contacts_black_24dp )
+                .id(4 )
+        val favorites = SecondaryDrawerItem()
+                .titleText("Favorites" )
+                .iconResource( R.drawable.ic_star_black_24dp )
+                .id(5 )
+
+        val labels = MyPrimaryItem()
+                .titleText("Labels" )
+                .iconResource( R.drawable.ic_style_black_24dp )
+                .id(6 )
+                .selectable(false )
+
+                .buttonContentText("Edit" )
+                .buttonContentColor( Color.RED )
+                .buttonBackgroundColor( Color.RED )
+                .buttonBackgroundCornerRadiusDp(99f )
+                .buttonStyle( ButtonStyle.FLAT )
+        val label1 = SecondaryDrawerItem()
+                .titleText("Label 1" )
+                .iconResource( R.drawable.ic_label_black_24dp )
+                .iconColor( Color.RED )
+                .id(7 )
+        val label2 = SecondaryDrawerItem()
+                .titleText("Label 2" )
+                .iconResource( R.drawable.ic_label_black_24dp )
+                .iconColor( Color.GREEN )
+                .id(8 )
+        val label3 = SecondaryDrawerItem()
+                .titleText("Label 3" )
+                .iconResource( R.drawable.ic_label_black_24dp )
+                .iconColor( Color.BLUE )
+                .id(9 )
+        val label4 = SecondaryDrawerItem()
+                .titleText("Label 4" )
+                .iconResource( R.drawable.ic_label_black_24dp )
+                .iconColor( Color.MAGENTA )
+                .id(10 )
+        val label5 = SecondaryDrawerItem()
+                .titleText("Label 5" )
+                .iconResource( R.drawable.ic_label_black_24dp )
+                .iconColor( Color.CYAN )
+                .id(11 )
+
+        val body = MaterialDrawer.Body()
+                .selectionColor( Color.RED )
+                .selectionCornerRadiusDp(16f )
+                .items( listOf(
+                        chat, inbox, work,
+                        Divider(),
+                        contacts, favorites,
+                        Divider(),
+                        labels, label1, label2, label3, label4, label5
+                ) )
+                .setSelected( 1 )
+                .itemClickListener { id, title ->
+                    Toast.makeText(this, "$title - $id clicked", Toast.LENGTH_SHORT ).show()
+                }
+
+        return MaterialDrawer( header, body )
+    }
+
+    override fun onCreate( savedInstanceState: Bundle? ) {
+        Timber.plant( Timber.DebugTree() )
+        super.onCreate( savedInstanceState )
+        setContentView( R.layout.activity_demo )
+
+        setRecyclerView()
+        setButtons()
+
+        drawerLayout.drawer = fancyDrawer
     }
 
     private fun setRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(this )
+        recyclerView.layoutManager = LinearLayoutManager(this ) as RecyclerView.LayoutManager
         recyclerView.adapter = Adapter()
     }
 

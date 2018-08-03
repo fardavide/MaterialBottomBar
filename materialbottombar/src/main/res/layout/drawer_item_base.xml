@@ -39,13 +39,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:padding="2dp"
+        android:padding="3dp"
         app:elevation="2dp"
 
         app:layout_constraintTop_toTopOf="@id/item_title"
         app:layout_constraintBottom_toTopOf="@id/item_title"
+        app:layout_constraintVertical_bias="1"
         app:layout_constraintStart_toEndOf="@id/item_title"
 
+        android:gravity="center"
         tools:text="1"/>
 
     <Button android:id="@+id/item_button"

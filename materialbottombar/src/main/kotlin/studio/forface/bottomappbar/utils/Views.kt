@@ -10,7 +10,7 @@ fun TextView.setTextColorRes( @ColorRes res: Int ) {
     setTextColor( context.getColorCompat( res ) )
 }
 
-val View.constraintParams get() = layoutParams as ConstraintLayout.LayoutParams
+val View.constraintParams get() = layoutParams as? ConstraintLayout.LayoutParams
 
 var View.elevationCompat: Float
     get() = ViewCompat.getElevation(this )

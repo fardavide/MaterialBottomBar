@@ -1,6 +1,7 @@
 package studio.forface.bottomappbar.materialbottomdrawer.draweritems.extra
 
 import android.widget.TextView
+import androidx.core.view.doOnPreDraw
 import studio.forface.bottomappbar.materialbottomdrawer.holders.*
 import studio.forface.bottomappbar.materialbottomdrawer.params.Background
 import studio.forface.bottomappbar.materialbottomdrawer.params.Content
@@ -9,7 +10,8 @@ abstract class SimpleExtraItem<T>: Content<T>, Background<T> {
 
     fun applyTo( textView: TextView ) {
         applyContentTo( textView,true )
-        applyBackgroundTo( textView )
+        val scaleToSquare = textView.text.length == 1
+        applyBackgroundTo( textView, scaleToSquare )
     }
 
     @Suppress("UNCHECKED_CAST")

@@ -26,27 +26,27 @@ interface Content<T>: Param<T> {
         contentColorHolder.       applyToTextView( textView )
     }
 
-    fun contentStringRes(@StringRes res: Int ) =
+    fun contentStringRes( @StringRes res: Int ) =
             thisRef.apply { contentTextHolder = TextHolder( stringRes = res) }
-    fun contentTextRes(@StringRes res: Int ) =
+    fun contentTextRes( @StringRes res: Int ) =
             thisRef.apply { contentTextHolder = TextHolder( textRes = res) }
-    fun contentText(text: CharSequence ) =
+    fun contentText( text: CharSequence ) =
             thisRef.apply { contentTextHolder = TextHolder( text = text ) }
     fun withContentSpannable( spannable: Spannable) =
             thisRef.apply { contentTextHolder = TextHolder( spannable = spannable ) }
 
-    fun contentBold(bold: Boolean = true ) =
+    fun contentBold( bold: Boolean = true ) =
             thisRef.apply { contentTextStyleHolder = TextStyleHolder( bold = bold ) }
 
-    fun contentPixelSize(size: Float ) =
+    fun contentPixelSize( size: Float ) =
             thisRef.apply { contentTextSizeHolder = TextSizeHolder( pixel = size ) }
-    fun contentSpSize(size: Float ) =
+    fun contentSpSize( size: Float ) =
             thisRef.apply { contentTextSizeHolder = TextSizeHolder( sp = size ) }
-    fun contentDpSize(size: Float ) =
+    fun contentDpSize( size: Float ) =
             thisRef.apply { contentTextSizeHolder = TextSizeHolder( dp = size ) }
 
-    fun contentColorRes(@ColorRes res: Int ) =
+    fun contentColorRes( @ColorRes res: Int ) =
             thisRef.apply { contentColorHolder = ColorHolder( colorRes = res ) }
-    fun contentColor(@ColorInt color: Int ) =
+    fun contentColor( @ColorInt color: Int ) =
             thisRef.apply { contentColorHolder = ColorHolder( color = color ) }
 }

@@ -3,6 +3,7 @@ package studio.forface.bottomappbar.materialbottomdrawer.holders
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
@@ -38,4 +39,12 @@ class ImageHolder internal constructor(
         }
         requestBuilder?.apply( imageShape.requestOptions )?.into( imageView )
     }
+
+    fun applyToOrHide( imageView: ImageView ) {
+        if ( allNull( bitmap, drawable, file, res, uri, url ) )
+            imageView.visibility = View.GONE
+        else applyTo( imageView )
+    }
+
+    private fun allNull(vararg any: Any? ) = any.filterNotNull().isEmpty()
 }

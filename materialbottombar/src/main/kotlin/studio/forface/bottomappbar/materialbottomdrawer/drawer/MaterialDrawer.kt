@@ -5,6 +5,7 @@ import studio.forface.bottomappbar.materialbottomdrawer.draweritems.BaseDrawerIt
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.DrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.holders.*
 import studio.forface.bottomappbar.materialbottomdrawer.params.*
+import studio.forface.bottomappbar.utils.Drawables
 import java.util.*
 
 class MaterialDrawer(
@@ -51,9 +52,9 @@ class MaterialDrawer(
             hasCustomShape = true
         }
 
-        override fun applyIconTo( imageView: ImageView ) {
+        override fun applyIconTo( imageView: ImageView, applyOrHide: Boolean ) {
             if ( ! hasCustomShape ) iconImageHolder.imageShape = ImageShape.ROUND
-            super.applyIconTo( imageView )
+            super.applyIconTo( imageView,true )
         }
     }
 
@@ -62,8 +63,8 @@ class MaterialDrawer(
     ): Observable(), Selection<Body> {
         override val thisRef: Body get() = this
 
-        override var roundedCorners: Boolean = true
-        override var selectionColorHolder = ColorHolder()
+        override var selectionColorHolder =             ColorHolder()
+        override var selectionCornerRadiusSizeHolder =  SizeHolder( dp = Drawables.CORNER_RADIUS_SOFT )
 
         override var onItemClickListener: OnItemClickListener = { _, _ ->  }
 
@@ -74,7 +75,10 @@ class MaterialDrawer(
                 notifyObservers()
             }
 
-        fun setSelected( selectedId: Int ) {
+        fun items( items: List<DrawerItem> ) =
+                apply { this.items = items }
+
+        fun setSelected( selectedId: Int ) = apply {
             items = items.mapBaseDrawerItems { it.selected = it.id == selectedId && it.selectable }
         }
 
