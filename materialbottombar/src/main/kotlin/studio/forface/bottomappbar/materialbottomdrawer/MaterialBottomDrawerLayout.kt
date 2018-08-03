@@ -27,14 +27,11 @@ import kotlinx.android.synthetic.main.drawer_header.view.*
 import studio.forface.bottomappbar.materialbottomappbar.MaterialBottomAppBar
 import studio.forface.bottomappbar.materialbottomdrawer.adapter.DrawerAdapter
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
-import studio.forface.bottomappbar.materialbottomdrawer.drawer.forEachBaseDrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
 import studio.forface.bottomappbar.utils.dpToPixels
 import studio.forface.bottomappbar.utils.elevationCompat
 import studio.forface.bottomappbar.utils.findChild
 import studio.forface.materialbottombar.bottomappbar.R
-import timber.log.Timber
-import java.util.*
 
 class MaterialBottomDrawerLayout @JvmOverloads constructor (
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -77,7 +74,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             body?.let {
                 if ( it.selectionColorHolder.resolveColor( context ) == null ) {
                     val color = drawerHeaderColor ?: Color.GRAY
-                    it.withSelectionColor( color )
+                    it.selectionColor( color )
                 }
 
                 drawerRecyclerView.layoutManager = LinearLayoutManager( context )

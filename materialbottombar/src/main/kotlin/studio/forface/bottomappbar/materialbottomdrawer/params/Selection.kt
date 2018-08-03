@@ -16,24 +16,25 @@ interface Selection<T>: Param<T> {
 
     fun applySelectionTo( view: View, selected: Boolean = false ) {
         val color = selectionColorHolder.resolveColor( view.context )
+        val cornerRadius = if ( roundedCorners ) Drawables.CORNER_RADIUS_SOFT else 0f
+
         color?.let {
             val background = if ( selected )
-                Drawables.getRippleColor( color, roundedCorners,true )
-            else Drawables.getSelectableDrawableFor( color, roundedCorners )
+                Drawables.materialDrawable( color, cornerRadius,true )
+            else Drawables.selectableDrawable( color, cornerRadius )
 
             view.background = background
         }
     }
 
-    fun withItemClickListener( onItemClickListener: OnItemClickListener ) =
+    fun itemClickListener( onItemClickListener: OnItemClickListener ) =
             thisRef.apply { this@Selection.onItemClickListener = onItemClickListener }
 
-    fun withSelectionColorRes( @ColorRes res: Int ) =
+    fun selectionColorRes( @ColorRes res: Int ) =
             thisRef.apply { selectionColorHolder = ColorHolder( colorRes = res ) }
-
-    fun withSelectionColor( @ColorInt color: Int ) =
+    fun selectionColor( @ColorInt color: Int ) =
             thisRef.apply { selectionColorHolder = ColorHolder( color = color ) }
 
-    fun withSelectionRounderCorners( rounded: Boolean = true ) =
+    fun selectionRounderCorners( rounded: Boolean = true ) =
             this.apply { this@Selection.roundedCorners = roundedCorners }
 }

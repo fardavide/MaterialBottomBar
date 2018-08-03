@@ -25,9 +25,11 @@ class ItemViewHolder internal constructor(
                 itemView.item_title.constraintParams.marginStart =
                         dpToPixels( drawerItem.iconMarginEndDp ).toInt()
 
-                drawerItem.applyTitleTo(    itemView.item_title )
-                drawerItem.applyIconTo(     itemView.item_icon )
-                drawerItem.applyBadgeTo(    itemView.item_badge )
+                drawerItem.applyTitleTo(        itemView.item_title )
+                drawerItem.applyIconTo(         itemView.item_icon )
+
+                drawerItem.badgeItem.applyTo(   itemView.item_badge )
+                drawerItem.buttonItem.applyTo(  itemView.item_button )
 
                 drawerBody.applySelectionTo( itemView, drawerItem.selected )
 

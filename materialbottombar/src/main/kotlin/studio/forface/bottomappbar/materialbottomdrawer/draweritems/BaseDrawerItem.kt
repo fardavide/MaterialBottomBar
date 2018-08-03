@@ -1,17 +1,16 @@
 package studio.forface.bottomappbar.materialbottomdrawer.draweritems
 
-import studio.forface.bottomappbar.materialbottomdrawer.draweritems.badge.BadgeItem
+import studio.forface.bottomappbar.materialbottomdrawer.draweritems.extra.BadgeItem
+import studio.forface.bottomappbar.materialbottomdrawer.draweritems.extra.ButtonItem
 import studio.forface.bottomappbar.materialbottomdrawer.holders.*
-import studio.forface.bottomappbar.materialbottomdrawer.params.Badge
-import studio.forface.bottomappbar.materialbottomdrawer.params.Icon
-import studio.forface.bottomappbar.materialbottomdrawer.params.Identifier
-import studio.forface.bottomappbar.materialbottomdrawer.params.Title
+import studio.forface.bottomappbar.materialbottomdrawer.params.*
 
 abstract class BaseDrawerItem: DrawerItem,
         Title<BaseDrawerItem>,
         Icon<BaseDrawerItem>,
         Identifier<BaseDrawerItem>,
-        Badge<BaseDrawerItem>
+        Badge<BaseDrawerItem>,
+        DrawerButton<BaseDrawerItem>
 {
     override val thisRef get() = this
     abstract val iconMarginStartDp: Float
@@ -25,7 +24,7 @@ abstract class BaseDrawerItem: DrawerItem,
 
     override var iconImageHolder =      ImageHolder()
     override var iconColorHolder =      ColorHolder()
-    override var iconSizeHolder =       IconSizeHolder()
+    override var iconSizeHolder =       SizeHolder()
 
     override var id = Int.MIN_VALUE
 
@@ -33,19 +32,8 @@ abstract class BaseDrawerItem: DrawerItem,
     var selected = false
 
     fun withSelectable( selectable: Boolean = true ) =
-            thisRef.apply { this.selectable = selectable }
+            apply { this.selectable = selectable }
 
-    override var badgeContentTextHolder =              TextHolder()
-    override var badgeContentTextStyleHolder =         TextStyleHolder()
-    override var badgeContentTextSizeHolder =          TextSizeHolder()
-    override var badgeContentColorHolder =         ColorHolder()
-    override var badgeBackgroundColorHolder =   ColorHolder()
-
-    fun withBadgeItem( badgeItem: BadgeItem ) {
-        badgeContentTextHolder =        badgeItem.titleTextHolder
-        badgeContentTextStyleHolder =   badgeItem.titleTextStyleHolder
-        badgeContentTextStyleHolder =   badgeItem.titleTextStyleHolder
-        badgeContentColorHolder =       badgeItem.titleColorHolder
-        badgeBackgroundColorHolder =    badgeItem.backgroundColorHolder
-    }
+    override var badgeItem =  BadgeItem()
+    override var buttonItem = ButtonItem()
 }

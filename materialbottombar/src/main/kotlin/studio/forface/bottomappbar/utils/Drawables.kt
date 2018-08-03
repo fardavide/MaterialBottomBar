@@ -1,12 +1,10 @@
 package studio.forface.bottomappbar.utils
 
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.RippleDrawable
-import android.graphics.drawable.ColorDrawable
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.drawable.StateListDrawable
+import android.graphics.drawable.*
 import android.os.Build
+import com.google.android.material.shape.EdgeTreatment
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.RoundedCornerTreatment
 import com.google.android.material.shape.ShapePathModel
@@ -14,9 +12,11 @@ import com.google.android.material.shape.ShapePathModel
 
 object Drawables {
 
-    fun getSelectableDrawableFor(
+    const val CORNER_RADIUS_SOFT = 12f
+
+    fun selectableDrawable(
             color: Int,
-            roundedCorners: Boolean = false
+            cornerRadius: Float
     ): Drawable {
         if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP ) {
             val stateListDrawable = StateListDrawable()
@@ -37,7 +37,7 @@ object Drawables {
         } else {
             val colorList = ColorStateList.valueOf( color )
             val content = ColorDrawable( Color.TRANSPARENT )
-            val mask = getRippleColor( color, roundedCorners )
+            val mask = materialDrawable( color, cornerRadius )
             return RippleDrawable(
                     colorList,
                     content,
@@ -46,12 +46,12 @@ object Drawables {
         }
     }
 
-    fun getRippleColor(
-            color: Int, roundedCorners: Boolean, shouldLighten: Boolean = false
+    fun materialDrawable(
+            color: Int, cornerRadius: Float, shouldLighten: Boolean = false
     ): Drawable {
         val shapedPathModel = ShapePathModel().apply {
-            val corners = if ( roundedCorners ) dpToPixels(12f ) else 0f
-            setAllCorners( RoundedCornerTreatment( corners ) )
+            setAllEdges( EdgeTreatment() )
+            setAllCorners( RoundedCornerTreatment( cornerRadius ) )
         }
 
         return MaterialShapeDrawable( shapedPathModel ).apply {

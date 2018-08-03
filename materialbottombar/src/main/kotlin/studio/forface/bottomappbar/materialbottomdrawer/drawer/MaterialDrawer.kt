@@ -32,16 +32,17 @@ class MaterialDrawer(
     {
         override val thisRef: Header get() = this
 
-        override var backgroundColorHolder =    ColorHolder()
+        override var backgroundColorHolder =            ColorHolder()
+        override var backgroundCornerRadiusSizeHolder =  SizeHolder()
 
-        override var titleTextHolder =          TextHolder()
-        override var titleTextStyleHolder =     TextStyleHolder()
-        override var titleTextSizeHolder =      TextSizeHolder()
-        override var titleColorHolder =         ColorHolder()
+        override var titleTextHolder =                  TextHolder()
+        override var titleTextStyleHolder =             TextStyleHolder()
+        override var titleTextSizeHolder =              TextSizeHolder()
+        override var titleColorHolder =                 ColorHolder()
 
-        override var iconImageHolder =          ImageHolder()
-        override var iconColorHolder =          ColorHolder()
-        override var iconSizeHolder =           IconSizeHolder()
+        override var iconImageHolder =                  ImageHolder()
+        override var iconColorHolder =                  ColorHolder()
+        override var iconSizeHolder =                   SizeHolder()
 
         private var hasCustomShape = false
 
@@ -67,7 +68,7 @@ class MaterialDrawer(
         override var onItemClickListener: OnItemClickListener = { _, _ ->  }
 
         var items = _items
-            set(value) {
+            set( value ) {
                 field = value
                 setChanged()
                 notifyObservers()

@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.IconSizeHolder
+import studio.forface.bottomappbar.materialbottomdrawer.holders.SizeHolder
 import studio.forface.bottomappbar.materialbottomdrawer.holders.ImageHolder
 import studio.forface.bottomappbar.materialbottomdrawer.holders.ImageShape
 import java.io.File
@@ -15,7 +15,7 @@ import java.io.File
 interface Icon<T>: Param<T> {
     var iconImageHolder: ImageHolder
     var iconColorHolder: ColorHolder
-    var iconSizeHolder: IconSizeHolder
+    var iconSizeHolder: SizeHolder
     fun applyIconTo( imageView: ImageView) {
         iconImageHolder.applyTo( imageView )
         iconColorHolder.applyToImageView( imageView )
@@ -28,22 +28,22 @@ interface Icon<T>: Param<T> {
             thisRef.apply { iconImageHolder = ImageHolder( drawable = drawable ) }
     fun withIconFile( file: File) =
             thisRef.apply { iconImageHolder = ImageHolder( file = file ) }
-    fun withIconResource( @DrawableRes res: Int ) =
+    fun iconResource(@DrawableRes res: Int ) =
             thisRef.apply { iconImageHolder = ImageHolder( res = res ) }
     fun withIconUri( uri: Uri) =
             thisRef.apply { iconImageHolder = ImageHolder( uri = uri ) }
-    fun withIconUrl( url: String ) =
+    fun iconUrl(url: String ) =
             thisRef.apply { iconImageHolder = ImageHolder( url = url ) }
 
     fun withIconColorRes( @ColorRes res: Int ) =
             thisRef.apply { iconColorHolder = ColorHolder( colorRes = res ) }
-    fun withIconColor( color: Int ) =
+    fun iconColor(color: Int ) =
             thisRef.apply { iconColorHolder = ColorHolder( color = color ) }
 
     fun withIconPixelSize( size: Float ) =
-            thisRef.apply { iconSizeHolder = IconSizeHolder( pixel = size ) }
+            thisRef.apply { iconSizeHolder = SizeHolder( pixel = size ) }
     fun withIconDpSize( size: Float ) =
-            thisRef.apply { iconSizeHolder = IconSizeHolder( dp = size ) }
+            thisRef.apply { iconSizeHolder = SizeHolder( dp = size ) }
 
     fun withIconShape( imageShape: ImageShape) {
         iconImageHolder.imageShape = imageShape

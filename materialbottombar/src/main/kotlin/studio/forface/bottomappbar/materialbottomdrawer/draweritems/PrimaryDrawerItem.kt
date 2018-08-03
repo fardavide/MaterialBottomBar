@@ -1,6 +1,6 @@
 package studio.forface.bottomappbar.materialbottomdrawer.draweritems
 
-import studio.forface.bottomappbar.materialbottomdrawer.holders.IconSizeHolder
+import studio.forface.bottomappbar.materialbottomdrawer.holders.SizeHolder
 import studio.forface.bottomappbar.materialbottomdrawer.holders.TextSizeHolder
 
 open class PrimaryDrawerItem: BaseDrawerItem() {
@@ -11,5 +11,5 @@ open class PrimaryDrawerItem: BaseDrawerItem() {
 
     override var titleTextSizeHolder =  TextSizeHolder( sp = 18f )
 
-    override var iconSizeHolder =       IconSizeHolder( dp = 24f )
+    override var iconSizeHolder =       SizeHolder( dp = 24f )
 }

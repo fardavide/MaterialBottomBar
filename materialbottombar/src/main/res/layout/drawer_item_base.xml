@@ -39,10 +39,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
+        android:padding="2dp"
+        app:elevation="2dp"
+
         app:layout_constraintTop_toTopOf="@id/item_title"
         app:layout_constraintBottom_toTopOf="@id/item_title"
         app:layout_constraintStart_toEndOf="@id/item_title"
 
         tools:text="1"/>
+
+    <Button android:id="@+id/item_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="@id/item_title"
+        app:layout_constraintBottom_toBottomOf="@id/item_title"
+        app:layout_constraintStart_toEndOf="@id/item_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

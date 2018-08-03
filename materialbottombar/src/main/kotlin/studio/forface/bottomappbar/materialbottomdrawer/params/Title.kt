@@ -27,12 +27,12 @@ interface Title<T>: Param<T> {
             thisRef.apply { titleTextHolder = TextHolder( stringRes = res) }
     fun withTitleTextRes( @StringRes res: Int ) =
             thisRef.apply { titleTextHolder = TextHolder( textRes = res) }
-    fun withTitleText( text: CharSequence ) =
+    fun titleText(text: CharSequence ) =
             thisRef.apply { titleTextHolder = TextHolder( text = text ) }
     fun withTitleSpannable( spannable: Spannable) =
             thisRef.apply { titleTextHolder = TextHolder( spannable = spannable ) }
 
-    fun withTitleBold( bold: Boolean = true ) =
+    fun titleBold(bold: Boolean = true ) =
             thisRef.apply { titleTextStyleHolder = TextStyleHolder( bold = bold ) }
 
     fun withTitlePixelSize( size: Float ) =
@@ -44,6 +44,6 @@ interface Title<T>: Param<T> {
 
     fun withTitleColorRes( @ColorRes res: Int ) =
             thisRef.apply { titleColorHolder = ColorHolder( colorRes = res ) }
-    fun withTitleColor( @ColorInt color: Int ) =
+    fun titleColor(@ColorInt color: Int ) =
             thisRef.apply { titleColorHolder = ColorHolder( color = color ) }
 }

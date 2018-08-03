@@ -1,62 +1,48 @@
 package studio.forface.bottomappbar.materialbottomdrawer.params
 
 import android.text.Spannable
-import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.TextHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.TextSizeHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.TextStyleHolder
-
-enum class BadgeShape { SQUARE, ROUND }
+import studio.forface.bottomappbar.materialbottomdrawer.draweritems.extra.BadgeItem
 
 internal interface Badge<T>: Param<T> {
-    var badgeContentTextHolder: TextHolder
-    var badgeContentTextStyleHolder: TextStyleHolder
-    var badgeContentTextSizeHolder: TextSizeHolder
-    var badgeContentColorHolder: ColorHolder
+    var badgeItem: BadgeItem
+    fun badgeItem( badge: BadgeItem ) =
+            thisRef.apply { badgeItem = badge.copy() }
 
-    var badgeBackgroundColorHolder: ColorHolder
+    fun badgeContentStringRes( @StringRes res: Int ) =
+            thisRef.apply { badgeItem.contentStringRes( res ) }
+    fun badgeContentTextRes (@StringRes res: Int ) =
+            thisRef.apply { badgeItem.contentTextRes( res ) }
+    fun badgeContentText( text: CharSequence ) =
+            thisRef.apply { badgeItem.contentText( text ) }
+    fun badgeContentSpannable( spannable: Spannable ) =
+            thisRef.apply { badgeItem.withContentSpannable( spannable ) }
 
-    fun applyBadgeTo( textView: TextView ) {
-        badgeContentTextHolder.         applyToOrHide( textView )
-        badgeContentTextStyleHolder.    applyTo( textView )
-        badgeContentTextSizeHolder.     applyTo( textView )
-        badgeContentColorHolder.        applyToTextView( textView )
+    fun badgeContentBold( bold: Boolean = true ) =
+            thisRef.apply { badgeItem.contentBold( bold ) }
 
-        badgeBackgroundColorHolder.     applyToBackground( textView )
-    }
+    fun badgeContentPixelSize( size: Float ) =
+            thisRef.apply { badgeItem.contentPixelSize( size ) }
+    fun badgeContentSpSize( size: Float ) =
+            thisRef.apply { badgeItem.contentSpSize( size ) }
+    fun badgeContentDpSize( size: Float ) =
+            thisRef.apply { badgeItem.contentDpSize( size ) }
 
-    fun withBadgeContentStringRes(@StringRes res: Int ) =
-            thisRef.apply { badgeContentTextHolder = TextHolder( stringRes = res) }
-    fun withBadgeContentTextRes(@StringRes res: Int ) =
-            thisRef.apply { badgeContentTextHolder = TextHolder( textRes = res) }
-    fun withBadgeContentText(text: CharSequence ) =
-            thisRef.apply { badgeContentTextHolder = TextHolder( text = text ) }
-    fun withBadgeContentSpannable(spannable: Spannable) =
-            thisRef.apply { badgeContentTextHolder = TextHolder( spannable = spannable ) }
-
-    fun withBadgeContentBold(bold: Boolean = true ) =
-            thisRef.apply { badgeContentTextStyleHolder = TextStyleHolder( bold = bold ) }
-
-    fun withBadgeContentPixelSize(size: Float ) =
-            thisRef.apply { badgeContentTextSizeHolder = TextSizeHolder( pixel = size ) }
-    fun withBadgeContentSpSize(size: Float ) =
-            thisRef.apply { badgeContentTextSizeHolder = TextSizeHolder( sp = size ) }
-    fun withBadgeContentDpSize(size: Float ) =
-            thisRef.apply { badgeContentTextSizeHolder = TextSizeHolder( dp = size ) }
-
-    fun withBadgeContentColorRes(@ColorRes res: Int ) =
-            thisRef.apply { badgeContentColorHolder = ColorHolder( colorRes = res ) }
-    fun withBadgeContentColor(@ColorInt color: Int ) =
-            thisRef.apply { badgeContentColorHolder = ColorHolder( color = color ) }
+    fun badgeContentColorRes( @ColorRes res: Int ) =
+            thisRef.apply { badgeItem.contentColorRes( res ) }
+    fun badgeContentColor( @ColorInt color: Int ) =
+            thisRef.apply { badgeItem.contentColor( color ) }
 
 
-    fun withBadgeBadgeBackgroundColorRes( @ColorRes res: Int ) =
-            thisRef.apply { badgeBackgroundColorHolder = ColorHolder( colorRes = res ) }
+    fun badgeBackgroundColorRes( @ColorRes res: Int ) =
+            thisRef.apply { badgeItem.backgroundColorRes( res ) }
+    fun badgeBackgroundColor( @ColorInt color: Int ) =
+            thisRef.apply { badgeItem.backgroundColor( color ) }
 
-    fun withBadgeBadgeBackgroundColor( @ColorInt color: Int ) =
-            thisRef.apply { badgeBackgroundColorHolder = ColorHolder( color = color ) }
+    fun badgeBackgroundCornerRadiiPixel( pixel: Float ) =
+            thisRef.apply { badgeItem.backgroundCornerRadiusPixel( pixel ) }
+    fun badgeBackgroundCornerRadiiDp( dp: Float ) =
+            thisRef.apply { badgeItem.backgroundCornerRadiusDp( dp ) }
 }
