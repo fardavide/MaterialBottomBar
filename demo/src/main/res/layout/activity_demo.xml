@@ -86,7 +86,7 @@
 
         app:hideOnScroll="true"
         app:hideFabOnScroll="true"
-        app:backgroundTint="#30D5C8"
+        app:backgroundTint="@android:color/holo_red_light"
         app:navigationIcon="@drawable/ic_menu_black_24dp"
 
         app:fabAlignmentMode="center"

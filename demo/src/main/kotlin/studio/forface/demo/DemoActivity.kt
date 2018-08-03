@@ -162,7 +162,7 @@ class DemoActivity: AppCompatActivity() {
         val header = MaterialDrawer.Header()
                 .iconUrl( IMAGE_URL )
                 .backgroundColorHex("#30D5C8" )
-                .titleText("Fancy drawer" )
+                .titleText("Material drawer" )
                 .titleColor( Color.WHITE )
                 .titleBold()
 
