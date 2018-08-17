@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+
 android {
     compileSdkVersion       versions.targetSdk
 
@@ -53,3 +54,5 @@ dependencies {
     androidTestImplementation deps.test.espressoCore
     androidTestImplementation deps.test.testRunner
 }
+
+apply from: 'publish.gradle'

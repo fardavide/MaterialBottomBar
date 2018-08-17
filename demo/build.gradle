@@ -43,5 +43,4 @@ dependencies {
 
     androidTestImplementation deps.test.espressoCore
     androidTestImplementation deps.test.testRunner
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

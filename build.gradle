@@ -1,7 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.51'
 
     ext.build = [
             major:              0,
@@ -22,9 +21,11 @@ buildscript {
             kotlin:                 '1.2.51',
 
             appCompat:              '1.0.0-beta01',
+            bintrayPlugin:          '1.8.0',
             constraintLayout:       '2.0.0-alpha1',
             glide:                  '4.8.0-SNAPSHOT',
             material:               '1.0.0-alpha3',
+            mavenPlugin:            '2.0',
             ktx:                    '1.0.0-alpha1',
             rxAndroid:              '2.0.2',
             rxJava:                 '2.1.13',
@@ -56,6 +57,10 @@ buildscript {
                     glide_compiler:     "com.github.bumptech.glide:compiler:$versions.glide",
                     timber:             "com.jakewharton.timber:timber:$versions.timber",
             ],
+            plugins: [
+                    bintray:            "com.jfrog.bintray.gradle:gradle-bintray-plugin:$versions.bintrayPlugin",
+                    maven:              "com.github.dcendents:android-maven-gradle-plugin:$versions.mavenPlugin"
+            ],
             rx: [
                     android:            "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid",
                     java:               "io.reactivex.rxjava2:rxjava:$versions.rxJava",
@@ -78,6 +83,9 @@ buildscript {
         classpath deps.android.gradlePlugin
         classpath deps.kotlin.gradlePlugin
 
+        classpath deps.plugins.bintray
+        classpath deps.plugins.maven
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -92,6 +100,10 @@ allprojects {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
     }
+}
+
+subprojects {
+    tasks.withType(Javadoc).all { enabled = false }
 }
 
 task clean(type: Delete) {
