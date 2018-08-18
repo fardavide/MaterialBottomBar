@@ -5,7 +5,7 @@ buildscript {
     ext.build = [
             major:              0,
             minor:              0,
-            patch:              2,
+            patch:              5,
     ]
 
 
@@ -23,7 +23,7 @@ buildscript {
             appCompat:              '1.0.0-beta01',
             bintrayPlugin:          '1.8.0',
             constraintLayout:       '2.0.0-alpha1',
-            glide:                  '4.8.0-SNAPSHOT',
+            glide:                  '4.8.0',
             material:               '1.0.0-alpha3',
             mavenPlugin:            '2.0',
             ktx:                    '1.0.0-alpha1',
@@ -95,10 +95,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {
-            name 'glide-snapshot'
-            url 'http://oss.sonatype.org/content/repositories/snapshots'
-        }
     }
 }
 
