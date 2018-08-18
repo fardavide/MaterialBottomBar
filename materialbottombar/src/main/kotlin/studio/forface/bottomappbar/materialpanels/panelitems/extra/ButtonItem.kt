@@ -3,9 +3,9 @@ package studio.forface.bottomappbar.materialbottomdrawer.draweritems.extra
 import android.graphics.Color
 import android.widget.Button
 import androidx.core.view.doOnPreDraw
-import studio.forface.bottomappbar.materialbottomdrawer.holders.*
-import studio.forface.bottomappbar.materialbottomdrawer.params.ButtonStyle
-import studio.forface.bottomappbar.materialbottomdrawer.params.RippleBackgroundStyle
+import studio.forface.bottomappbar.materialpanels.holders.*
+import studio.forface.bottomappbar.materialpanels.params.ButtonStyle
+import studio.forface.bottomappbar.materialpanels.params.RippleBackgroundStyle
 import studio.forface.bottomappbar.utils.Drawables
 
 open class ButtonItem: SimpleExtraItem<ButtonItem>() {

@@ -1,4 +1,4 @@
-package studio.forface.bottomappbar.materialbottomdrawer.holders
+package studio.forface.bottomappbar.materialpanels.holders
 
 import android.util.TypedValue
 import android.widget.TextView

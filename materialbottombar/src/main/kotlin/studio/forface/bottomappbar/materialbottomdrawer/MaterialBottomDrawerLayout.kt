@@ -4,6 +4,7 @@ package studio.forface.bottomappbar.materialbottomdrawer
 
 import android.animation.Animator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
@@ -20,17 +21,17 @@ import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.android.synthetic.main.drawer_header.view.*
 import studio.forface.bottomappbar.materialbottomappbar.MaterialBottomAppBar
-import studio.forface.bottomappbar.materialbottomdrawer.adapter.DrawerAdapter
+import studio.forface.bottomappbar.materialpanels.adapter.PanelBodyAdapter
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
-import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
+import studio.forface.bottomappbar.materialpanels.holders.ColorHolder
 import studio.forface.bottomappbar.utils.dpToPixels
 import studio.forface.bottomappbar.utils.elevationCompat
 import studio.forface.bottomappbar.utils.findChild
+import studio.forface.bottomappbar.utils.show
 import studio.forface.materialbottombar.bottomappbar.R
 
 class MaterialBottomDrawerLayout @JvmOverloads constructor (
@@ -47,7 +48,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     val bottomAppBar    get() = findChild<MaterialBottomAppBar>()
     val fab             get() = findChild<FloatingActionButton>()
-    val topAppBar       get() = findChild<AppBarLayout>()
+    //val topAppBar       get() = findChild<AppBarLayout>()
 
     private val bottomAppBarInitialY by lazy { bottomAppBar?.y ?: height.toFloat() }
     private val matchDrawerY get() = height / 3f
@@ -60,29 +61,36 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             field.body?.deleteObservers()
             field = this
 
-            value.addObserver { _, _ -> drawer = value }
+            observe { newDrawer, change -> when( change ) {
+                is MaterialDrawer.Change.HEADER ->  { setHeader( newDrawer.header ) }
+                is MaterialDrawer.Change.BODY ->    { setBody(   newDrawer.body   ) }
+                is MaterialDrawer.Change.PANEL->    { change.id }
+            } }
 
-            header?.let {
-                it.applyIconTo( drawerHeader.header_icon )
-
-                it.applyTitleTo( drawerHeader.header_title )
-                it.titleColorHolder.applyToDrawable( drawerHeader.header_close )
-
-                drawerHeaderColor = it.backgroundColorHolder.resolveColor( context )
-            }
-
-            body?.let {
-                if ( it.selectionColorHolder.resolveColor( context ) == null ) {
-                    val color = drawerHeaderColor ?: Color.GRAY
-                    it.selectionColor( color )
-                }
-
-                drawerRecyclerView.layoutManager = LinearLayoutManager( context )
-                val adapter = DrawerAdapter( it )
-                it.addObserver { _, _ -> adapter.notifyDataSetChanged() }
-                drawerRecyclerView.adapter = adapter
-            }
+            setHeader( header )
+            setBody(   body   )
         }
+
+    private fun setHeader( header: MaterialDrawer.Header? ) { header ?: return
+        header.applyIconTo( drawerHeader.header_icon )
+
+        header.applyTitleTo( drawerHeader.header_title )
+        header.titleColorHolder.applyToDrawable( drawerHeader.header_close )
+
+        drawerHeaderColor = header.backgroundColorHolder.resolveColor( context )
+    }
+
+    private fun setBody( body: MaterialDrawer.Body? ) { body ?: return
+        if ( body.selectionColorHolder.resolveColor( context ) == null ) {
+            val color = drawerHeaderColor ?: Color.GRAY
+            body.selectionColor( color )
+        }
+
+        drawerRecyclerView.layoutManager = LinearLayoutManager( context )
+        val adapter = PanelBodyAdapter( body )
+        body.addObserver { _, _ -> adapter.notifyDataSetChanged() }
+        drawerRecyclerView.adapter = adapter
+    }
 
     private val drawerHeader by lazy {
         LayoutInflater.from( context )
@@ -168,7 +176,8 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         return false
     }
 
-    override fun onTouchEvent( event: MotionEvent ): Boolean {
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent ): Boolean {
 
         val direction = downY.compareTo( event.y )
         val shouldScrollDrawerRecyclerView =
@@ -275,7 +284,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
         val height = height - bottomAppBar!!.height
 
-        val totalPercentage =   1f / ( height / y )
+        //val totalPercentage =   1f / ( height / y )
         val topPercentage =     1f / ( matchDrawerY / y.coerceAtMost( matchDrawerY ) )
         val bottomPercentage =  1f / ( ( height - matchDrawerY ) / ( y - matchDrawerY ).coerceAtLeast(0f ) )
 
@@ -309,11 +318,6 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         }
 
         fab?.show(isInitialState && hasFab )
-    }
-
-    private fun FloatingActionButton.show( show: Boolean ) {
-        if      (   show && ! isOrWillBeShown  ) show()
-        else if ( ! show && ! isOrWillBeHidden ) hide()
     }
 
 }

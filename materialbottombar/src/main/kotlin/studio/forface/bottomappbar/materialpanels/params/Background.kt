@@ -1,4 +1,4 @@
-package studio.forface.bottomappbar.materialbottomdrawer.params
+package studio.forface.bottomappbar.materialpanels.params
 
 import android.graphics.Color
 import android.view.View
@@ -6,10 +6,9 @@ import android.widget.Button
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.view.doOnPreDraw
-import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.SizeHolder
+import studio.forface.bottomappbar.materialpanels.holders.ColorHolder
+import studio.forface.bottomappbar.materialpanels.holders.SizeHolder
 import studio.forface.bottomappbar.utils.Drawables
-import studio.forface.bottomappbar.utils.constraintParams
 
 enum class RippleBackgroundStyle { COLOR, FLAT }
 

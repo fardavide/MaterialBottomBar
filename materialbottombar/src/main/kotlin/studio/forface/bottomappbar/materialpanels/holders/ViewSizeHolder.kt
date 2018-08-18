@@ -1,4 +1,4 @@
-package studio.forface.bottomappbar.materialbottomdrawer.holders
+package studio.forface.bottomappbar.materialpanels.holders
 
 import android.view.View
 import studio.forface.bottomappbar.utils.dpToPixels

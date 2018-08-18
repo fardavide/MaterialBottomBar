@@ -11,15 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_demo.*
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
-import studio.forface.bottomappbar.materialbottomdrawer.draweritems.Divider
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.PrimaryDrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.SecondaryDrawerItem
-import studio.forface.bottomappbar.materialbottomdrawer.params.ButtonStyle
+import studio.forface.bottomappbar.materialpanels.panelitems.Divider
+import studio.forface.bottomappbar.materialpanels.params.ButtonStyle
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
 
 private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg"
-
 
 class DemoActivity: AppCompatActivity() {
 
@@ -174,7 +173,6 @@ class DemoActivity: AppCompatActivity() {
                 .titleText("Messages" )
                 .iconResource( R.drawable.ic_message_black_24dp )
                 .id(1 )
-
                 .badgeBackgroundColor( Color.RED )
                 .badgeBackgroundCornerRadiusDp(999f )
                 .badgeContentText("New" )
@@ -189,6 +187,7 @@ class DemoActivity: AppCompatActivity() {
                 .badgeContentText("8" )
                 .badgeContentBold()
                 .badgeContentColor( Color.WHITE )
+
         val work = SecondaryDrawerItem()
                 .titleText("Work" )
                 .iconResource( R.drawable.ic_work_black_24dp )
@@ -270,7 +269,7 @@ class DemoActivity: AppCompatActivity() {
     }
 
     private fun setRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(this ) as RecyclerView.LayoutManager
+        recyclerView.layoutManager = LinearLayoutManager(this )
         recyclerView.adapter = Adapter()
     }
 

@@ -1,6 +1,6 @@
 @file:Suppress("MemberVisibilityCanBePrivate")
 
-package studio.forface.bottomappbar.materialbottomdrawer.holders
+package studio.forface.bottomappbar.materialpanels.holders
 
 import android.content.Context
 import android.graphics.Color
@@ -12,9 +12,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.graphics.drawable.DrawableCompat
-import studio.forface.bottomappbar.utils.Drawables
 import studio.forface.bottomappbar.utils.getColorCompat
-import studio.forface.bottomappbar.utils.setTextColorRes
 
 class ColorHolder internal constructor(
     @ColorRes   val colorRes:   Int? =      null,

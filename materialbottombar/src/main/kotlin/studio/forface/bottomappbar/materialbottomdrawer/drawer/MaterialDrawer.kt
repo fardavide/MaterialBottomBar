@@ -1,10 +1,11 @@
 package studio.forface.bottomappbar.materialbottomdrawer.drawer
 
 import android.widget.ImageView
-import studio.forface.bottomappbar.materialbottomdrawer.draweritems.BaseDrawerItem
 import studio.forface.bottomappbar.materialbottomdrawer.draweritems.DrawerItem
-import studio.forface.bottomappbar.materialbottomdrawer.holders.*
-import studio.forface.bottomappbar.materialbottomdrawer.params.*
+import studio.forface.bottomappbar.materialpanels.holders.*
+import studio.forface.bottomappbar.materialpanels.panelitems.BasePanelItem
+import studio.forface.bottomappbar.materialpanels.panelitems.PanelItem
+import studio.forface.bottomappbar.materialpanels.params.*
 import studio.forface.bottomappbar.utils.Drawables
 import java.util.*
 
@@ -22,9 +23,17 @@ class MaterialDrawer(
     var body = _body
         set(value) {
             field = value
-            setChanged()
-            notifyObservers()
+            notifyChange( Change.BODY )
         }
+
+    private fun notifyChange( change: Change ) {
+        setChanged()
+        notifyObservers( change )
+    }
+
+    internal fun observe( change: (MaterialDrawer, Change) -> Unit ) {
+        addObserver { observable, any -> change( observable as MaterialDrawer, any as Change ) }
+    }
 
     class Header:
             Background<Header>,
@@ -47,7 +56,7 @@ class MaterialDrawer(
 
         private var hasCustomShape = false
 
-        override fun iconShape(imageShape: ImageShape ) {
+        override fun iconShape( imageShape: ImageShape ) {
             super.iconShape( imageShape )
             hasCustomShape = true
         }
@@ -59,7 +68,7 @@ class MaterialDrawer(
     }
 
     class Body(
-        _items: List<DrawerItem> = listOf()
+        _items: List<PanelItem> = listOf()
     ): Observable(), Selection<Body> {
         override val thisRef: Body get() = this
 
@@ -75,19 +84,24 @@ class MaterialDrawer(
                 notifyObservers()
             }
 
-        fun items( items: List<DrawerItem> ) =
+        fun items( items: List<PanelItem> ) =
                 apply { this.items = items }
 
         fun setSelected( selectedId: Int ) = apply {
-            items = items.mapBaseDrawerItems { it.selected = it.id == selectedId && it.selectable }
+            items = items.mapBasePanelItems { it.selected = it.id == selectedId && it.selectable }
         }
+    }
 
+    internal sealed class Change {
+        object HEADER :             Change()
+        object BODY:                Change()
+        class PANEL( val id: Int ): Change()
     }
 }
 
-fun List<DrawerItem>.mapBaseDrawerItems( mapper: (BaseDrawerItem) -> Unit ) =
-        this.map { ( it as? BaseDrawerItem )?.apply { mapper( this ) } ?: it }
+fun List<PanelItem>.mapBasePanelItems(mapper: (BasePanelItem) -> Unit ) =
+        this.map { ( it as? BasePanelItem )?.apply { mapper( this ) } ?: it }
 
-fun List<DrawerItem>.forEachBaseDrawerItem( block: (BaseDrawerItem) -> Unit ) {
-    forEach { ( it as? BaseDrawerItem )?.run( block ) }
+fun List<PanelItem>.forEachBasePanelItem(block: (BasePanelItem) -> Unit ) {
+    forEach { ( it as? BasePanelItem )?.run( block ) }
 }

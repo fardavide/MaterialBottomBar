@@ -1,3 +1,5 @@
 package studio.forface.bottomappbar.materialbottomdrawer.draweritems
 
-interface DrawerItem
+import studio.forface.bottomappbar.materialpanels.panelitems.PanelItem
+
+interface DrawerItem: PanelItem

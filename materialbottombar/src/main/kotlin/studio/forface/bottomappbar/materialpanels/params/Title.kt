@@ -1,14 +1,14 @@
-package studio.forface.bottomappbar.materialbottomdrawer.params
+package studio.forface.bottomappbar.materialpanels.params
 
 import android.text.Spannable
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.TextHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.TextSizeHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.TextStyleHolder
+import studio.forface.bottomappbar.materialpanels.holders.ColorHolder
+import studio.forface.bottomappbar.materialpanels.holders.TextHolder
+import studio.forface.bottomappbar.materialpanels.holders.TextSizeHolder
+import studio.forface.bottomappbar.materialpanels.holders.TextStyleHolder
 
 interface Title<T>: Param<T> {
     var titleTextHolder:        TextHolder

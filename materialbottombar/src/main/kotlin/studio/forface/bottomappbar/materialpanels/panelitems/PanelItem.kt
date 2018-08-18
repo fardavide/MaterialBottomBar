@@ -1,0 +1,3 @@
+package studio.forface.bottomappbar.materialpanels.panelitems
+
+interface PanelItem

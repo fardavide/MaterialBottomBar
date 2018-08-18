@@ -1,4 +1,4 @@
-package studio.forface.bottomappbar.materialbottomdrawer.params
+package studio.forface.bottomappbar.materialpanels.params
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -6,10 +6,10 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.SizeHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.ImageHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.ImageShape
+import studio.forface.bottomappbar.materialpanels.holders.ColorHolder
+import studio.forface.bottomappbar.materialpanels.holders.SizeHolder
+import studio.forface.bottomappbar.materialpanels.holders.ImageHolder
+import studio.forface.bottomappbar.materialpanels.holders.ImageShape
 import java.io.File
 
 interface Icon<T>: Param<T> {

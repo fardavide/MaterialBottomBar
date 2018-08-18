@@ -1,11 +1,11 @@
-package studio.forface.bottomappbar.materialbottomdrawer.params
+package studio.forface.bottomappbar.materialpanels.params
 
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.view.doOnPreDraw
-import studio.forface.bottomappbar.materialbottomdrawer.holders.ColorHolder
-import studio.forface.bottomappbar.materialbottomdrawer.holders.SizeHolder
+import studio.forface.bottomappbar.materialpanels.holders.ColorHolder
+import studio.forface.bottomappbar.materialpanels.holders.SizeHolder
 import studio.forface.bottomappbar.utils.Drawables
 
 typealias OnItemClickListener = (id: Int, title: CharSequence) -> Unit

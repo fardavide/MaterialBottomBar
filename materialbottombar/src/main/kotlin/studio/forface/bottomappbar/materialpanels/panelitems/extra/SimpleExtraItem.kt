@@ -1,10 +1,9 @@
 package studio.forface.bottomappbar.materialbottomdrawer.draweritems.extra
 
 import android.widget.TextView
-import androidx.core.view.doOnPreDraw
-import studio.forface.bottomappbar.materialbottomdrawer.holders.*
-import studio.forface.bottomappbar.materialbottomdrawer.params.Background
-import studio.forface.bottomappbar.materialbottomdrawer.params.Content
+import studio.forface.bottomappbar.materialpanels.holders.*
+import studio.forface.bottomappbar.materialpanels.params.Background
+import studio.forface.bottomappbar.materialpanels.params.Content
 
 abstract class SimpleExtraItem<T>: Content<T>, Background<T> {
 

@@ -1,4 +1,4 @@
-package studio.forface.bottomappbar.materialbottomdrawer.params
+package studio.forface.bottomappbar.materialpanels.params
 
 import android.text.Spannable
 import android.widget.Button
@@ -26,7 +26,7 @@ internal interface DrawerButton<T>: Param<T> {
     fun buttonContentText( text: CharSequence ) =
             thisRef.apply { buttonItem.contentText( text ) }
     fun buttonContentSpannable( spannable: Spannable ) =
-            thisRef.apply { buttonItem.withContentSpannable( spannable ) }
+            thisRef.apply { buttonItem.contentSpannable( spannable ) }
 
     fun buttonContentBold( bold: Boolean = true ) =
             thisRef.apply { buttonItem.contentBold( bold ) }

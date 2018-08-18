@@ -1,6 +1,6 @@
 package studio.forface.bottomappbar.materialbottomdrawer.draweritems.extra
 
-import studio.forface.bottomappbar.materialbottomdrawer.holders.*
+import studio.forface.bottomappbar.materialpanels.holders.*
 
 open class BadgeItem: SimpleExtraItem<BadgeItem>() {
     override val thisRef get() = this

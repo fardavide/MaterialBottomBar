@@ -1,10 +1,9 @@
-package studio.forface.bottomappbar.materialbottomdrawer.holders
+package studio.forface.bottomappbar.materialpanels.holders
 
 import android.text.Spannable
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.core.view.isVisible
 
 class TextHolder internal constructor(
     @StringRes  val stringRes:  Int? =          null,

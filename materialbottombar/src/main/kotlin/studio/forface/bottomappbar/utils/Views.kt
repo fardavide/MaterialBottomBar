@@ -5,6 +5,12 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+
+fun FloatingActionButton.show( show: Boolean ) {
+    if      (   show && ! isOrWillBeShown  ) show()
+    else if ( ! show && ! isOrWillBeHidden ) hide()
+}
 
 fun TextView.setTextColorRes( @ColorRes res: Int ) {
     setTextColor( context.getColorCompat( res ) )

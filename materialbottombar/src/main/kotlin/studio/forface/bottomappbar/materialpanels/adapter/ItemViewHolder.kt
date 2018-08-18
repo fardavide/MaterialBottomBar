@@ -1,12 +1,12 @@
-package studio.forface.bottomappbar.materialbottomdrawer.adapter
+package studio.forface.bottomappbar.materialpanels.adapter
 
 import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.drawer_item_base.view.*
 import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
-import studio.forface.bottomappbar.materialbottomdrawer.draweritems.BaseDrawerItem
-import studio.forface.bottomappbar.materialbottomdrawer.draweritems.DrawerItem
+import studio.forface.bottomappbar.materialpanels.panelitems.BasePanelItem
+import studio.forface.bottomappbar.materialpanels.panelitems.PanelItem
 import studio.forface.bottomappbar.utils.constraintParams
 import studio.forface.bottomappbar.utils.dpToPixels
 
@@ -15,10 +15,10 @@ class ItemViewHolder internal constructor(
         private val drawerBody: MaterialDrawer.Body
 ): RecyclerView.ViewHolder( itemView ) {
 
-    fun bind( drawerItem: DrawerItem ) {
+    fun bind( drawerItem: PanelItem) {
 
         when( drawerItem ) {
-            is BaseDrawerItem -> {
+            is BasePanelItem -> {
                 itemView.item_icon.alpha = drawerItem.iconAlpha
                 itemView.item_icon.constraintParams!!.marginStart =
                         dpToPixels( drawerItem.iconMarginStartDp ).toInt()
@@ -40,7 +40,7 @@ class ItemViewHolder internal constructor(
         }
     }
 
-    private val itemClickListener: (BaseDrawerItem) -> (View) -> Unit get() = { item -> {
+    private val itemClickListener: ( BasePanelItem) -> (View) -> Unit get() = { item -> {
         drawerBody.onItemClickListener( item.id, itemView.item_title.text )
 
         Handler().postDelayed({

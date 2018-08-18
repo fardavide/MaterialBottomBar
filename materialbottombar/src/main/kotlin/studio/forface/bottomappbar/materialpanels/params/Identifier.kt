@@ -1,4 +1,4 @@
-package studio.forface.bottomappbar.materialbottomdrawer.params
+package studio.forface.bottomappbar.materialpanels.params
 
 interface Identifier<T>: Param<T> {
     var id: Int

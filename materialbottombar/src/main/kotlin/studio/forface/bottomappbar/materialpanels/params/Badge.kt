@@ -1,4 +1,4 @@
-package studio.forface.bottomappbar.materialbottomdrawer.params
+package studio.forface.bottomappbar.materialpanels.params
 
 import android.text.Spannable
 import android.widget.TextView
@@ -23,7 +23,7 @@ internal interface Badge<T>: Param<T> {
     fun badgeContentText( text: CharSequence ) =
             thisRef.apply { badgeItem.contentText( text ) }
     fun badgeContentSpannable( spannable: Spannable ) =
-            thisRef.apply { badgeItem.withContentSpannable( spannable ) }
+            thisRef.apply { badgeItem.contentSpannable( spannable ) }
 
     fun badgeContentBold( bold: Boolean = true ) =
             thisRef.apply { badgeItem.contentBold( bold ) }
