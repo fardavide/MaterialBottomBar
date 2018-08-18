@@ -26,30 +26,30 @@ interface Icon<T>: Param<T> {
         iconSizeHolder.applyTo( imageView )
     }
 
-    fun withIconBitmap( bitmap: Bitmap) =
+    fun iconBitmap( bitmap: Bitmap) =
             thisRef.apply { iconImageHolder = ImageHolder( bitmap = bitmap ) }
-    fun withIconDrawable( drawable: Drawable) =
+    fun iconDrawable( drawable: Drawable) =
             thisRef.apply { iconImageHolder = ImageHolder( drawable = drawable ) }
-    fun withIconFile( file: File) =
+    fun iconFile( file: File) =
             thisRef.apply { iconImageHolder = ImageHolder( file = file ) }
-    fun iconResource(@DrawableRes res: Int ) =
+    fun iconResource( @DrawableRes res: Int ) =
             thisRef.apply { iconImageHolder = ImageHolder( res = res ) }
-    fun withIconUri( uri: Uri) =
+    fun iconUri( uri: Uri) =
             thisRef.apply { iconImageHolder = ImageHolder( uri = uri ) }
-    fun iconUrl(url: String ) =
+    fun iconUrl( url: String ) =
             thisRef.apply { iconImageHolder = ImageHolder( url = url ) }
 
-    fun withIconColorRes( @ColorRes res: Int ) =
+    fun iconColorRes( @ColorRes res: Int ) =
             thisRef.apply { iconColorHolder = ColorHolder( colorRes = res ) }
-    fun iconColor(color: Int ) =
+    fun iconColor( color: Int ) =
             thisRef.apply { iconColorHolder = ColorHolder( color = color ) }
 
-    fun withIconPixelSize( size: Float ) =
+    fun iconPixelSize( size: Float ) =
             thisRef.apply { iconSizeHolder = SizeHolder( pixel = size ) }
-    fun withIconDpSize( size: Float ) =
+    fun iconDpSize( size: Float ) =
             thisRef.apply { iconSizeHolder = SizeHolder( dp = size ) }
 
-    fun withIconShape( imageShape: ImageShape) {
+    fun iconShape( imageShape: ImageShape) {
         iconImageHolder.imageShape = imageShape
     }
 }

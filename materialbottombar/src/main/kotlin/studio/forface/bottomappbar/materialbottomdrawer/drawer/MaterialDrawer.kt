@@ -47,8 +47,8 @@ class MaterialDrawer(
 
         private var hasCustomShape = false
 
-        override fun withIconShape( imageShape: ImageShape ) {
-            super.withIconShape( imageShape )
+        override fun iconShape(imageShape: ImageShape ) {
+            super.iconShape( imageShape )
             hasCustomShape = true
         }
 

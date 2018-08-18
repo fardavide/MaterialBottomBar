@@ -33,7 +33,7 @@ class DemoActivity: AppCompatActivity() {
 
         val chat = PrimaryDrawerItem()
                 .titleText("Messages" )
-                .withTitleSpSize(10f )
+                .titleSpSize(10f )
                 .titleColor( Color.MAGENTA )
                 .iconResource( R.drawable.ic_message_black_24dp )
                 .id(1 )

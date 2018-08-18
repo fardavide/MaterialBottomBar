@@ -23,27 +23,27 @@ interface Title<T>: Param<T> {
         titleColorHolder.       applyToTextView( textView )
     }
 
-    fun withTitleStringRes( @StringRes res: Int ) =
+    fun titleStringRes( @StringRes res: Int ) =
             thisRef.apply { titleTextHolder = TextHolder( stringRes = res) }
-    fun withTitleTextRes( @StringRes res: Int ) =
+    fun titleTextRes( @StringRes res: Int ) =
             thisRef.apply { titleTextHolder = TextHolder( textRes = res) }
-    fun titleText(text: CharSequence ) =
+    fun titleText( text: CharSequence ) =
             thisRef.apply { titleTextHolder = TextHolder( text = text ) }
-    fun withTitleSpannable( spannable: Spannable) =
+    fun titleSpannable( spannable: Spannable) =
             thisRef.apply { titleTextHolder = TextHolder( spannable = spannable ) }
 
-    fun titleBold(bold: Boolean = true ) =
+    fun titleBold( bold: Boolean = true ) =
             thisRef.apply { titleTextStyleHolder = TextStyleHolder( bold = bold ) }
 
-    fun withTitlePixelSize( size: Float ) =
+    fun titlePixelSize( size: Float ) =
             thisRef.apply { titleTextSizeHolder = TextSizeHolder( pixel = size ) }
-    fun withTitleSpSize( size: Float ) =
+    fun titleSpSize( size: Float ) =
             thisRef.apply { titleTextSizeHolder = TextSizeHolder( sp = size ) }
-    fun withTitleDpSize( size: Float ) =
+    fun titleDpSize( size: Float ) =
             thisRef.apply { titleTextSizeHolder = TextSizeHolder( dp = size ) }
 
-    fun withTitleColorRes( @ColorRes res: Int ) =
+    fun titleColorRes( @ColorRes res: Int ) =
             thisRef.apply { titleColorHolder = ColorHolder( colorRes = res ) }
-    fun titleColor(@ColorInt color: Int ) =
+    fun titleColor( @ColorInt color: Int ) =
             thisRef.apply { titleColorHolder = ColorHolder( color = color ) }
 }
