@@ -68,10 +68,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         return newId
     }
 
-    var drawer: MaterialDrawer = MaterialDrawer()
+    var drawer: MaterialDrawer
         get() = panels[drawerPanelId] as MaterialDrawer
         set( value ) = value.run {
-            addPanel( field, drawerPanelId,true )
+            addPanel( value, drawerPanelId,true )
         }
 
     private val drawerRecyclerView get() = drawerPanel?.body as? RecyclerView
@@ -117,6 +117,13 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         panels.remove( id )
     }
 
+    fun openDrawer() { openPanel( drawerPanelId ) }
+
+    fun openPanel( id: Int ) {
+        grabPanel = panels[id]?.panelView
+        flyBar( Fly.MATCH_DRAWER )
+    }
+
     fun closeDrawer() { closePanel() }
 
     fun closePanel() {
@@ -126,6 +133,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private var grabPanel: PanelView? = null
 
     private fun setHeader( header: MaterialPanel.IHeader?, panelView: PanelView ) {
+        panelView.setHeader(this, header )
         ( header as? MaterialPanel.AbsHeader<*> )?.let {
             header.applyIconTo( panelView.header.header_icon )
 
@@ -140,6 +148,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     }
 
     private fun setBody( body: MaterialPanel.IBody?, panelView: PanelView ) {
+        panelView.setBody( body )
         ( body as? MaterialPanel.AbsBody<*> )?.let {
             if ( body.selectionColorHolder.resolveColor( context ) == null) {
                 val color = drawerHeaderColor ?: Color.GRAY
@@ -164,13 +173,12 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 flyBar( Fly.MATCH_DRAWER )
             }
 
-            /*panels.forEach {
-                val panelView = PanelView(this, it.value )
-                addView( panelView )
-                panelView.layoutParams.height = CoordinatorLayout.LayoutParams.WRAP_CONTENT
-                panelView.y = 555f
-                it.value.panelView = panelView
-            }*/
+            panels.forEach { val panelView = it.value.panelView
+                panelView?.y = height.toFloat()
+                bottomAppBar?.height?.let { barHeight ->
+                    panelView?.header?.layoutParams?.height = barHeight
+                }
+            }
 
             doOnNextLayout {
                 /*panels.forEach {
@@ -211,7 +219,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 consumedTimestamp = System.currentTimeMillis()
 
         } else if ( ! inRange )
-            flyBar(Fly.BOTTOM)
+            flyBar( Fly.BOTTOM )
 
         if ( actionUp ) {
             val moved = Math.abs( downY - event.y ) > MIN_DRAG_THRESHOLD
@@ -325,7 +333,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private fun setViewsY( y: Float ) {
         if ( y < 0f ) return
 
-        Timber.d("$grabPanel" )
+        Timber.d("${grabPanel?.children?.joinToString { it::class.java.simpleName }}" )
 
         bottomAppBar!!.y =  y
         grabPanel?.y =      y

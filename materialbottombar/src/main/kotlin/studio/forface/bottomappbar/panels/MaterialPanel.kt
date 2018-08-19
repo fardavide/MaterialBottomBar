@@ -19,8 +19,7 @@ open class MaterialPanel(
     var header = _header
         set(value) {
             field = value
-            setChanged()
-            notifyObservers()
+            notifyChange( Change.HEADER )
         }
     var body = _body
         set(value) {

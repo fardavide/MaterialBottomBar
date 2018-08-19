@@ -34,18 +34,31 @@ class PanelView @JvmOverloads constructor (
 
     fun init( layout: MaterialBottomDrawerLayout, panel: MaterialPanel ) {
         orientation = LinearLayout.VERTICAL
+        y = layout.height.toFloat()
 
-        header =        buildHeader( layout, panel.header )
-        body =          buildBody( panel.body )
-        background =    buildBackground()
+        setHeader( layout, panel.header )
+        setBody( panel.body )
+        setBackground()
+    }
 
-        addView( header )
+    internal fun setHeader( layout: MaterialBottomDrawerLayout, panelHeader: MaterialPanel.IHeader? ) {
+        if ( this::header.isInitialized ) removeView( header )
+        header = buildHeader( layout, panelHeader )
+        addView( header,0 )
         layout.bottomAppBar?.height?.let { header.layoutParams.height = it }
+    }
 
-        addView( body )
+    internal fun setBody( panelBody: MaterialPanel.IBody? ) {
+        if ( this::body.isInitialized ) removeView( body )
+        body = buildBody( panelBody )
+        addView( body,1 )
         body.layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT
+    }
 
-        addView( background )
+    internal fun setBackground() {
+        if ( this::background.isInitialized ) removeView( background )
+        background = buildBackground()
+        addView( background,2 )
         background.layoutParams.height = LinearLayout.LayoutParams.MATCH_PARENT
     }
 
