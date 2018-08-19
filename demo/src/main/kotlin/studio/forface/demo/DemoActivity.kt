@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_demo.*
-import studio.forface.bottomappbar.materialbottomdrawer.drawer.MaterialDrawer
-import studio.forface.bottomappbar.materialbottomdrawer.draweritems.PrimaryDrawerItem
-import studio.forface.bottomappbar.materialbottomdrawer.draweritems.SecondaryDrawerItem
-import studio.forface.bottomappbar.materialpanels.panelitems.Divider
-import studio.forface.bottomappbar.materialpanels.params.ButtonStyle
+import studio.forface.bottomappbar.drawer.MaterialDrawer
+import studio.forface.bottomappbar.drawer.items.PrimaryDrawerItem
+import studio.forface.bottomappbar.drawer.items.SecondaryDrawerItem
+import studio.forface.bottomappbar.panels.items.Divider
+import studio.forface.bottomappbar.panels.params.ButtonStyle
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
 

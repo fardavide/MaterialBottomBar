@@ -1,0 +1,31 @@
+package studio.forface.bottomappbar.drawer
+
+import android.view.View
+import studio.forface.bottomappbar.panels.MaterialPanel
+import studio.forface.bottomappbar.panels.items.BasePanelItem
+import studio.forface.bottomappbar.panels.items.PanelItem
+
+class MaterialDrawer(
+    _header: Header? = null,
+    _body: IBody? = null
+): MaterialPanel( _header, _body ) {
+
+    class Header: MaterialPanel.AbsHeader<Header>() {
+        override val thisRef: Header get() = this
+    }
+
+    class CustomHeader( _contentView: View ): MaterialPanel.CustomBody( _contentView )
+
+    class Body( _items: List<PanelItem> = listOf() ): MaterialPanel.AbsBody<Body>( _items ) {
+        override val thisRef: Body get() = this
+    }
+
+    class CustomBody( _contentView: View): MaterialPanel.CustomBody( _contentView )
+}
+
+fun List<PanelItem>.mapBasePanelItems(mapper: (BasePanelItem) -> Unit ) =
+        this.map { ( it as? BasePanelItem )?.apply { mapper( this ) } ?: it }
+
+fun List<PanelItem>.forEachBasePanelItem(block: (BasePanelItem) -> Unit ) {
+    forEach { ( it as? BasePanelItem )?.run( block ) }
+}

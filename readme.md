@@ -14,7 +14,7 @@ Add the library to your Gradle dependecies:
 ### Basic usage ( more complex example and TIPS below )
 First you need to create a _layout_:
 
-    <studio.forface.bottomappbar.materialbottomdrawer.MaterialBottomDrawerLayout
+    <studio.forface.bottomappbar.layout.MaterialBottomDrawerLayout
 	    xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:id="@+id/drawerLayout"
    	    android:layout_width="match_parent"    
@@ -22,12 +22,12 @@ First you need to create a _layout_:
     
 	    <!-- Here it goes your content -->
 	    
-	    <studio.forface.bottomappbar.materialbottomappbar.MaterialBottomAppBar
+	    <studio.forface.bottomappbar.appbar.MaterialBottomAppBar
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="bottom"/>
 		    
-	</studio.forface.bottomappbar.materialbottomdrawer.MaterialBottomDrawerLayout>
+	</studio.forface.bottomappbar.layout.MaterialBottomDrawerLayout>
 
 Then add your code:
 
@@ -62,7 +62,7 @@ Then add your code:
 	 drawerLayout.drawer = MaterialDrawer( header, body )
 
 ### Complex usage ( see demo app for more details )
-    <studio.forface.bottomappbar.materialbottomdrawer.MaterialBottomDrawerLayout
+    <studio.forface.bottomappbar.layout.MaterialBottomDrawerLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
         
@@ -72,7 +72,7 @@ Then add your code:
         
     	<!-- Here it goes your content -->
 	    
-	    <studio.forface.bottomappbar.materialbottomappbar.MaterialBottomAppBar
+	    <studio.forface.bottomappbar.appbar.MaterialBottomAppBar
 		    android:id="@+id/bar"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
@@ -96,7 +96,7 @@ Then add your code:
 		    android:layout_height="wrap_content"
 		    app:layout_anchor="@id/bar"/>    
 	    
-	    </studio.forface.bottomappbar.materialbottomdrawer.MaterialBottomDrawerLayout>
+	    </studio.forface.bottomappbar.layout.MaterialBottomDrawerLayout>
 
 Code:
 
