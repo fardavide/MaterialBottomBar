@@ -9,6 +9,8 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.graphics.ColorUtils
@@ -26,10 +28,7 @@ import studio.forface.bottomappbar.drawer.MaterialDrawer
 import studio.forface.bottomappbar.panels.MaterialPanel
 import studio.forface.bottomappbar.panels.adapter.PanelBodyAdapter
 import studio.forface.bottomappbar.panels.holders.ColorHolder
-import studio.forface.bottomappbar.utils.dpToPixels
-import studio.forface.bottomappbar.utils.findChild
-import studio.forface.bottomappbar.utils.joinToString
-import studio.forface.bottomappbar.utils.show
+import studio.forface.bottomappbar.utils.*
 import studio.forface.bottomappbar.view.PanelView
 import timber.log.Timber
 import java.util.*
@@ -38,24 +37,48 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         context: Context, val attrs: AttributeSet? = null, val defStyleAttr: Int = 0
 ) : CoordinatorLayout( context, attrs, defStyleAttr ) {
 
-    private val MIN_DRAG_THRESHOLD = dpToPixels(10f )
-    private val DRAG_THRESHOLD by lazy { height / 10 }
+    /**
+     * The minimum dragging distance after the Layout intercept the [MotionEvent].
+     * If the minimum distance has been consumed from the [MotionEvent.ACTION_DOWN] to the
+     * [MotionEvent.ACTION_UP] the layout will be intercept the [MotionEvent] blocking the delivery
+     * to the other Views, else the [MotionEvent] event will be delivered.
+     * @see onInterceptTouchEvent
+     */
+    private val MIN_INTERCEPT_DRAG_THRESHOLD = dpToPixels(10f )
 
-    private val BOTTOM_BAR_RANGE get() =
+    /**
+     * The minimum dragging distance before the [bottomAppBar] backs to its old position.
+     * If the minimum distance has been consumed the [bottomAppBar] will [flyBar] to the closest
+     * position, else it will [flyBar] back to [lastFly] position.
+     */
+    private val MIN_FLY_DRAG_THRESHOLD by lazy { height / 10 }
+
+    val bottomAppBar    get() = findChildType<MaterialBottomAppBar>()
+    val fab             get() = findChildType<FloatingActionButton>()
+    //val topAppBar       get() = findChildType<AppBarLayout>()
+
+    /**
+     * If [bottomAppBar] is not null, it represents the [ClosedFloatingPointRange] that goes from
+     * [bottomAppBar] [MaterialBottomAppBar.getY] until the end of the layout ( [getHeight] ),
+     * else it's 0..0.
+     */
+    private val bottomBarRange get() =
         bottomAppBar?.let {
             it.y .. height.toFloat()
         } ?: 0f .. 0f
 
-    val bottomAppBar    get() = findChild<MaterialBottomAppBar>()
-    val fab             get() = findChild<FloatingActionButton>()
-    //val topAppBar       get() = findChild<AppBarLayout>()
-
-    private val bottomAppBarInitialY by lazy { bottomAppBar?.y ?: height.toFloat() }
+    /**
+     * The [View.getY] of the [bottomAppBar] initial position ( bottom ).
+     * if [bottomAppBar] [MaterialBottomAppBar.getY] is not null, we set a default value which
+     * is the [getHeight] of the layout and we will try the get the right Y, every time the
+     * parameter is called, until it is set, after that it is set it will be un-mutable.
+     */
+    private val bottomBarInitialY by retryIfDefaultLazy( height.toFloat() ) { bottomAppBar?.y }
     private val matchPanelY get() = if ( draggingPanelView?.wrapToContent == true ) {
         ( height - draggingPanelView!!.contentHeight.toFloat() ).coerceAtLeast(0f )
     } else height / 3f
 
-    private val isBarInInitialState get() = bottomAppBar?.y == bottomAppBarInitialY
+    private val isBarInInitialState get() = bottomAppBar?.y == bottomBarInitialY
 
     private var viewsAnimator: Animator? = null
 
@@ -77,7 +100,9 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             addPanel( value, drawerPanelId,true )
         }
 
-    private val drawerRecyclerView get() = drawerPanel?.body as? RecyclerView
+    private val draggingPanelRecyclerView: RecyclerView? get() =
+        draggingPanelView?.body as? RecyclerView
+                ?: ( draggingPanelView?.body as? ViewGroup )?.findChildType()
 
     fun addPanel( materialPanel: MaterialPanel, id: Int ) {
         addPanel( materialPanel, id,false )
@@ -197,7 +222,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                     it.value.panelView?.y = height.toFloat()
                 }*/
 
-                /*if ( panels.isEmpty() ) */setViewsY( bottomAppBarInitialY )
+                /*if ( panels.isEmpty() ) */setViewsY( bottomBarInitialY )
             }
         }
     }
@@ -214,7 +239,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         val actionUp = event.action == MotionEvent.ACTION_UP ||
                 event.action == MotionEvent.ACTION_CANCEL
 
-        val inRange = downY in BOTTOM_BAR_RANGE || event.y in BOTTOM_BAR_RANGE
+        val inRange = downY in bottomBarRange || event.y in bottomBarRange
 
         if ( actionDown ) {
             downY = event.y
@@ -224,7 +249,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         val direction = downY.compareTo( event.y )
         val shouldScrollDrawerRecyclerView =
                 event.action == MotionEvent.ACTION_MOVE && bottomAppBar!!.y < 1 &&
-                        drawerRecyclerView?.canScrollVertically( direction ) ?: false
+                        draggingPanelRecyclerView?.canScrollVertically( direction ) ?: false
 
         if ( ! shouldScrollDrawerRecyclerView && inRange ) {
             if ( onTouchEvent(event) )
@@ -234,7 +259,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             flyBar( Fly.BOTTOM )
 
         if ( actionUp ) {
-            val moved = Math.abs( downY - event.y ) > MIN_DRAG_THRESHOLD
+            val moved = Math.abs( downY - event.y ) > MIN_INTERCEPT_DRAG_THRESHOLD
 
             downY = 0f
             return moved
@@ -249,7 +274,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         val direction = downY.compareTo( event.y )
         val shouldScrollDrawerRecyclerView =
                 event.action == MotionEvent.ACTION_MOVE && bottomAppBar!!.y < 1 &&
-                        drawerRecyclerView?.canScrollVertically( direction ) ?: false
+                        draggingPanelRecyclerView?.canScrollVertically( direction ) ?: false
 
         if ( shouldScrollDrawerRecyclerView ) return false
 
@@ -270,13 +295,13 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         if ( draggingBar ) {
             draggingBar = false
 
-            val inThreshold = Math.abs( event.y - downY ) > DRAG_THRESHOLD
+            val inThreshold = Math.abs( event.y - downY ) > MIN_FLY_DRAG_THRESHOLD
 
             if (inThreshold) {
                 val isDraggingUp = event.y < downY
 
                 val fly = if ( ! isDraggingUp ) Fly.BOTTOM
-                else if (it.y < matchPanelY) Fly.TOP
+                else if ( it.y < matchPanelY ) Fly.TOP
                 else Fly.MATCH_DRAWER
 
                 flyBar( fly )
@@ -292,11 +317,11 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     fun dragBar( y: Float ) = bottomAppBar?.let {
         val toY = ( bottomBarDownY - ( downY - y ) )
                 .coerceAtLeast(0f )
-                .coerceAtMost( bottomAppBarInitialY )
+                .coerceAtMost( bottomBarInitialY )
         setViewsY( toY )
     }
 
-    fun onDown( event: MotionEvent ) = if ( event.y in BOTTOM_BAR_RANGE ) {
+    fun onDown( event: MotionEvent ) = if ( event.y in bottomBarRange ) {
         bottomBarDownY = bottomAppBar?.y ?: 0f
         true
     } else false
@@ -304,7 +329,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     fun onMove( event: MotionEvent ) = when {
         draggingBar -> { dragBar( event.y ); true }
-        downY in BOTTOM_BAR_RANGE -> { grabBar(); true }
+        downY in bottomBarRange -> { grabBar(); true }
         else -> false
     }
 
@@ -315,7 +340,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         bottomAppBar?.let {
             val toY = when( fly ) {
                 Fly.TOP ->          0f
-                Fly.BOTTOM ->       bottomAppBarInitialY
+                Fly.BOTTOM ->       bottomBarInitialY
                 Fly.MATCH_DRAWER -> matchPanelY
             }
             animateViewsY( toY )
@@ -328,7 +353,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         viewsAnimator?.cancel()
 
         val fromY = bottomAppBar!!.y
-        if ( fromY == bottomAppBarInitialY ) hasFab = fab?.isVisible == true
+        if ( fromY == bottomBarInitialY ) hasFab = fab?.isVisible == true
 
         val duration = Math.abs( fromY - toY ) / 2
         viewsAnimator = ValueAnimator.ofFloat( fromY, toY ).apply {
@@ -343,7 +368,8 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     }
 
     private var bottomAppBarInitialColor: Int? = null
-    private fun setViewsY( y: Float ) {
+    @SuppressLint("ResourceType")
+    private fun setViewsY(y: Float ) {
         if ( y < 0f ) return
 
         Timber.d("$draggingPanelId ... $drawerPanelId ... ${panels.joinToString { "${it.key}" }}" )
@@ -372,7 +398,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
         if ( isBarInInitialState ) {
             panels.forEach { it.value.panelView?.y = height.toFloat() }
-            drawerRecyclerView?.scrollToPosition( 0 )
+            draggingPanelRecyclerView?.scrollToPosition( 0 )
         }
 
         //drawerHeaderColorHolder?.applyToBackground( bottomAppBar!! )

@@ -19,7 +19,7 @@ import androidx.core.view.doOnPreDraw
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.*
-import studio.forface.bottomappbar.utils.findChild
+import studio.forface.bottomappbar.utils.findChildType
 import studio.forface.bottomappbar.utils.reflection
 import studio.forface.materialbottombar.bottomappbar.R
 
@@ -28,7 +28,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BottomAppBar( context, attrs, defStyleAttr ) {
 
-    val fab: FloatingActionButton? get() = ( parent as? ViewGroup )?.findChild()
+    val fab: FloatingActionButton? get() = ( parent as? ViewGroup )?.findChildType()
 
     var hideBarOnScroll: Boolean = false
     var hideFabOnScroll: Boolean

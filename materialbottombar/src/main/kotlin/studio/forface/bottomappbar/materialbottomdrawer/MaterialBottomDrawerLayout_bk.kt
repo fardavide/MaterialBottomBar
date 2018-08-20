@@ -15,9 +15,9 @@ class MaterialBottomDrawerLayout_bk @JvmOverloads constructor (
             it.y .. height.toFloat()
         } ?: 0f .. 0f
 
-    val bottomAppBar    get() = findChild<MaterialBottomAppBar>()
-    val fab             get() = findChild<FloatingActionButton>()
-    //val topAppBar       get() = findChild<AppBarLayout>()
+    val bottomAppBar    get() = findChildType<MaterialBottomAppBar>()
+    val fab             get() = findChildType<FloatingActionButton>()
+    //val topAppBar       get() = findChildType<AppBarLayout>()
 
     private val bottomAppBarInitialY by lazy { bottomAppBar?.y ?: height.toFloat() }
     private val matchDrawerY get() = height / 3f
