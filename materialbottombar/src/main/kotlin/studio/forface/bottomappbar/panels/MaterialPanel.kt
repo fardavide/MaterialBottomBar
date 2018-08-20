@@ -13,7 +13,8 @@ import java.util.*
 
 open class MaterialPanel(
         _header: IHeader? = null,
-        _body: IBody? = null
+        _body: IBody? = null,
+        _wrapToContent: Boolean = true
 ): Observable() {
 
     var header = _header
@@ -31,6 +32,12 @@ open class MaterialPanel(
     var panelView: PanelView?
         get() = panelViewWR.get()
         set( value ) { panelViewWR = WeakReference( value ) }
+
+    var wrapToContent = _wrapToContent
+        set( value ) {
+            field = value
+            notifyChange( Change.PANEL )
+        }
 
     private fun notifyChange( change: Change ) {
         setChanged()
@@ -59,7 +66,7 @@ open class MaterialPanel(
         override var backgroundCornerRadiusSizeHolder = SizeHolder()
 
         override var titleTextHolder =                  TextHolder()
-        override var titleTextStyleHolder =             TextStyleHolder()
+        override var titleTextStyleHolder =             TextStyleHolder( bold = true )
         override var titleTextSizeHolder =              TextSizeHolder()
         override var titleColorHolder =                 ColorHolder()
 
@@ -116,7 +123,7 @@ open class MaterialPanel(
         fun items( items: List<PanelItem> ) =
                 apply { this.items = items }
 
-        fun setSelected( selectedId: Int ) = apply {
+        fun setSelected( selectedId: Int? ) = apply {
             items = items.mapBasePanelItems { it.selected = it.id == selectedId && it.selectable }
         }
     }
@@ -135,15 +142,15 @@ open class MaterialPanel(
     }
 
     internal sealed class Change {
-        object HEADER :             Change()
-        object BODY:                Change()
-        class PANEL( val id: Int ): Change()
+        object HEADER:      Change()
+        object BODY:        Change()
+        object PANEL:       Change()
     }
 }
 
-fun List<PanelItem>.mapBasePanelItems(mapper: (BasePanelItem) -> Unit ) =
+fun List<PanelItem>.mapBasePanelItems( mapper: (BasePanelItem) -> Unit ) =
         this.map { ( it as? BasePanelItem )?.apply { mapper( this ) } ?: it }
 
-fun List<PanelItem>.forEachBasePanelItem(block: (BasePanelItem) -> Unit ) {
+fun List<PanelItem>.forEachBasePanelItem( block: (BasePanelItem) -> Unit ) {
     forEach { ( it as? BasePanelItem )?.run( block ) }
 }

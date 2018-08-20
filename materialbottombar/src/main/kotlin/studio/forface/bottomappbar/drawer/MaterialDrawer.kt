@@ -7,8 +7,9 @@ import studio.forface.bottomappbar.panels.items.PanelItem
 
 class MaterialDrawer(
     _header: Header? = null,
-    _body: IBody? = null
-): MaterialPanel( _header, _body ) {
+    _body: IBody? = null,
+    _wrapToContent: Boolean = false
+): MaterialPanel( _header, _body, _wrapToContent ) {
 
     class Header: MaterialPanel.AbsHeader<Header>() {
         override val thisRef: Header get() = this

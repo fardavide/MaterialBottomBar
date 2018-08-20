@@ -5,14 +5,13 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.drawer_header.view.*
 import studio.forface.bottomappbar.layout.MaterialBottomDrawerLayout
 import studio.forface.bottomappbar.panels.MaterialPanel
+import studio.forface.bottomappbar.utils.children
 import studio.forface.bottomappbar.utils.elevationCompat
 import studio.forface.materialbottombar.bottomappbar.R
 
@@ -22,9 +21,14 @@ class PanelView @JvmOverloads constructor (
         defStyleAttr: Int = 0
 ): LinearLayout( context, attrs, defStyleAttr ) {
 
-    constructor( layout: MaterialBottomDrawerLayout, panel: MaterialPanel ) : this(
-            layout.context, layout.attrs, layout.defStyleAttr
-    ) {
+    internal var wrapToContent: Boolean = false
+    internal val contentHeight get() = if ( wrapToContent )
+        header.height + body.height
+    else height
+
+    constructor(
+            layout: MaterialBottomDrawerLayout, panel: MaterialPanel
+    ) : this( layout.context, layout.attrs, layout.defStyleAttr ) {
         init( layout, panel )
     }
 
@@ -33,6 +37,7 @@ class PanelView @JvmOverloads constructor (
     internal lateinit var background:   View
 
     fun init( layout: MaterialBottomDrawerLayout, panel: MaterialPanel ) {
+        wrapToContent = panel.wrapToContent
         orientation = LinearLayout.VERTICAL
         y = layout.height.toFloat()
 
@@ -41,9 +46,18 @@ class PanelView @JvmOverloads constructor (
         setBackground()
     }
 
+    fun fadeHeader( alpha: Float, enabled: Boolean ) {
+        header.children.forEach {
+            it.alpha =          alpha
+            it.isClickable =    enabled
+            it.isEnabled =      enabled
+        }
+    }
+
     internal fun setHeader( layout: MaterialBottomDrawerLayout, panelHeader: MaterialPanel.IHeader? ) {
         if ( this::header.isInitialized ) removeView( header )
         header = buildHeader( layout, panelHeader )
+        fadeHeader(0f,false )
         addView( header,0 )
         layout.bottomAppBar?.height?.let { header.layoutParams.height = it }
     }

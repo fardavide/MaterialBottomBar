@@ -26,9 +26,9 @@ import studio.forface.bottomappbar.drawer.MaterialDrawer
 import studio.forface.bottomappbar.panels.MaterialPanel
 import studio.forface.bottomappbar.panels.adapter.PanelBodyAdapter
 import studio.forface.bottomappbar.panels.holders.ColorHolder
-import studio.forface.bottomappbar.utils.children
 import studio.forface.bottomappbar.utils.dpToPixels
 import studio.forface.bottomappbar.utils.findChild
+import studio.forface.bottomappbar.utils.joinToString
 import studio.forface.bottomappbar.utils.show
 import studio.forface.bottomappbar.view.PanelView
 import timber.log.Timber
@@ -51,10 +51,13 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     //val topAppBar       get() = findChild<AppBarLayout>()
 
     private val bottomAppBarInitialY by lazy { bottomAppBar?.y ?: height.toFloat() }
-    private val matchDrawerY get() = height / 3f
+    private val matchPanelY get() = if ( draggingPanelView?.wrapToContent == true ) {
+        ( height - draggingPanelView!!.contentHeight.toFloat() ).coerceAtLeast(0f )
+    } else height / 3f
+
+    private val isBarInInitialState get() = bottomAppBar?.y == bottomAppBarInitialY
 
     private var viewsAnimator: Animator? = null
-    private var drawerHeaderColor: Int? = null
 
     var panels = mutableMapOf<Int, MaterialPanel>()
 
@@ -90,7 +93,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         removePanel( id )
         if ( isDrawer ) { drawerPanelId = id }
 
-        val panelView = PanelView(this, materialPanel )
+        val panelView = PanelView(this, materialPanel)
         addView( panelView )
         panelView.layoutParams.height = CoordinatorLayout.LayoutParams.WRAP_CONTENT
         panelView.y = height.toFloat()
@@ -101,7 +104,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             observe { newPanel, change -> when( change ) {
                 is MaterialPanel.Change.HEADER ->  { setHeader( newPanel.header, panelView ) }
                 is MaterialPanel.Change.BODY ->    { setBody(   newPanel.body,   panelView ) }
-                is MaterialPanel.Change.PANEL->    { change.id }
+                is MaterialPanel.Change.PANEL->    { addPanel( materialPanel, id, isDrawer ) }
             } }
 
             setHeader( header, panelView )
@@ -120,7 +123,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     fun openDrawer() { openPanel( drawerPanelId ) }
 
     fun openPanel( id: Int ) {
-        grabPanel = panels[id]?.panelView
+        grabPanel( id )
         flyBar( Fly.MATCH_DRAWER )
     }
 
@@ -130,7 +133,18 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         flyBar( Fly.BOTTOM )
     }
 
-    private var grabPanel: PanelView? = null
+    private var draggingPanelId: Int = Int.MIN_VALUE // TODO: test only
+    private var draggingPanelView: PanelView? = null
+    private var draggingPanelHeaderColor: Int? = null
+
+    private fun grabPanel( id: Int ) {
+        draggingPanelId = id // TODO: test only
+        val draggingPanel = panels[id]
+        draggingPanelView = draggingPanel?.panelView
+        draggingPanelHeaderColor = ( draggingPanel?.header as? MaterialPanel.AbsHeader<*> )
+                ?.backgroundColorHolder?.resolveColor( context )
+    }
+
 
     private fun setHeader( header: MaterialPanel.IHeader?, panelView: PanelView ) {
         panelView.setHeader(this, header )
@@ -139,8 +153,6 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
             header.applyTitleTo( panelView.header.header_title )
             header.titleColorHolder.applyToDrawable( panelView.header.header_close )
-
-            drawerHeaderColor = header.backgroundColorHolder.resolveColor( context )
 
         } ?: ( header as? MaterialPanel.CustomHeader )?.let {
             panelView.header = header.contentView
@@ -151,7 +163,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         panelView.setBody( body )
         ( body as? MaterialPanel.AbsBody<*> )?.let {
             if ( body.selectionColorHolder.resolveColor( context ) == null) {
-                val color = drawerHeaderColor ?: Color.GRAY
+                val color = draggingPanelHeaderColor ?: Color.GRAY
                 body.selectionColor( color )
             }
 
@@ -169,7 +181,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     init {
         doOnPreDraw {
             bottomAppBar?.setNavigationOnClickListener {
-                grabPanel = drawerPanel
+                grabPanel( drawerPanelId )
                 flyBar( Fly.MATCH_DRAWER )
             }
 
@@ -250,7 +262,8 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     }
 
     fun grabBar() {
-        grabPanel = drawerPanel
+        if ( isBarInInitialState )
+            grabPanel( drawerPanelId )
         draggingBar = true
     }
     fun releaseBar( event: MotionEvent ) = bottomAppBar?.let {
@@ -263,7 +276,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 val isDraggingUp = event.y < downY
 
                 val fly = if ( ! isDraggingUp ) Fly.BOTTOM
-                else if (it.y < matchDrawerY) Fly.TOP
+                else if (it.y < matchPanelY) Fly.TOP
                 else Fly.MATCH_DRAWER
 
                 flyBar( fly )
@@ -303,7 +316,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             val toY = when( fly ) {
                 Fly.TOP ->          0f
                 Fly.BOTTOM ->       bottomAppBarInitialY
-                Fly.MATCH_DRAWER -> matchDrawerY
+                Fly.MATCH_DRAWER -> matchPanelY
             }
             animateViewsY( toY )
         }
@@ -333,16 +346,16 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private fun setViewsY( y: Float ) {
         if ( y < 0f ) return
 
-        Timber.d("${grabPanel?.children?.joinToString { it::class.java.simpleName }}" )
+        Timber.d("$draggingPanelId ... $drawerPanelId ... ${panels.joinToString { "${it.key}" }}" )
 
         bottomAppBar!!.y =  y
-        grabPanel?.y =      y
+        draggingPanelView?.y =      y
 
         val height = height - bottomAppBar!!.height
 
         //val totalPercentage =   1f / ( height / y )
-        val topPercentage =     1f / ( matchDrawerY / y.coerceAtMost( matchDrawerY ) )
-        val bottomPercentage =  1f / ( ( height - matchDrawerY ) / ( y - matchDrawerY ).coerceAtLeast(0f ) )
+        val topPercentage =     1f / ( matchPanelY / y.coerceAtMost( matchPanelY ) )
+        val bottomPercentage =  1f / ( ( height - matchPanelY ) / ( y - matchPanelY ).coerceAtLeast(0f ) )
 
         bottomAppBar!!.cornersInterpolation =   topPercentage
 
@@ -350,30 +363,27 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 ( bottomAppBar?.background as? MaterialShapeDrawable )?.tintList?.defaultColor
 
         bottomAppBarInitialColor?.let { blendFrom ->
-            val blendTo = drawerHeaderColor ?: blendFrom
+            val blendTo = draggingPanelHeaderColor ?: blendFrom
             val blend = ColorUtils.blendARGB(
                     blendFrom, blendTo, 1f - bottomPercentage
             )
             ColorHolder( color = blend ).applyToBackground( bottomAppBar!! )
         }
 
-        val isInitialState = y == bottomAppBarInitialY
-
-        if ( isInitialState ) drawerRecyclerView?.scrollToPosition( 0 )
+        if ( isBarInInitialState ) {
+            panels.forEach { it.value.panelView?.y = height.toFloat() }
+            drawerRecyclerView?.scrollToPosition( 0 )
+        }
 
         //drawerHeaderColorHolder?.applyToBackground( bottomAppBar!! )
         bottomAppBar!!.children.forEach {
             it.alpha = bottomPercentage
-            it.isClickable =   isInitialState
-            it.isEnabled =     isInitialState
+            it.isClickable =   isBarInInitialState
+            it.isEnabled =     isBarInInitialState
         }
-        grabPanel?.header?.children?.forEach {
-            it.alpha = 1f - bottomPercentage
-            it.isClickable =   ! isInitialState
-            it.isEnabled =     ! isInitialState
-        }
+        draggingPanelView?.fadeHeader(1f - bottomPercentage, ! isBarInInitialState )
 
-        fab?.show(isInitialState && hasFab )
+        fab?.show(isBarInInitialState && hasFab )
     }
 
 }

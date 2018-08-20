@@ -3,6 +3,8 @@ package studio.forface.demo
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
@@ -13,14 +15,95 @@ import kotlinx.android.synthetic.main.activity_demo.*
 import studio.forface.bottomappbar.drawer.MaterialDrawer
 import studio.forface.bottomappbar.drawer.items.PrimaryDrawerItem
 import studio.forface.bottomappbar.drawer.items.SecondaryDrawerItem
+import studio.forface.bottomappbar.panels.MaterialPanel
 import studio.forface.bottomappbar.panels.items.Divider
+import studio.forface.bottomappbar.panels.items.PrimaryPanelItem
 import studio.forface.bottomappbar.panels.params.ButtonStyle
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
 
 private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg"
 
+private const val PANEL_SORT_ID = 123
+
 class DemoActivity: AppCompatActivity() {
+
+    override fun onCreate( savedInstanceState: Bundle? ) {
+        Timber.plant( Timber.DebugTree() )
+        super.onCreate( savedInstanceState )
+        setContentView( R.layout.activity_demo )
+        setSupportActionBar( drawerLayout.bottomAppBar )
+
+        setRecyclerView()
+        setButtons()
+
+        drawerLayout.drawer = fancyDrawer
+
+        val name = PrimaryPanelItem()
+                .id(100 )
+                .titleText("Name" )
+
+        val surname = PrimaryPanelItem()
+                .id(101 )
+                .titleText("Surname" )
+
+        val panelBody = MaterialPanel.Body()
+                .items( listOf( name, surname ) )
+
+        val panelHeader = MaterialPanel.Header()
+                .titleText("Sort by" )
+                .titleColor( Color.WHITE )
+                .backgroundColor( Color.DKGRAY )
+
+        val panelSort = MaterialPanel( panelHeader, panelBody )
+
+        drawerLayout.addPanel( panelSort, PANEL_SORT_ID )
+    }
+
+    override fun onCreateOptionsMenu( menu: Menu ): Boolean {
+        menuInflater.inflate( R.menu.menu_demo, menu )
+        return super.onCreateOptionsMenu( menu )
+    }
+
+    override fun onOptionsItemSelected( item: MenuItem ): Boolean {
+        when( item.itemId ) {
+            R.id.app_bar_sort -> drawerLayout.openPanel( PANEL_SORT_ID )
+        }
+        return super.onOptionsItemSelected( item )
+    }
+
+    private fun setRecyclerView() {
+        recyclerView.layoutManager = LinearLayoutManager(this )
+        recyclerView.adapter = Adapter()
+    }
+
+    private fun setButtons() {
+        val active = Color.parseColor("#30D5C8" )
+        val inactive = Color.GRAY
+
+        switchFab.setOnClickListener {
+            bar.fabAlignmentMode = if ( bar.fabAlignmentMode == 0 ) 1 else 0
+        }
+
+        hideFab.setOnClickListener {
+            val ( bg, set ) = if ( bar.hideFabOnScroll )
+                inactive to false
+            else active to true
+
+            hideFab.background.setColorFilter( bg, PorterDuff.Mode.SRC )
+            bar.hideFabOnScroll = set
+        }
+
+        hideBar.setOnClickListener {
+            val ( bg, set ) = if ( bar.hideBarOnScroll )
+                inactive to false
+            else active to true
+
+            hideBar.background.setColorFilter( bg, PorterDuff.Mode.SRC )
+            bar.hideBarOnScroll = set
+        }
+
+    }
 
     private val testDrawer: MaterialDrawer get() {
         val header = MaterialDrawer.Header()
@@ -256,51 +339,6 @@ class DemoActivity: AppCompatActivity() {
 
         return MaterialDrawer( header, body )
     }
-
-    override fun onCreate( savedInstanceState: Bundle? ) {
-        Timber.plant( Timber.DebugTree() )
-        super.onCreate( savedInstanceState )
-        setContentView( R.layout.activity_demo )
-
-        setRecyclerView()
-        setButtons()
-
-        drawerLayout.drawer = fancyDrawer
-    }
-
-    private fun setRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(this )
-        recyclerView.adapter = Adapter()
-    }
-
-    private fun setButtons() {
-        val active = Color.parseColor("#30D5C8" )
-        val inactive = Color.GRAY
-
-        switchFab.setOnClickListener {
-            bar.fabAlignmentMode = if ( bar.fabAlignmentMode == 0 ) 1 else 0
-        }
-
-        hideFab.setOnClickListener {
-            val ( bg, set ) = if ( bar.hideFabOnScroll )
-                inactive to false
-            else active to true
-
-            hideFab.background.setColorFilter( bg, PorterDuff.Mode.SRC )
-            bar.hideFabOnScroll = set
-        }
-
-        hideBar.setOnClickListener {
-            val ( bg, set ) = if ( bar.hideBarOnScroll )
-                inactive to false
-            else active to true
-
-            hideBar.background.setColorFilter( bg, PorterDuff.Mode.SRC )
-            bar.hideBarOnScroll = set
-        }
-
-    }
-
 }
 
 class Adapter: RecyclerView.Adapter<Adapter.ViewHolder>() {
