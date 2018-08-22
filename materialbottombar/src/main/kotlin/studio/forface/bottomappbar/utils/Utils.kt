@@ -12,7 +12,7 @@ import kotlin.reflect.KProperty
  * Like a normal [lazy], this value is set at the first call BUT, if the value is null, the
  * [initializer] will be called until the value is not null.
  * @param V the type of the [KProperty].
- * @param initializer the function that will initialize the value.
+ * @param initializer the init that will initialize the value.
  */
 internal fun <V> retryIfNullLazy( initializer: () -> V ) =
         RetryIfNullLazy<Any, V>( initializer )
@@ -20,11 +20,11 @@ internal fun <V> retryIfNullLazy( initializer: () -> V ) =
 /**
  * [ReadOnlyProperty] extended class for [retryIfNullLazy].
  */
-internal class RetryIfNullLazy<T, V>( val function: () -> V ): ReadOnlyProperty<T, V> {
+internal class RetryIfNullLazy<T, V>( val init: () -> V ): ReadOnlyProperty<T, V> {
     private object EMPTY
     private var value: Any? = EMPTY
     override fun getValue( thisRef: T, property: KProperty<*> ): V {
-        if ( value == EMPTY ) value = function()
+        if ( value == EMPTY ) value = init()
         @Suppress("UNCHECKED_CAST")
         return value as V
     }
@@ -35,7 +35,7 @@ internal class RetryIfNullLazy<T, V>( val function: () -> V ): ReadOnlyProperty<
  * and different from the [default] value.
  * @param V the type of the [KProperty].
  * @param default the default value.
- * @param initializer the function that will initialize the value.
+ * @param initializer the init that will initialize the value.
  */
 internal fun <V> retryIfDefaultLazy( default: V, initializer: () -> V ) =
         RetryIfDefaultLazy<Any, V>( default, initializer )
@@ -43,10 +43,10 @@ internal fun <V> retryIfDefaultLazy( default: V, initializer: () -> V ) =
 /**
  * [ReadOnlyProperty] extended class for [retryIfDefaultLazy].
  */
-internal class RetryIfDefaultLazy<T, V>( val default: V, val function: () -> V ): ReadOnlyProperty<T, V> {
+internal class RetryIfDefaultLazy<T, V>( val default: V, val init: () -> V ): ReadOnlyProperty<T, V> {
     private var value = default
     override fun getValue( thisRef: T, property: KProperty<*> ): V {
-        if ( value == default || value == null ) value = function()
+        if ( value == default || value == null ) value = init()
         if ( value == null ) value = default
         return value
     }
