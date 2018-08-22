@@ -69,7 +69,7 @@ class PanelView @JvmOverloads constructor (
         body.layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT
     }
 
-    internal fun setBackground() {
+    private fun setBackground() {
         if ( this::background.isInitialized ) removeView( background )
         background = buildBackground()
         addView( background,2 )

@@ -33,7 +33,7 @@ class MaterialBottomDrawerLayout_bk @JvmOverloads constructor (
             observe { newDrawer, change -> when( change ) {
                 is MaterialDrawer.Change.HEADER ->  { setHeader( newDrawer.header ) }
                 is MaterialDrawer.Change.BODY ->    { setBody(   newDrawer.body   ) }
-                is MaterialDrawer.Change.PANEL->    { change.id }
+                is MaterialDrawer.Change.PANEL_VIEW->    { change.id }
             } }
 
             setHeader( header )
@@ -89,7 +89,7 @@ class MaterialBottomDrawerLayout_bk @JvmOverloads constructor (
             bottomAppBar?.setNavigationOnClickListener { flyBar( Fly.TOP ) }
 
             bottomAppBar?.let { bar ->
-                bar.setNavigationOnClickListener { flyBar( Fly.MATCH_DRAWER ) }
+                bar.setNavigationOnClickListener { flyBar( Fly.MATCH_PANEL ) }
                 addView( drawerHeader )
                 drawerHeader.layoutParams.height = bar.height
 
@@ -108,8 +108,8 @@ class MaterialBottomDrawerLayout_bk @JvmOverloads constructor (
     private var bottomBarDownY = 0f
     private var draggingBar = false
 
-    var downTimestamp = 0L
-    var consumedTimestamp = 0L
+    var downEventTimestamp = 0L
+    var consumedEventTimestamp = 0L
 
     override fun onInterceptTouchEvent( event: MotionEvent ): Boolean {
         val actionDown = event.action == MotionEvent.ACTION_DOWN
@@ -120,7 +120,7 @@ class MaterialBottomDrawerLayout_bk @JvmOverloads constructor (
 
         if ( actionDown ) {
             downY = event.y
-            downTimestamp = System.currentTimeMillis()
+            downEventTimestamp = System.currentTimeMillis()
         }
 
         val direction = downY.compareTo( event.y )
@@ -130,7 +130,7 @@ class MaterialBottomDrawerLayout_bk @JvmOverloads constructor (
 
         if ( ! shouldScrollDrawerRecyclerView && inRange ) {
             if ( onTouchEvent(event) )
-                consumedTimestamp = System.currentTimeMillis()
+                consumedEventTimestamp = System.currentTimeMillis()
 
         } else if ( ! inRange )
             flyBar( Fly.BOTTOM )
@@ -177,7 +177,7 @@ class MaterialBottomDrawerLayout_bk @JvmOverloads constructor (
 
                 val fly = if ( ! isDraggingUp ) Fly.BOTTOM
                 else if (it.y < matchDrawerY) Fly.TOP
-                else Fly.MATCH_DRAWER
+                else Fly.MATCH_PANEL
 
                 flyBar( fly )
 
@@ -208,7 +208,7 @@ class MaterialBottomDrawerLayout_bk @JvmOverloads constructor (
         else -> false
     }
 
-    enum class Fly { TOP, BOTTOM, MATCH_DRAWER }
+    enum class Fly { TOP, BOTTOM, MATCH_PANEL }
     private var lastFly = Fly.BOTTOM
     private fun flyBar( fly: Fly ) {
         lastFly = fly
@@ -216,7 +216,7 @@ class MaterialBottomDrawerLayout_bk @JvmOverloads constructor (
             val toY = when( fly ) {
                 Fly.TOP ->          0f
                 Fly.BOTTOM ->       bottomAppBarInitialY
-                Fly.MATCH_DRAWER -> matchDrawerY
+                Fly.MATCH_PANEL -> matchDrawerY
             }
             animateViewsY( toY )
         }

@@ -37,18 +37,18 @@ internal class RetryIfNullLazy<T, V>( val init: () -> V ): ReadOnlyProperty<T, V
  * @param default the default value.
  * @param initializer the init that will initialize the value.
  */
-internal fun <V> retryIfDefaultLazy( default: V, initializer: () -> V ) =
+internal fun <V: Any> retryIfDefaultLazy( default: V, initializer: () -> V? ) =
         RetryIfDefaultLazy<Any, V>( default, initializer )
 
 /**
  * [ReadOnlyProperty] extended class for [retryIfDefaultLazy].
  */
-internal class RetryIfDefaultLazy<T, V>( val default: V, val init: () -> V ): ReadOnlyProperty<T, V> {
-    private var value = default
+internal class RetryIfDefaultLazy<T, V>( val default: V, val init: () -> V? ): ReadOnlyProperty<T, V> {
+    private var value: V? = default
     override fun getValue( thisRef: T, property: KProperty<*> ): V {
         if ( value == default || value == null ) value = init()
         if ( value == null ) value = default
-        return value
+        return value!!
     }
 }
 
@@ -92,3 +92,5 @@ internal fun Context.useAttributes(
 }
 
 inline fun <reified T> ViewGroup.findChildType() = children.find { it is T } as? T
+
+inline fun <reified T> ViewGroup.filterChildType() = children.filter { it is T }

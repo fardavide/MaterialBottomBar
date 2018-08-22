@@ -12,9 +12,9 @@ import java.lang.ref.WeakReference
 import java.util.*
 
 open class MaterialPanel(
-        _header: IHeader? = null,
-        _body: IBody? = null,
-        _wrapToContent: Boolean = true
+    _header: IHeader? = null,
+    _body: IBody? = null,
+    _wrapToContent: Boolean = true
 ): Observable() {
 
     var header = _header
@@ -36,7 +36,7 @@ open class MaterialPanel(
     var wrapToContent = _wrapToContent
         set( value ) {
             field = value
-            notifyChange( Change.PANEL )
+            notifyChange( Change.PANEL_VIEW )
         }
 
     private fun notifyChange( change: Change ) {
@@ -141,10 +141,11 @@ open class MaterialPanel(
             }
     }
 
+    @Suppress("ClassName")
     internal sealed class Change {
         object HEADER:      Change()
         object BODY:        Change()
-        object PANEL:       Change()
+        object PANEL_VIEW:  Change()
     }
 }
 
