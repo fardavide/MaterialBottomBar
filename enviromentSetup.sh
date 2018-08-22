@@ -1,5 +1,5 @@
 function copyEnvVarsToLocalProperties {
-    LOCAL_PROPERTIES=$HOME"/local.properties"
+    LOCAL_PROPERTIES="/home/circleci/code/local.properties"
     export LOCAL_PROPERTIES
     echo "Local Properties should exist at $LOCAL_PROPERTIES"
  
