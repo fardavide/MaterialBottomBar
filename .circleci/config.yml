@@ -2,7 +2,7 @@ version: 2
 
 dependencies:
   pre:
-    - source environmentSetup.sh && copyEnvVarsToLocalProperties
+    - bash ./environmentSetup.sh
 
 jobs:
   build:
