@@ -1,4 +1,9 @@
 version: 2
+
+dependencies:
+  pre:
+    - source environmentSetup.sh && copyEnvVarsToLocalProperties
+
 jobs:
   build:
     working_directory: ~/code
@@ -8,10 +13,6 @@ jobs:
 
     environment:
       JVM_OPTS: -Xmx3200m
-
-    dependencies:
-      pre:
-        - source environmentSetup.sh && copyEnvVarsToLocalProperties
 
     steps:
       - checkout
