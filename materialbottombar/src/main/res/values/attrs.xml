@@ -11,8 +11,6 @@
             <enum name="cut" value="1"/>
         </attr>
 
-        <attr name="relativeFabCradleDiameter" format="dimension"/>
-
         <attr name="rightCornerRadius" format="dimension" />
         <attr name="rightCornerStyle" format="enum">
             <enum name="round" value="0"/>

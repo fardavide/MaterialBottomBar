@@ -138,10 +138,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /**
      * The Drawer Menu.
      */
-    var drawer: MaterialDrawer
-        get() = panels[drawerPanelId] as MaterialDrawer
+    var drawer: MaterialDrawer?
+        get() = panels[drawerPanelId] as MaterialDrawer?
         set( value ) = value.run {
-            addPanel( value, drawerPanelId,true )
+            value?.let { addPanel( it, drawerPanelId,true ) }
         }
 
     /**
@@ -177,6 +177,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     init {
         doOnPreDraw {
             bottomAppBar?.setNavigationOnClickListener {
+                drawer ?: return@setNavigationOnClickListener
                 grabPanel( drawerPanelId )
                 flyBar( Fly.MATCH_PANEL )
             }
@@ -413,8 +414,11 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     }
 
     private fun grabBar() {
-        if ( isBarInInitialState )
-            grabPanel( drawerPanelId )
+        drawer ?: return
+        if ( isBarInInitialState ) {
+            hasFab = fab?.isVisible == true
+            grabPanel(drawerPanelId)
+        }
         draggingBar = true
     }
     private fun releaseBar( event: MotionEvent ) = bottomAppBar?.let {
@@ -473,7 +477,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         }
     }
 
-    private var hasFab = fab?.isVisible == true
+    private var hasFab = fab?.isVisible
     private fun animateViewsY( toY: Float ) {
         viewsAnimator?.cancel()
 
@@ -493,7 +497,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     }
 
     @SuppressLint("ResourceType")
-    private fun setViewsY(y: Float ) {
+    private fun setViewsY( y: Float ) {
         if ( y < 0f ) return
 
         bottomAppBar!!.y =  y
@@ -528,7 +532,8 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         }
         draggingPanelView?.fadeHeader(1f - bottomPercentage, ! isBarInInitialState )
 
-        fab?.show(isBarInInitialState && hasFab )
+        hasFab ?: return
+        fab?.show(isBarInInitialState && hasFab!! )
     }
 
 }

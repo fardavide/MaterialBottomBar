@@ -86,7 +86,7 @@ internal fun Context.useAttributes(
 ) {
     attrs ?: return
 
-    val a = obtainStyledAttributes( attrs, styleable, 0, 0  )
+    val a = theme.obtainStyledAttributes( attrs, styleable, 0, 0  )
     block( a )
     a.recycle()
 }

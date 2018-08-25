@@ -22,8 +22,8 @@ import com.google.android.material.shape.*
 import studio.forface.bottomappbar.utils.dpToPixels
 import studio.forface.bottomappbar.utils.findChildType
 import studio.forface.bottomappbar.utils.reflection
+import studio.forface.bottomappbar.utils.useAttributes
 import studio.forface.materialbottombar.bottomappbar.R
-
 
 class MaterialBottomAppBar @JvmOverloads constructor (
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -32,7 +32,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
     val fab: FloatingActionButton? get() = ( parent as? ViewGroup )?.findChildType()
 
     var hideBarOnScroll: Boolean = false
-    var hideFabOnScroll: Boolean
+    var hideFabOnScroll: Boolean = false
 
     @Deprecated("use hideBarOnScroll", ReplaceWith("hideBarOnScroll"))
     override fun getHideOnScroll(): Boolean {
@@ -43,10 +43,10 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         super.setHideOnScroll( hide )
     }
 
-    private var _leftCornerRadius: Int
-    private var _leftCornerStyle: Int
-    private var _rightCornerRadius: Int
-    private var _rightCornerStyle: Int
+    private var _leftCornerRadius: Int = 0
+    private var _leftCornerStyle: Int = 0
+    private var _rightCornerRadius: Int = 0
+    private var _rightCornerStyle: Int = 0
 
     private val navView: ImageButton? by reflection( "mNavButtonView",2 )
     private var modeAnimator: Animator? by reflection()
@@ -112,7 +112,22 @@ class MaterialBottomAppBar @JvmOverloads constructor (
             }
         }
 
-        val a = context.theme.obtainStyledAttributes(
+        context.useAttributes( attrs, R.styleable.MaterialBottomAppBar ) {
+            hideFabOnScroll = getBoolean(
+                    R.styleable.MaterialBottomAppBar_hideFabOnScroll, false )
+
+            _leftCornerRadius = getDimensionPixelSize(
+                    R.styleable.MaterialBottomAppBar_leftCornerRadius,0 )
+            _leftCornerStyle = getInt(
+                    R.styleable.MaterialBottomAppBar_leftCornerStyle, 0 )
+
+            _rightCornerRadius = getDimensionPixelSize(
+                    R.styleable.MaterialBottomAppBar_rightCornerRadius,0 )
+            _rightCornerStyle = getInt(
+                    R.styleable.MaterialBottomAppBar_rightCornerStyle,0 )
+        }
+
+        /*val a = context.theme.obtainStyledAttributes(
                 attrs,
                 R.styleable.MaterialBottomAppBar,
                 0, 0
@@ -134,7 +149,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
 
         } finally {
             a.recycle()
-        }
+        }*/
 
         doOnLayout { drawBackgroundTopCorners() }
     }
