@@ -5,9 +5,8 @@ buildscript {
     ext.build = [
             major:              0,
             minor:              0,
-            patch:              5,
+            patch:              6,
     ]
-
 
     ext.versions = [
             versionName:            "$build.major.$build.minor.$build.patch",
@@ -24,7 +23,7 @@ buildscript {
             bintrayPlugin:          '1.8.0',
             constraintLayout:       '2.0.0-alpha1',
             glide:                  '4.8.0',
-            material:               '1.0.0-alpha3',
+            material:               '1.0.0-beta01',
             mavenPlugin:            '2.0',
             ktx:                    '1.0.0-alpha1',
             rxAndroid:              '2.0.2',

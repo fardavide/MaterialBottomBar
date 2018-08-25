@@ -19,6 +19,7 @@ import androidx.core.view.doOnPreDraw
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.*
+import studio.forface.bottomappbar.utils.dpToPixels
 import studio.forface.bottomappbar.utils.findChildType
 import studio.forface.bottomappbar.utils.reflection
 import studio.forface.materialbottombar.bottomappbar.R
@@ -47,7 +48,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
     private var _rightCornerRadius: Int
     private var _rightCornerStyle: Int
 
-    private val navView: ImageButton by reflection( "mNavButtonView",2 )
+    private val navView: ImageButton? by reflection( "mNavButtonView",2 )
     private var modeAnimator: Animator? by reflection()
 
     internal lateinit var leftCorner: StaticCornerTreatment
@@ -60,9 +61,9 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         drawBackgroundTopCorners()
     }
 
-    internal var menuIconAlpha: Float
-        get() = navView.alpha
-        set( value ) { navView.alpha = value }
+    internal var menuIconAlpha: Float?
+        get() = navView?.alpha
+        set( value ) { if ( value != null ) navView?.alpha = value }
 
     fun unFlatCorners() { flatCorners( false ) }
 
@@ -81,7 +82,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         modeAnimator = set
         modeAnimator!!.doOnEnd { modeAnimator = null }
         modeAnimator!!.start()
-        isFabAttached = isFabAttached
+        fabAlignmentMode = fabAlignmentMode
     }
 
     var cornersInterpolation: Float
@@ -89,20 +90,22 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         set( value ) {
             leftCorner.fixedInterpolation = value
             rightCorner.fixedInterpolation = value
-            isFabAttached = isFabAttached
+            fabAlignmentMode = fabAlignmentMode
         }
 
     var backgroundAlpha: Int
         get() = DrawableCompat.getAlpha( background )
         set( value ) {
             background.alpha = value
-            isFabAttached = isFabAttached
+            fabAlignmentMode = fabAlignmentMode
         }
 
     init {
         fixNavigationIconPadding()
         doOnPreDraw {
             (layoutParams as CoordinatorLayout.LayoutParams).apply {
+                val minHeight = dpToPixels( 54f ).toInt()
+                if ( height < minHeight ) height = minHeight
                 behavior = Behavior( context, attrs )
                 hideBarOnScroll = hideOnScroll
                 hideOnScroll = true
@@ -139,7 +142,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
     private fun fixNavigationIconPadding() {
         val px = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,16f, resources.displayMetrics ).toInt()
-        navView.setPadding( px, px, px, px )
+        navView?.setPadding( px, px, px, px )
     }
 
     private fun drawBackgroundTopCorners() {
