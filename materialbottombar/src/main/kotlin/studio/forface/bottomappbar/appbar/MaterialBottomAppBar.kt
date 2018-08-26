@@ -101,14 +101,14 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         }
 
     init {
-        fixNavigationIconPadding()
+        //fixNavigationIconPadding()
+        val newHeight = dpToPixels(48f ).toInt()
+        minimumHeight = newHeight
+
         doOnPreDraw {
             (layoutParams as CoordinatorLayout.LayoutParams).apply {
-                val newHeight = dpToPixels( 54f ).toInt()
-                if ( height < newHeight ) {
-                    height = newHeight
-                    minimumHeight = newHeight
-                }
+                if ( height < newHeight ) height = newHeight
+                minimumHeight = height
                 behavior = Behavior( context, attrs )
                 hideBarOnScroll = hideOnScroll
                 hideOnScroll = true
@@ -129,30 +129,6 @@ class MaterialBottomAppBar @JvmOverloads constructor (
             _rightCornerStyle = getInt(
                     R.styleable.MaterialBottomAppBar_rightCornerStyle,0 )
         }
-
-        /*val a = context.theme.obtainStyledAttributes(
-                attrs,
-                R.styleable.MaterialBottomAppBar,
-                0, 0
-        )
-
-        try {
-            hideFabOnScroll = a.getBoolean(
-                    R.styleable.MaterialBottomAppBar_hideFabOnScroll, false )
-
-            _leftCornerRadius = a.getDimensionPixelSize(
-                    R.styleable.MaterialBottomAppBar_leftCornerRadius,0 )
-            _leftCornerStyle = a.getInt(
-                    R.styleable.MaterialBottomAppBar_leftCornerStyle, 0 )
-
-            _rightCornerRadius = a.getDimensionPixelSize(
-                    R.styleable.MaterialBottomAppBar_rightCornerRadius,0 )
-            _rightCornerStyle = a.getInt(
-                    R.styleable.MaterialBottomAppBar_rightCornerStyle,0 )
-
-        } finally {
-            a.recycle()
-        }*/
 
         doOnLayout { drawBackgroundTopCorners() }
     }

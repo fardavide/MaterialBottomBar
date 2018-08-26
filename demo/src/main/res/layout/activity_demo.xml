@@ -81,7 +81,7 @@
     <studio.forface.bottomappbar.appbar.MaterialBottomAppBar
         android:id="@+id/bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_gravity="bottom"
 
         app:hideOnScroll="true"
