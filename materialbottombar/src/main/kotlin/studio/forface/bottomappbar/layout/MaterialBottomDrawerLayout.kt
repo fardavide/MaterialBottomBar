@@ -522,6 +522,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         if ( isBarInInitialState ) {
             panels.forEach { it.value.panelView?.y = height.toFloat() }
             draggingPanelRecyclerView?.scrollToPosition( 0 )
+
+            bottomAppBar!!.menu.setGroupVisible( 0, true )
+        } else {
+            bottomAppBar!!.menu.setGroupVisible( 0, false )
         }
 
         //drawerHeaderColorHolder?.applyToBackground( bottomAppBar!! )

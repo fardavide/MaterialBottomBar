@@ -45,10 +45,6 @@ dependencies {
     kapt deps.other.glide_compiler
     implementation deps.other.timber
 
-    implementation deps.rx.android
-    implementation deps.rx.java
-    implementation deps.rx.kotlin
-
     testImplementation deps.test.junit
 
     androidTestImplementation deps.test.espressoCore

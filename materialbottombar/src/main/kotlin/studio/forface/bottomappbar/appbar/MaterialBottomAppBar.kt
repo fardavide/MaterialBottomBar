@@ -104,8 +104,11 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         fixNavigationIconPadding()
         doOnPreDraw {
             (layoutParams as CoordinatorLayout.LayoutParams).apply {
-                val minHeight = dpToPixels( 54f ).toInt()
-                if ( height < minHeight ) height = minHeight
+                val newHeight = dpToPixels( 54f ).toInt()
+                if ( height < newHeight ) {
+                    height = newHeight
+                    minimumHeight = newHeight
+                }
                 behavior = Behavior( context, attrs )
                 hideBarOnScroll = hideOnScroll
                 hideOnScroll = true
