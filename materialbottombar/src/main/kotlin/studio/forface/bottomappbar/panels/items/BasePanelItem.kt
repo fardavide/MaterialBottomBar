@@ -1,7 +1,7 @@
 package studio.forface.bottomappbar.panels.items
 
 import studio.forface.bottomappbar.drawer.items.extra.BadgeItem
-import studio.forface.bottomappbar.drawer.items.extra.ButtonItem
+import studio.forface.bottomappbar.panels.items.extra.ButtonItem
 import studio.forface.bottomappbar.panels.holders.*
 import studio.forface.bottomappbar.panels.params.*
 

@@ -6,6 +6,7 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
@@ -59,16 +60,16 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     //val topAppBar       get() = findChildType<AppBarLayout>()
 
     /**
-     * GET The [bottomAppBar] color when the bar is at its initial state.
-     * If [isBarInInitialState] we re-set the color, so it will reflect a new color if it's
-     * changed by the user at runtime.
+     * The [bottomAppBar] background color
+     * if [bottomAppBar] [MaterialBottomAppBar.getBackground] [MaterialShapeDrawable.tintList]
+     * [ColorStateList.getDefaultColor] is not null, we set it as value, else keep trying
+     * at every call and set when it isn't null
+     *
+     * ACTUALLY IT DOESN'T SUPPORT COLOR CHANGE AT RUNTIME.
      */
-    private var bottomBarInitialColor: Int? = null
-        get() {
-            if ( isBarInInitialState )
-                field = ( bottomAppBar?.background as? MaterialShapeDrawable )?.tintList?.defaultColor
-            return field
-        }
+    private val bottomBarInitialColor by retryIfNullLazy {
+        ( bottomAppBar?.background as? MaterialShapeDrawable )?.tintList?.defaultColor
+    }
 
     /**
      * GET the [ClosedFloatingPointRange] that goes from [bottomAppBar] [MaterialBottomAppBar.getY]

@@ -1,8 +1,9 @@
-package studio.forface.bottomappbar.drawer.items.extra
+package studio.forface.bottomappbar.panels.items.extra
 
 import android.graphics.Color
 import android.widget.Button
 import androidx.core.view.doOnPreDraw
+import studio.forface.bottomappbar.drawer.items.extra.SimpleExtraItem
 import studio.forface.bottomappbar.panels.holders.*
 import studio.forface.bottomappbar.panels.params.ButtonStyle
 import studio.forface.bottomappbar.panels.params.RippleBackgroundStyle

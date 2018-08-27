@@ -111,6 +111,8 @@ class PanelView @JvmOverloads constructor (
     private fun buildBackground() = View( context ).apply {
         setBackgroundColor( Color.WHITE )
         elevationCompat = 1f
+        isEnabled = true
+        isClickable = true
     }
 
 }

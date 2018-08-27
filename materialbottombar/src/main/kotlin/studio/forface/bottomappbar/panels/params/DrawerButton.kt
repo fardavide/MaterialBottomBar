@@ -5,14 +5,14 @@ import android.widget.Button
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import studio.forface.bottomappbar.drawer.items.extra.ButtonItem
+import studio.forface.bottomappbar.panels.items.extra.ButtonItem
 
 typealias ButtonStyle = RippleBackgroundStyle
 
 internal interface DrawerButton<T>: Param<T> {
     var buttonStyle: ButtonStyle
     var buttonItem: ButtonItem
-    fun buttonItem( button: ButtonItem ) =
+    fun buttonItem( button: ButtonItem) =
             thisRef.apply { buttonItem = button.copy() }
 
     fun applyButtonTo( button: Button) {

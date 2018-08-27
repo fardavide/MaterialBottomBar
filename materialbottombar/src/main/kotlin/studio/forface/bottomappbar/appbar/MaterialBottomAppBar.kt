@@ -10,15 +10,18 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewPropertyAnimator
 import android.widget.ImageButton
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.doOnLayout
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.postDelayed
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.*
+import studio.forface.bottomappbar.layout.MaterialBottomDrawerLayout
 import studio.forface.bottomappbar.utils.dpToPixels
 import studio.forface.bottomappbar.utils.findChildType
 import studio.forface.bottomappbar.utils.reflection
@@ -133,6 +136,21 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         doOnLayout { drawBackgroundTopCorners() }
     }
 
+    private val layoutBehavior get() =
+        ( ( layoutParams as CoordinatorLayout.LayoutParams ).behavior as MaterialBottomAppBar.Behavior )
+
+    fun hideAndShow( withFab: Boolean = false, delay: Long = 150 ) {
+        hide( withFab ) { postDelayed( { show() } , delay) }
+    }
+
+    fun hide( withFab: Boolean = false , doOnAnimationEnd: ( () -> Unit ) = {} ) {
+        layoutBehavior.hide(this, withFab, doOnAnimationEnd )
+    }
+
+    fun show( doOnAnimationEnd: ( () -> Unit ) = {} ) {
+        layoutBehavior.show(this, doOnAnimationEnd )
+    }
+
     private fun fixNavigationIconPadding() {
         val px = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,16f, resources.displayMetrics ).toInt()
@@ -165,7 +183,10 @@ class MaterialBottomAppBar @JvmOverloads constructor (
     class Behavior( context: Context, attrs: AttributeSet? )
         : BottomAppBar.Behavior( context, attrs ) {
 
-        private val currentState: Int get() {
+        private val currentAnimator by reflection<ViewPropertyAnimator>( superclassLevel = 2 )
+        private val currentState by reflection<Int>( superclassLevel = 2 )
+
+        /*private val currentState: Int get() {
             var result = 0
             val hideBottomViewOnScrollBehaviorClass = this::class.java.superclass.superclass
             hideBottomViewOnScrollBehaviorClass.getDeclaredField("currentState").run {
@@ -174,7 +195,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
                 isAccessible = false
             }
             return result
-        }
+        }*/
         private val BottomAppBar.material get() = this as MaterialBottomAppBar
 
         @Suppress("OverridingDeprecatedMember")
@@ -182,25 +203,43 @@ class MaterialBottomAppBar @JvmOverloads constructor (
                 coordinatorLayout: CoordinatorLayout, child: BottomAppBar, target: View,
                 dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int
         ) {
-            if ( target.id == R.id.drawer_recycler_view ) return
+            var targetParent = target.parent
+            while ( targetParent != null && targetParent !is MaterialBottomDrawerLayout )
+                targetParent = targetParent.parent
+            if ( targetParent is MaterialBottomDrawerLayout ) return
+
             if ( dyConsumed > 0 )       slideDown( child )
             else if ( dyConsumed < 0)   slideUp(child)
         }
 
-        override fun slideDown(child: BottomAppBar ) {
+        fun hide( child: BottomAppBar, withFab: Boolean, doOnAnimationEnd: () -> Unit ) {
+            if ( withFab ) child.material.run {
+                val oldHideFabOnScroll = hideFabOnScroll
+                hideBarOnScroll = true
+                slideDown( child )
+                hideBarOnScroll = oldHideFabOnScroll
+
+            } else super.slideDown( child )
+            currentAnimator.withEndAction( doOnAnimationEnd )
+        }
+
+        override fun slideDown( child: BottomAppBar ) {
             child.material.run {
                 if ( hideBarOnScroll && currentState != 1 ) super.slideDown( child )
                 if ( hideFabOnScroll ) fab?.hide()
             }
         }
 
+        fun show( child: BottomAppBar, doOnAnimationEnd: () -> Unit ) {
+            slideUp( child )
+            currentAnimator.withEndAction( doOnAnimationEnd )
+        }
         override fun slideUp( child: BottomAppBar ) {
             child.material.run {
                 if ( currentState != 2 ) super.slideUp( child )
                 fab?.show()
             }
         }
-
     }
 
 }

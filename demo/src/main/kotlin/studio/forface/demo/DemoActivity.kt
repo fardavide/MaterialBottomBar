@@ -58,6 +58,8 @@ class DemoActivity: AppCompatActivity() {
         val panelSort = MaterialPanel( panelHeader, panelBody )
 
         drawerLayout.addPanel( panelSort, PANEL_SORT_ID )
+
+        drawerLayout.postDelayed( { drawerLayout.bottomAppBar?.hideAndShow() },1000 )
     }
 
     override fun onCreateOptionsMenu( menu: Menu ): Boolean {
