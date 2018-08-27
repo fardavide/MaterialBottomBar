@@ -136,18 +136,22 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         doOnLayout { drawBackgroundTopCorners() }
     }
 
-    private val layoutBehavior get() =
+    val layoutBehavior get() =
         ( ( layoutParams as CoordinatorLayout.LayoutParams ).behavior as MaterialBottomAppBar.Behavior )
 
-    fun hideAndShow( withFab: Boolean = false, delay: Long = 150 ) {
-        hide( withFab ) { postDelayed( { show() } , delay) }
+    fun hideAndShow(
+            withFab: Boolean = false, delay: Long = 150,
+            doAfterHide: () -> Unit = {},
+            doAfterShow: () -> Unit = {}
+    ) {
+        hide( withFab ) { doAfterHide(); postDelayed( { show( doAfterShow ) } , delay) }
     }
 
-    fun hide( withFab: Boolean = false , doOnAnimationEnd: ( () -> Unit ) = {} ) {
+    fun hide( withFab: Boolean = false , doOnAnimationEnd: () -> Unit = {} ) {
         layoutBehavior.hide(this, withFab, doOnAnimationEnd )
     }
 
-    fun show( doOnAnimationEnd: ( () -> Unit ) = {} ) {
+    fun show( doOnAnimationEnd: () -> Unit = {} ) {
         layoutBehavior.show(this, doOnAnimationEnd )
     }
 

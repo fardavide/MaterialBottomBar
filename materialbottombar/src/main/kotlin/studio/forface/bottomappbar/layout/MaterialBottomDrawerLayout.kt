@@ -10,19 +10,15 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
-import android.view.Gravity
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.graphics.ColorUtils
-import androidx.core.view.children
-import androidx.core.view.doOnNextLayout
-import androidx.core.view.doOnPreDraw
-import androidx.core.view.isVisible
+import androidx.core.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.animation.AnimationUtils
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.android.synthetic.main.drawer_header.view.*
@@ -57,7 +53,8 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     val bottomAppBar    get() = findChildType<MaterialBottomAppBar>()
     val fab             get() = findChildType<FloatingActionButton>()
-    //val topAppBar       get() = findChildType<AppBarLayout>()
+    @Suppress("RemoveExplicitTypeArguments")
+    val topAppBar       get() = findChildType<AppBarLayout>()
 
     /**
      * The [bottomAppBar] background color
@@ -166,6 +163,48 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         var newId = 0
         while ( panels.keys.contains( newId ) ) { newId = random.nextInt() }
         return newId
+    }
+
+    var toolbarAnimator: ViewPropertyAnimator? = null
+
+    inline fun hideAndShowToolbar(
+            delay: Long = 150,
+            crossinline doAfterHide: () -> Unit = {},
+            crossinline doAfterShow: () -> Unit = {} )
+    {
+        hideToolbar { doAfterHide(); postDelayed( { showToolbar( doAfterShow ) }, delay ) }
+    }
+
+    inline fun hideToolbar( crossinline doOnAnimationEnd: () -> Unit = {} ) {
+        toolbarAnimator?.let {
+            it.cancel()
+            topAppBar?.clearAnimation()
+        }
+        topAppBar?.run {
+            toolbarAnimator = animate().translationY( -height.toFloat() )
+                    .setInterpolator( AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR )
+                    .setDuration( 175 )
+                    .doOnEnd {
+                        toolbarAnimator = null
+                        doOnAnimationEnd()
+                    }
+        }
+    }
+
+    inline fun showToolbar( crossinline doOnAnimationEnd: () -> Unit = {} ) {
+        toolbarAnimator?.let {
+            it.cancel()
+            topAppBar?.clearAnimation()
+        }
+        topAppBar?.run {
+            toolbarAnimator = animate().translationY(0f )
+                    .setInterpolator( AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR )
+                    .setDuration( 225 )
+                    .doOnEnd {
+                        toolbarAnimator = null
+                        doOnAnimationEnd()
+                    }
+        }
     }
 
     /**

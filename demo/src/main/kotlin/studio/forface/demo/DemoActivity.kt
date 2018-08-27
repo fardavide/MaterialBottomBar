@@ -60,6 +60,7 @@ class DemoActivity: AppCompatActivity() {
         drawerLayout.addPanel( panelSort, PANEL_SORT_ID )
 
         drawerLayout.postDelayed( { drawerLayout.bottomAppBar?.hideAndShow() },1000 )
+        drawerLayout.postDelayed( { drawerLayout.hideAndShowToolbar() },1000 )
     }
 
     override fun onCreateOptionsMenu( menu: Menu ): Boolean {
