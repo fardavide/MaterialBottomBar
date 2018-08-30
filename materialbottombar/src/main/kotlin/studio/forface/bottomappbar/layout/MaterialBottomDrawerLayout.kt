@@ -8,9 +8,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.*
+import android.widget.EditText
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.graphics.ColorUtils
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.animation.AnimationUtils
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.android.synthetic.main.drawer_header.view.*
@@ -30,6 +33,9 @@ import studio.forface.bottomappbar.panels.holders.ColorHolder
 import studio.forface.bottomappbar.utils.*
 import studio.forface.bottomappbar.view.PanelView
 import java.util.*
+import android.opengl.ETC1.getHeight
+
+
 
 class MaterialBottomDrawerLayout @JvmOverloads constructor (
         context: Context, val attrs: AttributeSet? = null, val defStyleAttr: Int = 0
@@ -165,16 +171,31 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         return newId
     }
 
+    /**
+     * The [Animator] for [topAppBar].
+     */
     var toolbarAnimator: ViewPropertyAnimator? = null
 
+    /**
+     * Run [hideToolbar] and then [showToolbar].
+     * @param delay the delay in millisec from the end of [hideToolbar] and the start of
+     * [showToolbar]
+     * @param doAfterHide the lambda to execute the [hideToolbar] the animation end.
+     * @param doAfterShow the lambda to execute the [showToolbar] the animation end.
+     */
     inline fun hideAndShowToolbar(
             delay: Long = 150,
             crossinline doAfterHide: () -> Unit = {},
-            crossinline doAfterShow: () -> Unit = {} )
-    {
+            crossinline doAfterShow: () -> Unit = {}
+    ) {
         hideToolbar { doAfterHide(); postDelayed( { showToolbar( doAfterShow ) }, delay ) }
     }
 
+    /**
+     * Start [ViewPropertyAnimator] that hide the [topAppBar]
+     * @param doOnAnimationEnd the lambda to execute the the animation end.
+     * @see [BottomAppBar.Behavior.slideDown] for duration and interpolator.
+     */
     inline fun hideToolbar( crossinline doOnAnimationEnd: () -> Unit = {} ) {
         toolbarAnimator?.let {
             it.cancel()
@@ -191,6 +212,11 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         }
     }
 
+    /**
+     * Start [ViewPropertyAnimator] that show the [topAppBar]
+     * @param doOnAnimationEnd the lambda to execute the the animation end.
+     * @see [BottomAppBar.Behavior.slideUp] for duration and interpolator.
+     */
     inline fun showToolbar( crossinline doOnAnimationEnd: () -> Unit = {} ) {
         toolbarAnimator?.let {
             it.cancel()
@@ -215,6 +241,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /* ========================================================================================== */
 
     init {
+
         doOnPreDraw {
             bottomAppBar?.setNavigationOnClickListener {
                 drawer ?: return@setNavigationOnClickListener
@@ -394,11 +421,53 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     /* ========================================================================================== */
 
+    /**
+     * The [Rect] that will receive the [getWindowVisibleDisplayFrame].
+     */
+    val rect = Rect()
+
+    /**
+     * Here we will [MaterialBottomAppBar.show] or [MaterialBottomAppBar.hide] whether if the
+     * soft keyboard is show or not.
+     * We will compare the display height to the visible frame height for understand if the
+     * soft keyboard is shown.
+     */
+    override fun onLayout( changed: Boolean, l: Int, t: Int, r: Int, b: Int ) {
+        super.onLayout( changed, l, t, r, b )
+
+        getWindowVisibleDisplayFrame( rect )
+
+        bottomAppBar?.let {
+            val heightDiff = rootView.height - ( rect.bottom - rect.top )
+            if ( heightDiff > 500 ) it.hide() else it.show()
+        }
+    }
+
+    /**
+     * The [MotionEvent.getY] of the last [MotionEvent.ACTION_DOWN].
+     */
     private var downY = 0f
+
+    /**
+     * The [bottomAppBar] [MaterialBottomAppBar.getY] in the moment of the last
+     * [MotionEvent.ACTION_DOWN].
+     */
     private var bottomBarDownY = 0f
+
+    /**
+     * Whether the [bottomAppBar] is being dragged.
+     */
     private var draggingBar = false
 
+    /**
+     * The timestamp of the last [MotionEvent.ACTION_DOWN].
+     */
     private var downEventTimestamp = 0L
+
+    /**
+     * The timestamp of the last [MotionEvent.ACTION_DOWN] consumed by the dragging of
+     * [bottomAppBar].
+     */
     private var consumedEventTimestamp = 0L
 
     override fun onInterceptTouchEvent( event: MotionEvent ): Boolean {
