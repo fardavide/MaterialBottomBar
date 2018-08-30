@@ -8,7 +8,7 @@ Actually the library is in pre-alpha and I basically want to read your feedbacks
 ## Installation
 Add the library to your Gradle dependecies:
 
-    implementation "studio.forface.materialbottombar:materialbottombar:0.0.9"
+    implementation "studio.forface.materialbottombar:materialbottombar:0.0.10"
 
 ## Usage
 ### Basic usage ( more complex example and TIPS below )
