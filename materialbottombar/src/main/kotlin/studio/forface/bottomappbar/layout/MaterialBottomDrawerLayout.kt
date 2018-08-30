@@ -432,7 +432,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      * We will compare the display height to the visible frame height for understand if the
      * soft keyboard is shown.
      */
-    override fun onLayout( changed: Boolean, l: Int, t: Int, r: Int, b: Int ) {
+    /*override fun onLayout( changed: Boolean, l: Int, t: Int, r: Int, b: Int ) {
         super.onLayout( changed, l, t, r, b )
 
         getWindowVisibleDisplayFrame( rect )
@@ -441,7 +441,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             val heightDiff = rootView.height - ( rect.bottom - rect.top )
             if ( heightDiff > 500 ) it.hide() else it.show()
         }
-    }
+    }*/
 
     /**
      * The [MotionEvent.getY] of the last [MotionEvent.ACTION_DOWN].
