@@ -143,9 +143,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     var drawer: MaterialDrawer?
         get() = panels[drawerPanelId] as MaterialDrawer?
-        set( value ) = value.run {
+        set( value ) =
             value?.let { addPanel( it, drawerPanelId,true ) }
-        }
+                    ?: removePanel( drawerPanelId )
+
 
     /**
      * The ID of the [drawerPanel]
@@ -671,7 +672,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     private fun onSoftKeyboardStateChange( open: Boolean ) {
         bottomAppBar?.let {
-            if ( open ) it.hide() else it.show()
+            if ( open ) it.hide(true ) else it.show()
         }
     }
 
