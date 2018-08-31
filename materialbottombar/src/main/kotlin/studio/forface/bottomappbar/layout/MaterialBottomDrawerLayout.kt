@@ -12,7 +12,6 @@ import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.*
-import android.widget.EditText
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.graphics.ColorUtils
@@ -34,7 +33,7 @@ import studio.forface.bottomappbar.utils.*
 import studio.forface.bottomappbar.view.PanelView
 import java.util.*
 import android.opengl.ETC1.getHeight
-
+import com.google.android.material.internal.Experimental
 
 
 class MaterialBottomDrawerLayout @JvmOverloads constructor (
@@ -422,28 +421,6 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /* ========================================================================================== */
 
     /**
-     * The [Rect] that will receive the [getWindowVisibleDisplayFrame].
-     */
-    val rect = Rect()
-
-    /**
-     * Here we will [MaterialBottomAppBar.show] or [MaterialBottomAppBar.hide] whether if the
-     * soft keyboard is show or not.
-     * We will compare the display height to the visible frame height for understand if the
-     * soft keyboard is shown.
-     */
-    /*override fun onLayout( changed: Boolean, l: Int, t: Int, r: Int, b: Int ) {
-        super.onLayout( changed, l, t, r, b )
-
-        getWindowVisibleDisplayFrame( rect )
-
-        bottomAppBar?.let {
-            val heightDiff = rootView.height - ( rect.bottom - rect.top )
-            if ( heightDiff > 500 ) it.hide() else it.show()
-        }
-    }*/
-
-    /**
      * The [MotionEvent.getY] of the last [MotionEvent.ACTION_DOWN].
      */
     private var downY = 0f
@@ -647,6 +624,55 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
         hasFab ?: return
         fab?.show(isBarInInitialState && hasFab!! )
+    }
+
+
+    /**
+     * EXPERIMENTAL: Set true for auto-hide [bottomAppBar] when a soft keyboard is open / visible.
+     */
+    @Experimental
+    var hideBottomAppBarOnSoftKeyboard = false
+
+    /**
+     * The [Rect] that will receive the [getWindowVisibleDisplayFrame].
+     */
+    private val rect = Rect()
+
+    /**
+     * Whether the soft keyboard is currently open / visible.
+     */
+    private var isSoftKeyboardOpen = false
+
+    /**
+     * Here we will [MaterialBottomAppBar.show] or [MaterialBottomAppBar.hide] whether if the
+     * soft keyboard is show or not.
+     * We will compare the display height to the visible frame height for understand if the
+     * soft keyboard is shown.
+     */
+    override fun onLayout( changed: Boolean, l: Int, t: Int, r: Int, b: Int ) {
+        super.onLayout( changed, l, t, r, b )
+        if ( ! hideBottomAppBarOnSoftKeyboard ) return
+
+        getWindowVisibleDisplayFrame( rect )
+
+        val wasSoftKeyboardOpen = isSoftKeyboardOpen
+        isSoftKeyboardOpen = kotlin.run {
+            val heightDiff = rootView.height - ( rect.bottom - rect.top )
+            heightDiff > 500
+        }
+
+        if ( isSoftKeyboardOpen != wasSoftKeyboardOpen )
+            onSoftKeyboardStateChange( isSoftKeyboardOpen )
+    }
+
+    /**
+     * Callback executed when [isSoftKeyboardOpen] changes.
+     * @param open whether the soft keyboard is open / visible.
+     */
+    private fun onSoftKeyboardStateChange( open: Boolean ) {
+        bottomAppBar?.let {
+            if ( open ) it.hide() else it.show()
+        }
     }
 
 }
