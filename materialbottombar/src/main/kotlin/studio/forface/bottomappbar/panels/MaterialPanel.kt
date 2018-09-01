@@ -76,9 +76,9 @@ open class MaterialPanel(
 
         private var hasCustomShape = false
 
-        override fun iconShape( imageShape: ImageShape) {
-            super.iconShape( imageShape )
+        override fun iconShape( imageShape: ImageShape ): T {
             hasCustomShape = true
+            return super.iconShape( imageShape )
         }
 
         override fun applyIconTo(imageView: ImageView, applyOrHide: Boolean ) {
