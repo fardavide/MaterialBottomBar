@@ -49,7 +49,6 @@ interface Icon<T>: Param<T> {
     fun iconDpSize( size: Float ) =
             thisRef.apply { iconSizeHolder = SizeHolder( dp = size ) }
 
-    fun iconShape( imageShape: ImageShape) {
-        iconImageHolder.imageShape = imageShape
-    }
+    fun iconShape( imageShape: ImageShape) =
+            thisRef.apply{ iconImageHolder.imageShape = imageShape }
 }
