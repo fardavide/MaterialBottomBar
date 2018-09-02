@@ -1,4 +1,4 @@
-package studio.forface.bottomappbar.drawer.items.extra
+package studio.forface.bottomappbar.panels.items.extra
 
 import android.widget.TextView
 import studio.forface.bottomappbar.panels.holders.*
@@ -14,7 +14,7 @@ abstract class SimpleExtraItem<T>: Content<T>, Background<T> {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun copy() = ( newInstance() as SimpleExtraItem<*> ).apply {
+    fun copy() = ( newInstance() as SimpleExtraItem<*>).apply {
         this@apply.contentTextHolder =                  this@SimpleExtraItem.contentTextHolder
         this@apply.contentTextStyleHolder =             this@SimpleExtraItem.contentTextStyleHolder
         this@apply.contentTextSizeHolder =              this@SimpleExtraItem.contentTextSizeHolder

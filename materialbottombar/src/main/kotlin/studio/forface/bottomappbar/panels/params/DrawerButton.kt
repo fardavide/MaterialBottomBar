@@ -12,12 +12,16 @@ typealias ButtonStyle = RippleBackgroundStyle
 internal interface DrawerButton<T>: Param<T> {
     var buttonStyle: ButtonStyle
     var buttonItem: ButtonItem
-    fun buttonItem( button: ButtonItem) =
+
+    fun buttonItem( button: ButtonItem ) =
             thisRef.apply { buttonItem = button.copy() }
 
-    fun applyButtonTo( button: Button) {
+    fun applyButtonTo( button: Button ) {
         buttonItem.applyTo( button, buttonStyle )
     }
+
+    fun buttonId( id: Int ) =
+            thisRef.apply { buttonItem.id = id }
 
     fun buttonContentStringRes( @StringRes res: Int ) =
             thisRef.apply { buttonItem.contentStringRes( res ) }

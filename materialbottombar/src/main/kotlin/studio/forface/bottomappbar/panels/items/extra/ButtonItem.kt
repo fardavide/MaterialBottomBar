@@ -3,15 +3,17 @@ package studio.forface.bottomappbar.panels.items.extra
 import android.graphics.Color
 import android.widget.Button
 import androidx.core.view.doOnPreDraw
-import studio.forface.bottomappbar.drawer.items.extra.SimpleExtraItem
 import studio.forface.bottomappbar.panels.holders.*
 import studio.forface.bottomappbar.panels.params.ButtonStyle
+import studio.forface.bottomappbar.panels.params.Identifier
 import studio.forface.bottomappbar.panels.params.RippleBackgroundStyle
 import studio.forface.bottomappbar.utils.Drawables
 
-open class ButtonItem: SimpleExtraItem<ButtonItem>() {
+open class ButtonItem: SimpleExtraItem<ButtonItem>(), Identifier<ButtonItem> {
     override val thisRef get() = this
     override fun newInstance() = ButtonItem()
+
+    override var id = Int.MIN_VALUE
 
     fun applyTo( button: Button, buttonStyle: ButtonStyle ) {
         button.doOnPreDraw {
