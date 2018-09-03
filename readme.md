@@ -1,9 +1,12 @@
+
 # Material Bottom bar
 **Material Bottom Bar** is an Android library that let you implement a customized **BottomAppBar** and a **bottom drawer** with just few simple steps.
 
 Actually the library is in pre-alpha and I basically want to read your feedbacks and suggestions.
 
 ##### DO NOT USE IN PRODUCTION!
+
+![Demo application](https://media.giphy.com/media/28HvTGKfBYIYwmjDHb/giphy.gif)         ![WhatsBook](https://media.giphy.com/media/1jaIC1yKNaikPyktaU/giphy.gif)
 
 ## Installation
 Add the library to your Gradle dependecies:
