@@ -39,32 +39,14 @@ class MaterialBottomAppBar @JvmOverloads constructor (
 ) : BottomAppBar( context, attrs, defStyleAttr ) {
 
     /**
-     * An [Int] for keep track of the radius of the left corner
-     * @see setCornersRadius
-     */
-    private var _leftCornerRadius: Int = 0
-
-    /** An [Int] representing the corner style for the left corner */
-    private var _leftCornerStyle: Int = 0
-
-    /**
-     * An [Int] for keep track of the radius of the right corner
-     * @see setCornersRadius
-     */
-    private var _rightCornerRadius: Int = 0
-
-    /** An [Int] representing the corner style for the right corner */
-    private var _rightCornerStyle: Int = 0
-
-    /**
      * Get ( [DrawableCompat.getAlpha] ) and Set ( [View.setAlpha] ) on [getBackground]
-     * On Set, also re-set the [BottomAppBar.fabAlignmentMode]
+     * On Set, also call [MaterialShapeDrawable.invalidateSelf] of [materialShapeDrawable]
      */
     var backgroundAlpha: Int
         get() = DrawableCompat.getAlpha( background )
         set( value ) {
             background.alpha = value
-            fabAlignmentMode = fabAlignmentMode
+            materialShapeDrawable.invalidateSelf()
         }
 
     /**
@@ -74,14 +56,14 @@ class MaterialBottomAppBar @JvmOverloads constructor (
      * will be the same as [rightCorner]
      *
      * Set: se the [StaticCornerTreatment.fixedInterpolation] of [leftCorner] and [rightCorner] and
-     * also re=set the [BottomAppBar.fabAlignmentMode]
+     * also call [MaterialShapeDrawable.invalidateSelf] of [materialShapeDrawable]
      */
     var cornersInterpolation: Float
         get() = leftCorner.fixedInterpolation
         set( value ) {
             leftCorner.fixedInterpolation = value
             rightCorner.fixedInterpolation = value
-            fabAlignmentMode = fabAlignmentMode
+            materialShapeDrawable.invalidateSelf()
         }
 
     /** Get the OPTIONAL [FloatingActionButton] located in the [getParent] */
@@ -103,6 +85,21 @@ class MaterialBottomAppBar @JvmOverloads constructor (
     val layoutBehavior get() = ( layoutParams as CoordinatorLayout.LayoutParams )
             .behavior as? MaterialBottomAppBar.Behavior
 
+    /** A [StaticCornerTreatment] for the left corner */
+    internal val leftCorner get() = shapeAppearanceModel.topLeftCorner as StaticCornerTreatment
+
+    /**
+     * An [Int] for keep track of the radius of the left corner
+     * @see setCornersRadius
+     */
+    private var leftCornerRadius: Int = 0
+
+    /** An [Int] representing the corner style for the left corner */
+    private var leftCornerStyle: Int = 0
+
+    /** Get the [getBackground] casted as [MaterialShapeDrawable] */
+    private val materialShapeDrawable get() = background as MaterialShapeDrawable
+
     /** Get ( [View.getAlpha] ) and Set ( [View.setAlpha] ) on [navButtonView] */
     internal var menuIconAlpha: Float?
         get() = navButtonView?.alpha
@@ -120,11 +117,21 @@ class MaterialBottomAppBar @JvmOverloads constructor (
      */
     private val navButtonView: ImageButton? by reflection("mNavButtonView",2 )
 
-    /** A [StaticCornerTreatment] for the left corner */
-    internal lateinit var leftCorner: StaticCornerTreatment
-
     /** A [StaticCornerTreatment] for the right corner */
-    internal lateinit var rightCorner: StaticCornerTreatment
+    internal val rightCorner get() = shapeAppearanceModel.topRightCorner as StaticCornerTreatment
+
+    /**
+     * An [Int] for keep track of the radius of the right corner
+     * @see setCornersRadius
+     */
+    private var rightCornerRadius: Int = 0
+
+    /** An [Int] representing the corner style for the right corner */
+    private var rightCornerStyle: Int = 0
+
+    /** Get a [ShapeAppearanceModel] from the [getBackground] */
+    private val shapeAppearanceModel: ShapeAppearanceModel get() =
+        materialShapeDrawable.shapeAppearanceModel
 
     /* INITIALIZE THE VIEW */
     init {
@@ -147,14 +154,14 @@ class MaterialBottomAppBar @JvmOverloads constructor (
             hideFabOnScroll = getBoolean(
                     R.styleable.MaterialBottomAppBar_hideFabOnScroll, false )
 
-            _leftCornerRadius = getDimensionPixelSize(
+            leftCornerRadius = getDimensionPixelSize(
                     R.styleable.MaterialBottomAppBar_leftCornerRadius,0 )
-            _leftCornerStyle = getInt(
+            leftCornerStyle = getInt(
                     R.styleable.MaterialBottomAppBar_leftCornerStyle, 0 )
 
-            _rightCornerRadius = getDimensionPixelSize(
+            rightCornerRadius = getDimensionPixelSize(
                     R.styleable.MaterialBottomAppBar_rightCornerRadius,0 )
-            _rightCornerStyle = getInt(
+            rightCornerStyle = getInt(
                     R.styleable.MaterialBottomAppBar_rightCornerStyle,0 )
         }
 
@@ -164,31 +171,24 @@ class MaterialBottomAppBar @JvmOverloads constructor (
 
 
     /**
-     * Apply a new [StaticCornerTreatment] to [ShapeAppearanceModel.topLeftCorner] and
-     * [ShapeAppearanceModel.topRightCorner] of [getBackground], using [_leftCornerRadius] and
-     * [_rightCornerRadius]
+     * Apply [leftCornerRadius], [leftCornerStyle], [rightCornerRadius] and [rightCornerStyle] to
+     * [shapeAppearanceModel] with the [cornersInterpolation]
      */
     private fun drawBackgroundTopCorners() {
-        val leftCornerRadius  = _leftCornerRadius.toFloat()
-        val rightCornerRadius = _rightCornerRadius.toFloat()
+        shapeAppearanceModel.apply {
 
-        val shapeDrawable = ( background as MaterialShapeDrawable )
-        val shapePathModel = shapeDrawable.shapedViewModel!!.apply {
-
-            leftCorner = when (_leftCornerStyle) {
-                0 ->    StaticRoundedCornerTreatment( leftCornerRadius )
-                else -> StaticCutCornerTreatment( leftCornerRadius )
+            topLeftCorner = when( leftCornerStyle ) {
+                0 -> StaticRoundedCornerTreatment( leftCornerRadius.toFloat() )
+                1 -> StaticCutCornerTreatment( leftCornerRadius.toFloat() )
+                else -> throw IllegalStateException()
             }
-            topLeftCorner = leftCorner
 
-            rightCorner = when (_rightCornerStyle) {
-                0 ->    StaticRoundedCornerTreatment( rightCornerRadius )
-                else -> StaticCutCornerTreatment( rightCornerRadius )
+            topRightCorner = when( rightCornerStyle ) {
+                0 -> StaticRoundedCornerTreatment( rightCornerRadius.toFloat() )
+                1 -> StaticCutCornerTreatment( rightCornerRadius.toFloat() )
+                else -> throw IllegalStateException()
             }
-            topRightCorner = rightCorner
         }
-
-        shapeDrawable.shapeAppearanceModel = shapePathModel
     }
 
     /** Set a padding of 16dp to [navButtonView]. [View.setPadding] */
@@ -204,7 +204,8 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         val animator = ValueAnimator.ofFloat( from, to )
 
         animator.addUpdateListener { animation ->
-            cornersInterpolation = animation.animatedValue as Float
+            val value = animation.animatedValue as Float
+            cornersInterpolation = value
         }
         animator.duration = 300L
 
@@ -250,12 +251,12 @@ class MaterialBottomAppBar @JvmOverloads constructor (
     }
 
     /**
-     * Set the radius of the corners [_leftCornerRadius] and [_rightCornerRadius]
+     * Set the radius of the corners [leftCornerRadius] and [rightCornerRadius]
      * Also call [drawBackgroundTopCorners]
      */
     fun setCornersRadius( left: Int, right: Int ) {
-        _leftCornerRadius = left
-        _rightCornerRadius = right
+        leftCornerRadius = left
+        rightCornerRadius = right
         drawBackgroundTopCorners()
     }
 

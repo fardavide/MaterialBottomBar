@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/switchFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread_inside" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/hideFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/switchFab" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/hideBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -100,13 +100,14 @@
         app:backgroundTint="@android:color/holo_red_light"
         app:navigationIcon="@drawable/ic_menu_black_24dp"
 
+        app:fabAnimationMode="slide"
         app:fabAlignmentMode="center"
         app:fabCradleRoundedCornerRadius="16dp"
 
         app:leftCornerRadius="24dp"
         app:leftCornerStyle="round"
         app:rightCornerRadius="24dp"
-        app:rightCornerStyle="round"/>
+        app:rightCornerStyle="cut"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

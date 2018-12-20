@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.bottomappbar.BottomAppBar.*
 import kotlinx.android.synthetic.main.activity_demo.*
 import studio.forface.bottomappbar.drawer.MaterialDrawer
 import studio.forface.bottomappbar.drawer.items.PrimaryDrawerItem
@@ -85,7 +87,8 @@ class DemoActivity: AppCompatActivity() {
         val inactive = Color.GRAY
 
         switchFab.setOnClickListener {
-            bar.fabAlignmentMode = if ( bar.fabAlignmentMode == 0 ) 1 else 0
+            bar.fabAlignmentMode = if ( bar.fabAlignmentMode == FAB_ALIGNMENT_MODE_CENTER )
+                FAB_ALIGNMENT_MODE_END else FAB_ALIGNMENT_MODE_CENTER
         }
 
         hideFab.setOnClickListener {
@@ -93,7 +96,7 @@ class DemoActivity: AppCompatActivity() {
                 inactive to false
             else active to true
 
-            hideFab.background.setColorFilter( bg, PorterDuff.Mode.SRC )
+            hideFab.setBackgroundColor( bg )
             bar.hideFabOnScroll = set
         }
 
@@ -102,7 +105,7 @@ class DemoActivity: AppCompatActivity() {
                 inactive to false
             else active to true
 
-            hideBar.background.setColorFilter( bg, PorterDuff.Mode.SRC )
+            hideBar.setBackgroundColor( bg )
             bar.hideBarOnScroll = set
         }
 
