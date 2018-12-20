@@ -31,11 +31,12 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':materialbottombar')
-    implementation deps.kotlin.stdlib
 
-    implementation deps.androidX.appCompat
-    implementation deps.androidX.constraintLayout
-    implementation deps.androidX.material
+    implementation deps.android.appCompat
+    implementation deps.android.constraintLayout
+    implementation deps.android.material
+
+    implementation deps.kotlin.stdlib
 
     implementation deps.other.timber
 

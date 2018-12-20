@@ -11,27 +11,25 @@ import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
-import android.widget.EditText
 import android.widget.ImageButton
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnLayout
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.postDelayed
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.shape.*
-import studio.forface.bottomappbar.layout.MaterialBottomDrawerLayout
+import com.google.android.material.shape.MaterialShapeDrawable
 import studio.forface.bottomappbar.utils.dpToPixels
 import studio.forface.bottomappbar.utils.findChildType
 import studio.forface.bottomappbar.utils.reflection
 import studio.forface.bottomappbar.utils.useAttributes
 import studio.forface.bottomappbar.view.PanelView
 import studio.forface.materialbottombar.bottomappbar.R
-import java.lang.ClassCastException
 
+/**
+ * @author Davide Giuseppe Farella
+ */
 class MaterialBottomAppBar @JvmOverloads constructor (
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BottomAppBar( context, attrs, defStyleAttr ) {
@@ -41,11 +39,11 @@ class MaterialBottomAppBar @JvmOverloads constructor (
     var hideBarOnScroll: Boolean = false
     var hideFabOnScroll: Boolean = false
 
-    @Deprecated("use hideBarOnScroll", ReplaceWith("hideBarOnScroll"))
+    @Deprecated("use hideBarOnScroll", ReplaceWith("hideBarOnScroll" ) )
     override fun getHideOnScroll(): Boolean {
         return super.getHideOnScroll()
     }
-    @Deprecated("use hideBarOnScroll", ReplaceWith("hideBarOnScroll"))
+    @Deprecated("use hideBarOnScroll", ReplaceWith("hideBarOnScroll" ) )
     override fun setHideOnScroll( hide: Boolean ) {
         super.setHideOnScroll( hide )
     }
@@ -185,7 +183,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
             topRightCorner = rightCorner
         }
 
-        shapeDrawable.shapedViewModel = shapePathModel
+        shapeDrawable.shapeAppearanceModel = shapePathModel
     }
 
     class Behavior( context: Context, attrs: AttributeSet? )

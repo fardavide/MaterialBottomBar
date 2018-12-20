@@ -34,15 +34,18 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation deps.kotlin.stdlib
 
-    implementation deps.androidX.appCompat
-    implementation deps.androidX.constraintLayout
-    implementation deps.androidX.ktx
-    implementation deps.androidX.material
+    implementation deps.android.appCompat
+    implementation deps.android.constraintLayout
+    implementation deps.android.ktx
+    implementation deps.android.material
+
+    implementation deps.kotlin.stdlib
+    implementation deps.kotlin.coroutines
+    implementation deps.kotlin.coroutinesAndroid
 
     implementation deps.other.glide
-    kapt deps.other.glide_compiler
+    kapt deps.other.glideCompiler
     implementation deps.other.timber
 
     testImplementation deps.test.junit

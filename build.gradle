@@ -2,75 +2,125 @@
 
 buildscript {
 
-    ext.build = [
-            major:              0,
-            minor:              0,
-            patch:              15,
+    ext.buildVersion = [
+            major:      1,
+            minor:      0,
+            channel:    1, // 0: build, 1: alpha, 2: beta, 3: RC, 4: stable
+            patch:      15,
+            build:      1
     ]
 
+    ext.getVersionName = {
+        def baseName = "${buildVersion.major}.${buildVersion.minor}"
+        def suffixName = getSuffixVersionName()
+
+        return "${baseName}${suffixName}"
+    }
+
+    ext.getSuffixVersionName = {
+        def ch = buildVersion.channel
+        if ( buildVersion.build > 0 || ch == 0 ) return getVersionBuildName()
+
+        def vChannel = ""
+        if ( ch == 1 ) vChannel = "-alpha"
+        else if ( ch == 2 ) vChannel = "-beta"
+        else if ( ch == 3 ) vChannel = "-RC"
+        //else if ( ch == 4 ) vChannel = "" // stable
+
+        def pt = buildVersion.patch
+        if ( pt > 0 ) vChannel = "${vChannel}-${pt}"
+
+        return vChannel
+    }
+
+    ext.getVersionBuildName = {
+        def vBuild = ""
+        def bv = buildVersion.build
+
+        if ( bv > 0 ) {
+            vBuild = "-build${buildVersion.channel}${buildVersion.patch}${bv}"
+
+            def ch = buildVersion.channel
+            if ( ch == 3 )
+                throw IllegalArgumentException( "build is ${bv}, but channel is ${ch} ( stable )" )
+        }
+
+        return vBuild
+    }
+
+    ext.getVersionCode = {
+        // pattern:
+        // major minor channel patch build
+        // 00    00    0      00     00
+
+        def build   = buildVersion.build   *            01
+        def patch   = buildVersion.patch   *         01_00
+        def channel = buildVersion.channel *       1_00_00
+        def minor   = buildVersion.minor   *    01_0_00_00
+        def major   = buildVersion.major   * 01_00_0_00_00
+
+        return major + minor + patch + channel + build
+    }
+
     ext.versions = [
-            versionName:            "$build.major.$build.minor.$build.patch",
-            versionCode:            build.major * 1_00_00 + build.minor * 1_00 + build.patch * 1,
+            versionName:                getVersionName(),
+            versionCode:                getVersionCode(),
 
-            minSdk:                 18,
-            targetSdk:              28,
-            sourceCompat:           JavaVersion.VERSION_1_8,
-            targetCompat:           JavaVersion.VERSION_1_8,
-            buildTools:             '3.3.0-alpha02',
-            kotlin:                 '1.2.51',
+            minSdk:                     18,
+            targetSdk:                  28,
+            sourceCompat:               JavaVersion.VERSION_1_8,
+            targetCompat:               JavaVersion.VERSION_1_8,
+            buildTools:                 '3.3.0-rc02',
 
-            appCompat:              '1.0.0-beta01',
-            bintrayPlugin:          '1.8.0',
-            constraintLayout:       '2.0.0-alpha1',
-            glide:                  '4.8.0',
-            material:               '1.0.0-rc01',
-            mavenPlugin:            '2.0',
-            ktx:                    '1.0.0-alpha1',
-            rxAndroid:              '2.0.2',
-            rxJava:                 '2.1.13',
-            rxKotlin:               '2.2.0',
-            timber:                 '4.7.1',
+            kotlin:                     '1.3.11',
+            kotlinCoroutines:           '1.0.0',
+            kotlinCoroutinesAndroid:    '1.0.0',
 
-            junit:                  '4.12',
-            espressoCore:           '3.1.0-alpha3',
-            testRunner:             '1.1.0-alpha3',
+            appCompat:                  '1.1.0-alpha01',
+            bintrayPlugin:              '1.8.0',
+            constraintLayout:           '2.0.0-alpha2',
+            glide:                      '4.8.0',
+            material:                   '1.1.0-alpha02',
+            mavenPlugin:                '2.0',
+            ktx:                        '1.0.1',
+            timber:                     '4.7.1',
+
+            junit:                      '4.12',
+            espressoCore:               '3.1.0-alpha3',
+            testRunner:                 '1.1.0-alpha3',
     ]
 
     ext.deps = [
-            android: [
-                    gradlePlugin:       "com.android.tools.build:gradle:$versions.buildTools",
-                    //design:             "com.android.support:design:$versions.support",
-            ],
-            androidX: [
-                    appCompat:          "androidx.appcompat:appcompat:$versions.appCompat",
-                    constraintLayout:   "androidx.constraintlayout:constraintlayout:$versions.constraintLayout",
-                    ktx:                "androidx.core:core-ktx:$versions.ktx",
-                    material:           "com.google.android.material:material:$versions.material",
-            ],
-            kotlin: [
-                    gradlePlugin:       "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
-                    stdlib:             "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin",
-            ],
-            other: [
-                    glide:              "com.github.bumptech.glide:glide:$versions.glide",
-                    glide_compiler:     "com.github.bumptech.glide:compiler:$versions.glide",
-                    timber:             "com.jakewharton.timber:timber:$versions.timber",
-            ],
-            plugins: [
-                    bintray:            "com.jfrog.bintray.gradle:gradle-bintray-plugin:$versions.bintrayPlugin",
-                    maven:              "com.github.dcendents:android-maven-gradle-plugin:$versions.mavenPlugin"
-            ],
-            rx: [
-                    android:            "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid",
-                    java:               "io.reactivex.rxjava2:rxjava:$versions.rxJava",
-                    kotlin:             "io.reactivex.rxjava2:rxkotlin:$versions.rxKotlin",
-            ],
-            test: [
-                    androidJunitRunner: "androidx.test.runner.AndroidJUnitRunner",
-                    junit:              "junit:junit:$versions.junit",
-                    espressoCore:       "androidx.test.espresso:espresso-core:$versions.espressoCore",
-                    testRunner:         "androidx.test:runner:$versions.testRunner",
-            ]
+        gradle: [
+            android:            "com.android.tools.build:gradle:$versions.buildTools",
+            bintray:            "com.jfrog.bintray.gradle:gradle-bintray-plugin:$versions.bintrayPlugin",
+            kotlin:             "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
+            maven:              "com.github.dcendents:android-maven-gradle-plugin:$versions.mavenPlugin",
+        ],
+        android: [
+            appCompat:          "androidx.appcompat:appcompat:$versions.appCompat",
+            constraintLayout:   "androidx.constraintlayout:constraintlayout:$versions.constraintLayout",
+            //design:             "com.android.support:design:$versions.support",
+            ktx:                "androidx.core:core-ktx:$versions.ktx",
+            material:           "com.google.android.material:material:$versions.material",
+        ],
+        kotlin: [
+            coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.kotlinCoroutines",
+            coroutinesAndroid:  "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.kotlinCoroutinesAndroid",
+            //reflection:         "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
+            stdlib:             "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin",
+        ],
+        other: [
+            glide:              "com.github.bumptech.glide:glide:$versions.glide",
+            glideCompiler:      "com.github.bumptech.glide:compiler:$versions.glide",
+            timber:             "com.jakewharton.timber:timber:$versions.timber",
+        ],
+        test: [
+            androidJunitRunner: "androidx.test.runner.AndroidJUnitRunner",
+            junit:              "junit:junit:$versions.junit",
+            espressoCore:       "androidx.test.espresso:espresso-core:$versions.espressoCore",
+            testRunner:         "androidx.test:runner:$versions.testRunner",
+        ]
     ]
 
     repositories {
@@ -79,11 +129,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath deps.android.gradlePlugin
-        classpath deps.kotlin.gradlePlugin
+        classpath deps.gradle.android
+        classpath deps.gradle.kotlin
 
-        classpath deps.plugins.bintray
-        classpath deps.plugins.maven
+        classpath deps.gradle.bintray
+        classpath deps.gradle.maven
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
