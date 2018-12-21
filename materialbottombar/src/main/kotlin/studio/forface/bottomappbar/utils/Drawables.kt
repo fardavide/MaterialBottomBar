@@ -4,12 +4,11 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.*
 import android.os.Build
-import com.google.android.material.shape.EdgeTreatment
-import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.shape.RoundedCornerTreatment
-import com.google.android.material.shape.ShapePathModel
+import com.google.android.material.shape.*
 
-
+/**
+ * @author Davide Giuseppe Farella
+ */
 object Drawables {
 
     const val CORNER_RADIUS_SOFT = 12f
@@ -44,16 +43,12 @@ object Drawables {
             val colorList = ColorStateList.valueOf( maskColor )
             val content = materialDrawable( contentColor, cornerRadius, contentAlpha )
             val mask = materialDrawable( maskColor, cornerRadius, maskAlpha )
-            return RippleDrawable(
-                    colorList, content, mask
-            )
+            return RippleDrawable( colorList, content, mask )
         }
     }
 
-    fun materialDrawable(
-            color: Int, cornerRadius: Float, colorAlpha: Float = 1f
-    ): Drawable {
-        val shapedPathModel = ShapePathModel().apply {
+    fun materialDrawable( color: Int, cornerRadius: Float, colorAlpha: Float = 1f ): Drawable {
+        val shapedPathModel = ShapeAppearanceModel().apply {
             setAllEdges( EdgeTreatment() )
             setAllCorners( RoundedCornerTreatment( cornerRadius ) )
         }
