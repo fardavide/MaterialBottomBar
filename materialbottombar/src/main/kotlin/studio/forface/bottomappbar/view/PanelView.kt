@@ -79,7 +79,7 @@ class PanelView @JvmOverloads constructor (
     private fun buildHeader( layout: MaterialBottomDrawerLayout, header: MaterialPanel.IHeader? )  =
             when ( header ) {
 
-                is MaterialPanel.AbsHeader<*> -> LayoutInflater.from( context )
+                is MaterialPanel.BaseHeader<*> -> LayoutInflater.from( context )
                         .inflate( R.layout.drawer_header,this, false )
                         .apply {
                             header_shadow.elevationCompat = 14f
@@ -97,7 +97,7 @@ class PanelView @JvmOverloads constructor (
     private fun buildBody( body: MaterialPanel.IBody? ) =
             when( body ) {
 
-                is MaterialPanel.AbsBody<*> -> LayoutInflater.from( context )
+                is MaterialPanel.BaseBody<*> -> LayoutInflater.from( context )
                         .inflate( R.layout.drawer_body,this, false )
                         as RecyclerView
 

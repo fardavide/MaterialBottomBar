@@ -11,22 +11,22 @@ class MaterialDrawer(
     _wrapToContent: Boolean = false
 ): MaterialPanel( _header, _body, _wrapToContent ) {
 
-    class Header: MaterialPanel.AbsHeader<Header>() {
+    class Header: MaterialPanel.BaseHeader<Header>() {
         override val thisRef: Header get() = this
     }
 
     class CustomHeader( _contentView: View ): MaterialPanel.CustomBody( _contentView )
 
-    class Body( _items: List<PanelItem> = listOf() ): MaterialPanel.AbsBody<Body>( _items ) {
+    class Body( _items: List<PanelItem> = listOf() ): MaterialPanel.BaseBody<Body>( _items ) {
         override val thisRef: Body get() = this
     }
 
     class CustomBody( _contentView: View): MaterialPanel.CustomBody( _contentView )
 }
 
-fun List<PanelItem>.mapBasePanelItems(mapper: (BasePanelItem) -> Unit ) =
+inline fun List<PanelItem>.mapBasePanelItems(mapper: (BasePanelItem) -> Unit ) =
         this.map { ( it as? BasePanelItem )?.apply { mapper( this ) } ?: it }
 
-fun List<PanelItem>.forEachBasePanelItem(block: (BasePanelItem) -> Unit ) {
+inline fun List<PanelItem>.forEachBasePanelItem(block: (BasePanelItem) -> Unit ) {
     forEach { ( it as? BasePanelItem )?.run( block ) }
 }

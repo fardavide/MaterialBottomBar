@@ -46,5 +46,5 @@ class ImageHolder internal constructor(
         else applyTo( imageView )
     }
 
-    private fun allNull(vararg any: Any? ) = any.filterNotNull().isEmpty()
+    private fun allNull( vararg any: Any? ) = any.all { it == null }
 }

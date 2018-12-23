@@ -6,7 +6,7 @@ buildscript {
             major:      1,
             minor:      0,
             channel:    1, // 0: build, 1: alpha, 2: beta, 3: RC, 4: stable
-            patch:      16,
+            patch:      17,
             build:      0
     ]
 
@@ -77,7 +77,7 @@ buildscript {
             kotlinCoroutinesAndroid:    '1.0.0',
 
             appCompat:                  '1.1.0-alpha01',
-            bintrayPlugin:              '1.8.0',
+            bintrayPlugin:              '1.8.4',
             constraintLayout:           '2.0.0-alpha2',
             glide:                      '4.8.0',
             material:                   '1.1.0-alpha02',

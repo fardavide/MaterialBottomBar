@@ -8,7 +8,7 @@ import studio.forface.bottomappbar.panels.items.BasePanelItem
 import studio.forface.bottomappbar.panels.items.Divider
 import studio.forface.materialbottombar.bottomappbar.R
 
-internal class PanelBodyAdapter( val body: MaterialPanel.AbsBody<*> )
+internal class PanelBodyAdapter( val body: MaterialPanel.BaseBody<*> )
     : RecyclerView.Adapter<ItemViewHolder>() {
 
     val items get() = body.items

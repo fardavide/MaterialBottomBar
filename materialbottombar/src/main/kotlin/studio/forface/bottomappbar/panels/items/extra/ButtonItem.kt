@@ -4,12 +4,12 @@ import android.graphics.Color
 import android.os.Build
 import android.widget.Button
 import androidx.core.view.doOnPreDraw
-import studio.forface.bottomappbar.panels.holders.*
+import studio.forface.bottomappbar.panels.holders.SizeHolder
+import studio.forface.bottomappbar.panels.holders.TextSizeHolder
 import studio.forface.bottomappbar.panels.params.ButtonStyle
 import studio.forface.bottomappbar.panels.params.Identifier
 import studio.forface.bottomappbar.panels.params.RippleBackgroundStyle
 import studio.forface.bottomappbar.utils.Drawables
-import studio.forface.bottomappbar.utils.elevationCompat
 
 /**
  * @author Davide Giuseppe Farella

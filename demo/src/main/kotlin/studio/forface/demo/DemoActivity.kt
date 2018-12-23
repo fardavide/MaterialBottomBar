@@ -17,10 +17,14 @@ import kotlinx.android.synthetic.main.activity_demo.*
 import studio.forface.bottomappbar.drawer.MaterialDrawer
 import studio.forface.bottomappbar.drawer.items.PrimaryDrawerItem
 import studio.forface.bottomappbar.drawer.items.SecondaryDrawerItem
+import studio.forface.bottomappbar.dsl.panel
 import studio.forface.bottomappbar.panels.MaterialPanel
 import studio.forface.bottomappbar.panels.items.Divider
 import studio.forface.bottomappbar.panels.items.PrimaryPanelItem
 import studio.forface.bottomappbar.panels.params.ButtonStyle
+import studio.forface.bottomappbar.panels.params.backgroundColor
+import studio.forface.bottomappbar.panels.params.titleColor
+import studio.forface.bottomappbar.panels.params.titleText
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
 
@@ -57,7 +61,19 @@ class DemoActivity: AppCompatActivity() {
                 .titleColor( Color.WHITE )
                 .backgroundColor( Color.DKGRAY )
 
-        val panelSort = MaterialPanel( panelHeader, panelBody )
+        val panelSort = panel {
+
+            header {
+                this.titleText = "Sort by"
+                this.titleColor = Color.WHITE
+                this.backgroundColor = Color.WHITE
+            }
+
+            body {
+
+            }
+
+        }
 
         drawerLayout.addPanel( panelSort, PANEL_SORT_ID )
 

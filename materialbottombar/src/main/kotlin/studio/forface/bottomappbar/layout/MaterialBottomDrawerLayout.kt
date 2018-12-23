@@ -108,7 +108,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /**
      * It represents the Background Color of the current dragging Panel.
      * If no Panel is being dragged it is null.
-     * If the [MaterialPanel.header] is [MaterialPanel.AbsHeader], it will be
+     * If the [MaterialPanel.header] is [MaterialPanel.BaseHeader], it will be
      * [ColorHolder.resolveColor];
      * If the [MaterialPanel.header] is [MaterialPanel.CustomHeader] and the [View.getBackground]
      * [MaterialPanel.CustomHeader.contentView] is [ColorDrawable], it will be
@@ -325,7 +325,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     private fun setHeader( header: MaterialPanel.IHeader?, panelView: PanelView ) {
         panelView.setHeader(this, header )
-        ( header as? MaterialPanel.AbsHeader<*> )?.let {
+        ( header as? MaterialPanel.BaseHeader<*> )?.let {
             header.applyIconTo( panelView.header.header_icon )
 
             header.applyTitleTo( panelView.header.header_title )
@@ -343,7 +343,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     private fun setBody( body: MaterialPanel.IBody?, panelView: PanelView ) {
         panelView.setBody( body )
-        ( body as? MaterialPanel.AbsBody<*> )?.let {
+        ( body as? MaterialPanel.BaseBody<*> )?.let {
             if ( body.selectionColorHolder.resolveColor( context ) == null) {
                 val color = draggingPanelHeaderColor ?: Color.GRAY
                 body.selectionColor( color )
@@ -412,7 +412,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
         // Store the color of the header of the PanelView.
         draggingPanelHeaderColor =
-                ( draggingPanel?.header as? MaterialPanel.AbsHeader<*> )
+                ( draggingPanel?.header as? MaterialPanel.BaseHeader<*> )
                         ?.backgroundColorHolder?.resolveColor( context )
 
                 ?: ( ( draggingPanel?.header as? MaterialPanel.CustomHeader )

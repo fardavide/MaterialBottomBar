@@ -13,7 +13,7 @@ import studio.forface.bottomappbar.utils.dpToPixels
 
 class ItemViewHolder internal constructor(
         itemView: View,
-        private val panelBody: MaterialPanel.AbsBody<*>
+        private val panelBody: MaterialPanel.BaseBody<*>
 ): RecyclerView.ViewHolder( itemView ) {
 
     fun bind(panelItem: PanelItem ) {
