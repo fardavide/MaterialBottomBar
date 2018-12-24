@@ -8,7 +8,7 @@ import studio.forface.bottomappbar.drawer.MaterialDrawer
  *
  * @see DrawerBuilder
  */
-inline fun drawer( wrapToContent: Boolean = true, f: DrawerBuilder.() -> Unit ): MaterialDrawer {
+inline fun drawer( wrapToContent: Boolean = false, f: DrawerBuilder.() -> Unit ): MaterialDrawer {
     val builder = DrawerBuilder( wrapToContent )
     builder.f()
     return builder.build()
