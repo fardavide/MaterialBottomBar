@@ -177,8 +177,8 @@ open class MaterialPanel(
         override var selectionColorHolder = ColorHolder()
         /** @see Selection.selectionCornerRadiusSizeHolder */
         override var selectionCornerRadiusSizeHolder = SizeHolder( dp = Drawables.CORNER_RADIUS_SOFT )
-        /** @see Selection.onItemClickListener */
-        override var onItemClickListener: OnItemClickListener = { _, _ ->  }
+        /** @see Selection.onItemClick */
+        override var onItemClick: OnItemClickListener = { _, _ ->  }
 
         /**
          * A [List] of [PanelItem] for the body. On Set: [Observable.setChanged] and

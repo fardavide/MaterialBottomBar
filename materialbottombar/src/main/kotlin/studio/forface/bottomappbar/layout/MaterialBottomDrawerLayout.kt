@@ -307,9 +307,9 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         // if the PanelView, re-set the panel.
         materialPanel.run {
             observe { newPanel, change -> when( change ) {
-                is MaterialPanel.Change.HEADER ->       { setHeader( newPanel.header, panelView ) }
-                is MaterialPanel.Change.BODY ->         { setBody(   newPanel.body,   panelView ) }
-                is MaterialPanel.Change.PANEL_VIEW->    { addPanel(  newPanel, id, isDrawer     ) }
+                MaterialPanel.Change.HEADER ->       { setHeader( newPanel.header, panelView ) }
+                MaterialPanel.Change.BODY ->         { setBody(   newPanel.body,   panelView ) }
+                MaterialPanel.Change.PANEL_VIEW->    { addPanel(  newPanel, id, isDrawer     ) }
             } }
 
             // Set the Header and the Body into the layout.

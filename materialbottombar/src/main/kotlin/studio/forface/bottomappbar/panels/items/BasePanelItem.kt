@@ -10,7 +10,8 @@ abstract class BasePanelItem: PanelItem,
         Icon<BasePanelItem>,
         Identifier<BasePanelItem>,
         Badge<BasePanelItem>,
-        DrawerButton<BasePanelItem>
+        PanelButton<BasePanelItem>,
+        Cloneable
 {
     override val thisRef get() = this
     abstract val iconMarginStartDp: Float

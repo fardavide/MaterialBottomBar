@@ -42,7 +42,7 @@ class ItemViewHolder internal constructor(
     }
 
     private val itemClickListener: (BasePanelItem) -> (View) -> Unit get() = { item -> {
-        panelBody.onItemClickListener( item.id, itemView.item_title.text )
+        panelBody.onItemClick( item.id, itemView.item_title.text )
 
         Handler().postDelayed({
             item.selected = true
@@ -51,7 +51,7 @@ class ItemViewHolder internal constructor(
     } }
 
     private val buttonItemClickListener: (ButtonItem) -> (View) -> Unit get() = { buttonItem -> {
-        panelBody.onItemClickListener( buttonItem.id, itemView.item_button.text )
+        panelBody.onItemClick( buttonItem.id, itemView.item_button.text )
     } }
 
 }

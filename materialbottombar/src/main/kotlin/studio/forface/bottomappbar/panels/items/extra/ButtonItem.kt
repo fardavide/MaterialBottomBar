@@ -8,17 +8,27 @@ import studio.forface.bottomappbar.panels.holders.SizeHolder
 import studio.forface.bottomappbar.panels.holders.TextSizeHolder
 import studio.forface.bottomappbar.panels.params.ButtonStyle
 import studio.forface.bottomappbar.panels.params.Identifier
+import studio.forface.bottomappbar.panels.params.Param
 import studio.forface.bottomappbar.panels.params.RippleBackgroundStyle
 import studio.forface.bottomappbar.utils.Drawables
 
 /**
  * @author Davide Giuseppe Farella
+ * An extra Item for Button.
+ *
+ * Inherit from [SimpleExtraItem] and [Identifier]
  */
 open class ButtonItem: SimpleExtraItem<ButtonItem>(), Identifier<ButtonItem> {
-    override val thisRef get() = this
-    override fun newInstance() = ButtonItem()
 
+    /** @see Param.thisRef */
+    override val thisRef get() = this
+    /** @see Identifier.id */
     override var id = Int.MIN_VALUE
+
+    /** A reference to [] for the XXX of the Button */
+    override var backgroundCornerRadiusSizeHolder = SizeHolder( dp = 6f )
+    /** A reference to [] for the XXX of the Button */
+    override var contentTextSizeHolder = TextSizeHolder( sp = 12f )
 
     /** Apply the [ButtonItem] params to a [Button], with the given [ButtonStyle] */
     fun applyTo( button: Button, buttonStyle: ButtonStyle ) {
@@ -43,7 +53,12 @@ open class ButtonItem: SimpleExtraItem<ButtonItem>(), Identifier<ButtonItem> {
             )
         }
     }
+}
 
-    override var contentTextSizeHolder =            TextSizeHolder( sp = 12f )
-    override var backgroundCornerRadiusSizeHolder = SizeHolder( dp = 6f )
+/** A function for create a [ButtonItem] within a DSL style */
+@Suppress("FunctionName")
+fun Button( f: ButtonItem.() -> Unit ): ButtonItem {
+    val item = ButtonItem()
+    item.f()
+    return item
 }

@@ -10,17 +10,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomappbar.BottomAppBar.*
+import com.google.android.material.bottomappbar.BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+import com.google.android.material.bottomappbar.BottomAppBar.FAB_ALIGNMENT_MODE_END
 import kotlinx.android.synthetic.main.activity_demo.*
 import studio.forface.bottomappbar.drawer.MaterialDrawer
 import studio.forface.bottomappbar.drawer.items.PrimaryDrawerItem
 import studio.forface.bottomappbar.drawer.items.SecondaryDrawerItem
 import studio.forface.bottomappbar.dsl.drawer
 import studio.forface.bottomappbar.dsl.panel
-import studio.forface.bottomappbar.panels.MaterialPanel
 import studio.forface.bottomappbar.panels.items.Divider
-import studio.forface.bottomappbar.panels.items.PrimaryPanelItem
-import studio.forface.bottomappbar.panels.items.extra.BadgeItem
+import studio.forface.bottomappbar.panels.items.extra.Badge
 import studio.forface.bottomappbar.panels.params.*
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
@@ -40,36 +39,20 @@ class DemoActivity: AppCompatActivity() {
         setRecyclerView()
         setButtons()
 
-        drawerLayout.drawer = oldFancyDrawer
-
-        val name = PrimaryPanelItem()
-                .id(100 )
-                .titleText("Name" )
-
-        val surname = PrimaryPanelItem()
-                .id(101 )
-                .titleText("Surname" )
-
-        val panelBody = MaterialPanel.Body()
-                .items( listOf( name, surname ) )
-
-        val panelHeader = MaterialPanel.Header()
-                .titleText("Sort by" )
-                .titleColor( Color.WHITE )
-                .backgroundColor( Color.DKGRAY )
+        drawerLayout.drawer = fancyDrawer
 
         val panelSort = panel {
 
             header {
-                this.titleText = "Sort by"
-                this.titleColor = Color.WHITE
-                this.backgroundColor = Color.WHITE
+                titleText = "Sort by"
+                titleColor = Color.WHITE
+                backgroundColor = Color.DKGRAY
             }
 
             body {
-
+                primaryItem("Name ") { id = 100 }
+                primaryItem("Surname ") { id = 101 }
             }
-
         }
 
         drawerLayout.addPanel( panelSort, PANEL_SORT_ID )
@@ -272,7 +255,17 @@ class DemoActivity: AppCompatActivity() {
         body {
 
             /* SETUP */
-            val baseBadge = BadgeItem {
+            selectedItem = 1
+            selectionColor = Color.RED
+            selectionCornerRadiusDp = 16f
+            onItemClick = { id, title ->
+                Toast.makeText(
+                        this@DemoActivity,
+                        "$title - $id clicked",
+                        Toast.LENGTH_SHORT
+                ).show()
+            }
+            val baseBadge = Badge {
                 backgroundColor = Color.RED
                 backgroundCornerRadiusDp = 999f
                 contentBold = true
@@ -299,6 +292,53 @@ class DemoActivity: AppCompatActivity() {
             primaryItem("Work" ) {
                 iconResource = R.drawable.ic_work_black_24dp
                 id = 3
+            }
+
+            divider()
+
+            primaryItem("Contacts" ) {
+                iconResource = R.drawable.ic_contacts_black_24dp
+                id = 4
+            }
+            secondaryItem("Favorites" ) {
+                iconResource = R.drawable.ic_star_black_24dp
+                id = 5
+            }
+
+            divider()
+
+            primaryItem("Labels" ) {
+                selectable = false
+                iconResource = R.drawable.ic_style_black_24dp
+                id = 6
+                button {
+                    buttonContentText = "Edit"
+                    buttonContentColor = Color.RED
+                    buttonBackgroundColor = Color.RED
+                    buttonBackgroundCornerRadiusDp = 99f
+                    buttonStyle = ButtonStyle.FLAT
+                }
+            }
+            allSecondary { iconResource = R.drawable.ic_label_black_24dp }
+            secondaryItem("Label 1" ) {
+                iconColor = Color.RED
+                id = 7
+            }
+            secondaryItem("Label 2" ) {
+                iconColor = Color.GREEN
+                id = 8
+            }
+            secondaryItem("Label 3" ) {
+                iconColor = Color.BLUE
+                id = 9
+            }
+            secondaryItem("Label 4" ) {
+                iconColor = Color.MAGENTA
+                id = 10
+            }
+            secondaryItem("Label 5" ) {
+                iconColor = Color.CYAN
+                id = 11
             }
         }
     }

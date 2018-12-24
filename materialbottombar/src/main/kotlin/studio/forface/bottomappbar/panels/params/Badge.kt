@@ -14,6 +14,7 @@ import studio.forface.bottomappbar.panels.items.extra.BadgeItem
 /**
  * @author Davide Giuseppe Farella.
  * An interface for items that have a customizable [Badge]
+ *
  * Inherit from [Param]
  */
 interface Badge<T>: Param<T> {
@@ -113,6 +114,14 @@ interface Badge<T>: Param<T> {
             thisRef.apply { badgeItem.contentColorRes( res ) }
 
     /**
+     * Apply the [Spannable] to the Content of [badgeItem]
+     * @see Content.contentSpannable
+     * @return [T]
+     */
+    fun badgeContentSpannable( spannable: Spannable ) =
+            thisRef.apply { badgeItem.contentSpannable( spannable ) }
+
+    /**
      * Apply the [StringRes] to the Content of [badgeItem]
      * @see Content.contentStringRes
      * @return [T]
@@ -135,14 +144,6 @@ interface Badge<T>: Param<T> {
      */
     fun badgeContentTextRes ( @StringRes res: Int ) =
             thisRef.apply { badgeItem.contentTextRes( res ) }
-
-    /**
-     * Apply the [Spannable] to the Content of [badgeItem]
-     * @see Content.contentSpannable
-     * @return [T]
-     */
-    fun badgeContentSpannable( spannable: Spannable ) =
-            thisRef.apply { badgeItem.contentSpannable( spannable ) }
 }
 
 /** A function for style a [Badge] within a DSL */

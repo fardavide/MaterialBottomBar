@@ -6,6 +6,7 @@ import android.view.View
 import androidx.annotation.StringRes
 import studio.forface.bottomappbar.panels.MaterialPanel
 import studio.forface.bottomappbar.panels.MaterialPanel.*
+import studio.forface.bottomappbar.panels.items.Divider
 import studio.forface.bottomappbar.panels.items.PrimaryPanelItem
 import studio.forface.bottomappbar.panels.items.SecondaryPanelItem
 import studio.forface.bottomappbar.panels.params.titleStringRes
@@ -33,6 +34,9 @@ abstract class AbsPanelBuilder<T: MaterialPanel>( internal val wrapToContent: Bo
     /** A base [SecondaryPanelItem] that will be used as base for every [Body.secondaryItem] */
     private var allSecondaryBodyItem = SecondaryPanelItem()
 
+    /** A [DslComponent] for call [MaterialPanel.Body.setSelected] function */
+    var Body.selectedItem: Int by dsl { setSelected( it ) }
+
     /** Create a [Body] for the [MaterialPanel] */
     fun body( f: Body.() -> Unit ) {
         val body = Body()
@@ -56,7 +60,7 @@ abstract class AbsPanelBuilder<T: MaterialPanel>( internal val wrapToContent: Bo
 
     /** Create a [CustomHeader] for the [MaterialPanel] */
     fun customHeader( contentView: View, f: CustomHeader.() -> Unit ) {
-        val header = CustomHeader( contentView )
+        val header = CustomHeader(contentView)
         header.f()
         _header = header
     }
@@ -80,16 +84,21 @@ abstract class AbsPanelBuilder<T: MaterialPanel>( internal val wrapToContent: Bo
         allSecondaryBodyItem.f()
     }
 
+    /** Crate a [Divider] and add to the receiver [Body] */
+    fun Body.divider() {
+        items += Divider()
+    }
+
     /** Crate a [PrimaryPanelItem] and add to the receiver [Body] */
     fun Body.primaryItem( f: PrimaryPanelItem.() -> Unit ) {
-        val item = allPrimaryBodyItem.cloneRef()
+        val item = allPrimaryBodyItem.clone()
         item.f()
         items += item
     }
 
     /** Crate a [PrimaryPanelItem] with the given [titleText] and add to the receiver [Body] */
     fun Body.primaryItem( titleText: CharSequence, f: PrimaryPanelItem.() -> Unit ) {
-        val item = allPrimaryBodyItem.cloneRef()
+        val item = allPrimaryBodyItem.clone()
         item.titleText = titleText
         item.f()
         items += item
@@ -97,7 +106,7 @@ abstract class AbsPanelBuilder<T: MaterialPanel>( internal val wrapToContent: Bo
 
     /** Crate a [PrimaryPanelItem] with the given [titleStringRes] and add to the receiver [Body] */
     fun Body.primaryItem( @StringRes titleStringRes: Int, f: PrimaryPanelItem.() -> Unit ) {
-        val item = allPrimaryBodyItem.cloneRef()
+        val item = allPrimaryBodyItem.clone()
         item.titleStringRes = titleStringRes
         item.f()
         items += item
@@ -105,14 +114,14 @@ abstract class AbsPanelBuilder<T: MaterialPanel>( internal val wrapToContent: Bo
 
     /** Crate a [SecondaryPanelItem] and add to the receiver [Body] */
     fun Body.secondaryItem( f: SecondaryPanelItem.() -> Unit ) {
-        val item = allSecondaryBodyItem.cloneRef()
+        val item = allSecondaryBodyItem.clone()
         item.f()
         items += item
     }
 
     /** Crate a [SecondaryPanelItem] with the given [titleText] and add to the receiver [Body] */
     fun Body.secondaryItem( titleText: CharSequence, f: SecondaryPanelItem.() -> Unit ) {
-        val item = allSecondaryBodyItem.cloneRef()
+        val item = allSecondaryBodyItem.clone()
         item.titleText = titleText
         item.f()
         items += item
@@ -120,7 +129,7 @@ abstract class AbsPanelBuilder<T: MaterialPanel>( internal val wrapToContent: Bo
 
     /** Crate a [SecondaryPanelItem] with the given [titleStringRes] and add to the receiver [Body] */
     fun Body.secondaryItem( @StringRes titleStringRes: Int, f: SecondaryPanelItem.() -> Unit ) {
-        val item = allSecondaryBodyItem.cloneRef()
+        val item = allSecondaryBodyItem.clone()
         item.titleStringRes = titleStringRes
         item.f()
         items += item
