@@ -28,14 +28,14 @@ open class MaterialPanel(
 
     /** The [IBody] for the panel. On Set: [notifyChange] */
     var body = _body
-        set(value) {
+        set( value ) {
             field = value
             notifyChange( Change.BODY )
         }
 
     /** The [IHeader] for the panel. On Set: [notifyChange] */
     var header = _header
-        set(value) {
+        set( value ) {
             field = value
             notifyChange( Change.HEADER )
         }

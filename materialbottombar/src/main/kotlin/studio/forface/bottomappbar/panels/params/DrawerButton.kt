@@ -16,7 +16,7 @@ internal interface DrawerButton<T>: Param<T> {
     var buttonItem: ButtonItem
 
     fun buttonItem( button: ButtonItem ) =
-            thisRef.apply { buttonItem = button.copy() }
+            thisRef.apply { buttonItem = button.cloneRef() }
 
     fun applyButtonTo( button: Button ) {
         buttonItem.applyTo( button, buttonStyle )

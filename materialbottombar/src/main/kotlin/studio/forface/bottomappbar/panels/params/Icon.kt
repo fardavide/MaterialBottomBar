@@ -24,11 +24,11 @@ import java.io.File
  */
 interface Icon<T>: Param<T> {
 
-    /** A reference to [ColorHolder] for of Color the Icon */
+    /** A reference to [ColorHolder] for of Color of the Icon */
     var iconColorHolder: ColorHolder
-    /** A reference to [ImageHolder] for of Image the Icon */
+    /** A reference to [ImageHolder] for of Image of the Icon */
     var iconImageHolder: ImageHolder
-    /** A reference to [SizeHolder] for of Size the Icon */
+    /** A reference to [SizeHolder] for of Size of the Icon */
     var iconSizeHolder: SizeHolder
 
     /**
@@ -60,7 +60,7 @@ interface Icon<T>: Param<T> {
 
 
     /**
-     * Set the [iconImageHolder] with the given []
+     * Set the [iconImageHolder] with the given [Bitmap]
      * @return [T]
      */
     fun iconBitmap( bitmap: Bitmap ) =

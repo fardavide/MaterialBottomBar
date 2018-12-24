@@ -4,7 +4,7 @@ import studio.forface.bottomappbar.panels.holders.ColorHolder
 import studio.forface.bottomappbar.panels.holders.SizeHolder
 import studio.forface.bottomappbar.panels.holders.TextSizeHolder
 
-open class SecondaryPanelItem: BasePanelItem() {
+open class SecondaryPanelItem: BasePanelItem(), Cloneable {
     override val thisRef get() = this
     override val iconMarginStartDp = 48f
     override val iconMarginEndDp = 12f
@@ -14,4 +14,6 @@ open class SecondaryPanelItem: BasePanelItem() {
 
     override var iconColorHolder =      ColorHolder()
     override var iconSizeHolder =       SizeHolder( dp = 20f )
+
+    fun cloneRef() = clone() as SecondaryPanelItem
 }

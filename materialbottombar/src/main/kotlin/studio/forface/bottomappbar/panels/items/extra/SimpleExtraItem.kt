@@ -5,7 +5,7 @@ import studio.forface.bottomappbar.panels.holders.*
 import studio.forface.bottomappbar.panels.params.Background
 import studio.forface.bottomappbar.panels.params.Content
 
-abstract class SimpleExtraItem<T>: Content<T>, Background<T> {
+abstract class SimpleExtraItem<T>: Content<T>, Background<T>, Cloneable {
 
     fun applyTo( textView: TextView ) {
         applyContentTo( textView,true )
@@ -14,17 +14,7 @@ abstract class SimpleExtraItem<T>: Content<T>, Background<T> {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun copy() = ( newInstance() as SimpleExtraItem<*>).apply {
-        this@apply.contentTextHolder =                  this@SimpleExtraItem.contentTextHolder
-        this@apply.contentTextStyleHolder =             this@SimpleExtraItem.contentTextStyleHolder
-        this@apply.contentTextSizeHolder =              this@SimpleExtraItem.contentTextSizeHolder
-        this@apply.contentColorHolder =                 this@SimpleExtraItem.contentColorHolder
-
-        this@apply.backgroundColorHolder =              this@SimpleExtraItem.backgroundColorHolder
-        this@apply.backgroundCornerRadiusSizeHolder =   this@SimpleExtraItem.backgroundCornerRadiusSizeHolder
-    } as T
-
-    internal abstract fun newInstance(): T
+    fun cloneRef() = clone() as T
 
     override var contentTextHolder =                TextHolder()
     override var contentTextStyleHolder =           TextStyleHolder( bold = true )

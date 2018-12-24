@@ -1,7 +1,6 @@
 package studio.forface.demo
 
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,20 +10,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomappbar.BottomAppBar.*
 import kotlinx.android.synthetic.main.activity_demo.*
 import studio.forface.bottomappbar.drawer.MaterialDrawer
 import studio.forface.bottomappbar.drawer.items.PrimaryDrawerItem
 import studio.forface.bottomappbar.drawer.items.SecondaryDrawerItem
+import studio.forface.bottomappbar.dsl.drawer
 import studio.forface.bottomappbar.dsl.panel
 import studio.forface.bottomappbar.panels.MaterialPanel
 import studio.forface.bottomappbar.panels.items.Divider
 import studio.forface.bottomappbar.panels.items.PrimaryPanelItem
-import studio.forface.bottomappbar.panels.params.ButtonStyle
-import studio.forface.bottomappbar.panels.params.backgroundColor
-import studio.forface.bottomappbar.panels.params.titleColor
-import studio.forface.bottomappbar.panels.params.titleText
+import studio.forface.bottomappbar.panels.items.extra.BadgeItem
+import studio.forface.bottomappbar.panels.params.*
 import studio.forface.materialbottombar.demo.R
 import timber.log.Timber
 
@@ -43,7 +40,7 @@ class DemoActivity: AppCompatActivity() {
         setRecyclerView()
         setButtons()
 
-        drawerLayout.drawer = fancyDrawer
+        drawerLayout.drawer = oldFancyDrawer
 
         val name = PrimaryPanelItem()
                 .id(100 )
@@ -262,7 +259,51 @@ class DemoActivity: AppCompatActivity() {
         return MaterialDrawer( header, body )
     }
 
-    private val fancyDrawer: MaterialDrawer get() {
+    private val fancyDrawer get() = drawer {
+
+        header {
+            iconUrl = IMAGE_URL
+            backgroundColorHex = "#30D5C8"
+            titleText = "Material drawer"
+            titleColor = Color.WHITE
+            titleBold = true
+        }
+
+        body {
+
+            /* SETUP */
+            val baseBadge = BadgeItem {
+                backgroundColor = Color.RED
+                backgroundCornerRadiusDp = 999f
+                contentBold = true
+                contentColor = Color.WHITE
+            }
+            allPrimary {
+                titleBold = true
+                badgeItem = baseBadge
+            }
+            allSecondary { badgeItem = baseBadge }
+
+            /* ITEMS */
+            primaryItem("Messages" ) {
+                iconResource = R.drawable.ic_message_black_24dp
+                id = 1
+                badgeContentText = "New"
+            }
+            secondaryItem("Inbox" ) {
+                iconResource = R.drawable.ic_message_black_24dp
+                id = 2
+                badgeContentText = "8"
+            }
+
+            primaryItem("Work" ) {
+                iconResource = R.drawable.ic_work_black_24dp
+                id = 3
+            }
+        }
+    }
+
+    private val oldFancyDrawer: MaterialDrawer get() {
         val header = MaterialDrawer.Header()
                 .iconUrl( IMAGE_URL )
                 .backgroundColorHex("#30D5C8" )
