@@ -1,6 +1,6 @@
 # Material Bottom bar
 
-#### DSL COMING SOON!
+### WITH DSL!!!
 
 **Material Bottom Bar** is an Android library that let you implement a customized **BottomAppBar** and a **bottom drawer** with just few simple steps.
 
@@ -373,7 +373,11 @@ drawer {
             backgroundColorRes = R.color.color_badge_background
             contentColorRes = R.color.color_badge_content
         }
-        allPrimary { badgeItem = myBadge }
+        allPrimary { 
+        	badgeItem = myBadge 
+        	titleSizeSp = 20f
+        	titleColor = Color.RED
+       	}
         primaryItem( "First" ) { badgeContentText = "1" " }
         primaryItem( "Second" ) { /* No badge content, so the badge will be hidden */ }
     }
