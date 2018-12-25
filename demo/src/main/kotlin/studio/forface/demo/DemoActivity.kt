@@ -312,10 +312,10 @@ class DemoActivity: AppCompatActivity() {
                 iconResource = R.drawable.ic_style_black_24dp
                 id = 6
                 button {
-                    buttonContentText = "Edit"
-                    buttonContentColor = Color.RED
-                    buttonBackgroundColor = Color.RED
-                    buttonBackgroundCornerRadiusDp = 99f
+                    contentText = "Edit"
+                    contentColor = Color.RED
+                    backgroundColor = Color.RED
+                    backgroundCornerRadiusDp = 99f
                     buttonStyle = ButtonStyle.FLAT
                 }
             }
