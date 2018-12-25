@@ -362,6 +362,26 @@ The lib is built on 3 focal points:
 
 The first two are pretty self-explanatory, while the third one means that you should be able to write your fully customized Drawer with the less lines of code as possible; in other word is suggested to use an approach like this:
 
+**with DSL:**
+
+```
+drawer {
+    header { ... }
+    body {
+        val myBadge = Badge {
+            backgroundCornerRadiusDp = 999f // Round badge
+            backgroundColorRes = R.color.color_badge_background
+            contentColorRes = R.color.color_badge_content
+        }
+        allPrimary { badgeItem = myBadge }
+        primaryItem( "First" ) { badgeContentText = "1" " }
+        primaryItem( "Second" ) { /* No badge content, so the badge will be hidden */ }
+    }
+}
+```
+
+**withou DSL:**
+
     val myBadge = BadgeItem()
     	    .backgroundCornerRadiusDp( 999f ) // Round badge
     	    .backgroundColorRes( R.color.color_badge_background )
