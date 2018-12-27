@@ -1,8 +1,6 @@
 package studio.forface.bottomappbar.utils
 
 import android.content.Context
-import android.content.res.TypedArray
-import android.util.AttributeSet
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 

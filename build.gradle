@@ -79,6 +79,7 @@ buildscript {
             appCompat:                  '1.1.0-alpha01',
             bintrayPlugin:              '1.8.4',
             constraintLayout:           '2.0.0-alpha2',
+            dokka:                      '0.9.17',
             glide:                      '4.8.0',
             material:                   '1.1.0-alpha02',
             mavenPlugin:                '2.0',
@@ -94,6 +95,7 @@ buildscript {
         gradle: [
             android:            "com.android.tools.build:gradle:$versions.buildTools",
             bintray:            "com.jfrog.bintray.gradle:gradle-bintray-plugin:$versions.bintrayPlugin",
+            dokka:              "org.jetbrains.dokka:dokka-gradle-plugin:$versions.dokka",
             kotlin:             "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
             maven:              "com.github.dcendents:android-maven-gradle-plugin:$versions.mavenPlugin",
         ],
@@ -133,6 +135,7 @@ buildscript {
         classpath deps.gradle.kotlin
 
         classpath deps.gradle.bintray
+        classpath deps.gradle.dokka
         classpath deps.gradle.maven
 
         // NOTE: Do not place your application dependencies here; they belong
