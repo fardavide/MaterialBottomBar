@@ -205,7 +205,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             toolbarAnimator = animate().translationY( -height.toFloat() )
                     .setInterpolator( AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR )
                     .setDuration( 175 )
-                    .doOnEnd {
+                    .withEndAction {
                         toolbarAnimator = null
                         doOnAnimationEnd()
                     }
@@ -226,7 +226,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             toolbarAnimator = animate().translationY(0f )
                     .setInterpolator( AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR )
                     .setDuration( 225 )
-                    .doOnEnd {
+                    .withEndAction {
                         toolbarAnimator = null
                         doOnAnimationEnd()
                     }

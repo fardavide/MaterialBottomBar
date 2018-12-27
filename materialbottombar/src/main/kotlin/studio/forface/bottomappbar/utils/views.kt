@@ -15,13 +15,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  */
 
 /** Call [FloatingActionButton.show] if [show] is true, else [FloatingActionButton.hide] */
-fun FloatingActionButton.show( show: Boolean ) {
+internal fun FloatingActionButton.show( show: Boolean ) {
     if      (   show && ! isOrWillBeShown  ) show()
     else if ( ! show && ! isOrWillBeHidden ) hide()
 }
 
 /** Call [TextView.setTextColor] with a [ColorRes] */
-fun TextView.setTextColorRes( @ColorRes res: Int ) {
+internal fun TextView.setTextColorRes( @ColorRes res: Int ) {
     setTextColor( context.getColorCompat( res ) )
 }
 
@@ -30,21 +30,34 @@ fun TextView.setTextColorRes( @ColorRes res: Int ) {
  * If [View] is not a [ViewGroup], return an empty [Sequence]
  * @return [Sequence] of [View]
  */
-val View.children get() = ( this as? ViewGroup )?.children ?: sequenceOf()
+internal val View.children get() = ( this as? ViewGroup )?.children ?: sequenceOf()
 
 /**
  * Get [View.getLayoutParams] casted as [ConstraintLayout.LayoutParams] if the casting is possible,
  * else return null.
  * @return OPTIONAL [ConstraintLayout.LayoutParams]
  */
-val View.constraintParams get() = layoutParams as? ConstraintLayout.LayoutParams
+internal val View.constraintParams get() = layoutParams as? ConstraintLayout.LayoutParams
 
 /** Get [View.getElevation] and Set [View.setElevation] via [ViewCompat] */
-var View.elevationCompat: Float
+internal var View.elevationCompat: Float
     get() = ViewCompat.getElevation(this )
     set(value) = ViewCompat.setElevation(this, value )
 
+/**
+ * Find a child of the [ViewGroup] that matches the queried type [T]
+ * @return OPTIONAL [T]
+ */
+internal inline fun <reified T> ViewGroup.findChildType() = children.find { it is T } as? T
+
+/**
+ * Filter the children of the [ViewGroup] that match the queried type [T]
+ * @return [Sequence] of [T]
+ */
+@Suppress("UNCHECKED_CAST")
+internal inline fun <reified T> ViewGroup.filterChildType() = children.filter { it is T } as Sequence<T>
+
 /** Call [View.setBackground] with a [ColorRes] */
-fun View.setBackgroundColorRes( @ColorRes res: Int ) {
+internal fun View.setBackgroundColorRes( @ColorRes res: Int ) {
     setBackgroundColor( context.getColorCompat( res ) )
 }

@@ -14,6 +14,7 @@ import android.view.ViewPropertyAnimator
 import android.widget.ImageButton
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
+import androidx.core.content.withStyledAttributes
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.doOnLayout
 import androidx.core.view.doOnPreDraw
@@ -26,7 +27,6 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import studio.forface.bottomappbar.utils.dpToPixels
 import studio.forface.bottomappbar.utils.findChildType
 import studio.forface.bottomappbar.utils.reflection
-import studio.forface.bottomappbar.utils.useAttributes
 import studio.forface.bottomappbar.view.PanelView
 import studio.forface.materialbottombar.bottomappbar.R
 
@@ -150,7 +150,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
             }
         }
 
-        context.useAttributes( attrs, R.styleable.MaterialBottomAppBar ) {
+        context.withStyledAttributes( attrs, R.styleable.MaterialBottomAppBar ) {
             hideFabOnScroll = getBoolean(
                     R.styleable.MaterialBottomAppBar_hideFabOnScroll, false )
 

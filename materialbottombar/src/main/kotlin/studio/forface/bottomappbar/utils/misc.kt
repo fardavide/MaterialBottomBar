@@ -8,6 +8,11 @@ import androidx.core.view.children
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
+/*
+ * Author: Davide Giuseppe Farella.
+ * A file containing misc utilities for Kotlin.
+ */
+
 /**
  * Like a normal [lazy], this value is set at the first call BUT, if the value is null, the
  * [initializer] will be called until the value is not null.
@@ -43,7 +48,10 @@ internal fun <V: Any> retryIfDefaultLazy( default: V, initializer: () -> V? ) =
 /**
  * [ReadOnlyProperty] extended class for [retryIfDefaultLazy].
  */
-internal class RetryIfDefaultLazy<T, V>( val default: V, val init: () -> V? ): ReadOnlyProperty<T, V> {
+internal class RetryIfDefaultLazy<T, V>(
+        private val default: V,
+        val init: () -> V?
+): ReadOnlyProperty<T, V> {
     private var value: V? = default
     override fun getValue( thisRef: T, property: KProperty<*> ): V {
         if ( value == default || value == null ) value = init()
@@ -51,46 +59,3 @@ internal class RetryIfDefaultLazy<T, V>( val default: V, val init: () -> V? ): R
         return value!!
     }
 }
-
-internal fun <T> Any.getField( field: String, superclassLevel: Int = 1 ): T {
-    var clazz = this::class.java as Class<in Nothing>
-    for ( i in 0 until superclassLevel ) clazz = clazz.superclass
-
-    var value: T? = null
-
-    clazz.getDeclaredField( field ).run {
-        isAccessible = true
-        @Suppress("UNCHECKED_CAST")
-        value = this.get( this@getField ) as T
-        isAccessible = false
-    }
-    return value!!
-}
-
-internal fun Any.setField(field: String, value: Any?, superclassLevel: Int = 1 ) {
-    var clazz = this::class.java as Class<in Nothing>
-    for ( i in 0 until superclassLevel ) clazz = clazz.superclass
-
-    clazz.getDeclaredField( field ).run {
-        isAccessible = true
-        @Suppress("UNCHECKED_CAST")
-        this.set( this@setField, value )
-        isAccessible = false
-    }
-}
-
-internal fun Context.useAttributes(
-        attrs: AttributeSet?,
-        styleable: IntArray,
-        block: TypedArray.() -> Unit
-) {
-    attrs ?: return
-
-    val a = theme.obtainStyledAttributes( attrs, styleable, 0, 0  )
-    block( a )
-    a.recycle()
-}
-
-inline fun <reified T> ViewGroup.findChildType() = children.find { it is T } as? T
-
-inline fun <reified T> ViewGroup.filterChildType() = children.filter { it is T }

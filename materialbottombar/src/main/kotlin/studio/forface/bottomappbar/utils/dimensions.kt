@@ -7,4 +7,4 @@ import android.content.res.Resources
  * @param dp the dp value
  * @return the size in pixels.
  */
-fun dpToPixels( dp: Float ) = dp * Resources.getSystem().displayMetrics.density
+internal fun dpToPixels( dp: Float ) = dp * Resources.getSystem().displayMetrics.density

@@ -8,11 +8,18 @@ import com.google.android.material.shape.*
 
 /**
  * @author Davide Giuseppe Farella
+ * On object for create [Drawable]
  */
 object Drawables {
 
-    const val CORNER_RADIUS_SOFT = 12f
+    /** A [Float] representing the default corner radius */
+    internal const val CORNER_RADIUS_SOFT = 12f
 
+    /**
+     * Create a [Drawable] with ripple effect when touched
+     * @see RippleDrawable for [Build.VERSION_CODES.LOLLIPOP]
+     * @see StateListDrawable for lower Android versions
+     */
     fun selectableDrawable(
             color: Int,
             cornerRadius: Float,
@@ -47,6 +54,7 @@ object Drawables {
         }
     }
 
+    /** Create a [MaterialShapeDrawable] */
     fun materialDrawable( color: Int, cornerRadius: Float, colorAlpha: Float = 1f ): Drawable {
         val shapedPathModel = ShapeAppearanceModel().apply {
             setAllEdges( EdgeTreatment() )
@@ -58,5 +66,4 @@ object Drawables {
             alpha = ( colorAlpha * 255 ).toInt()
         }
     }
-
 }
