@@ -1,0 +1,352 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Badge - materialbottombar</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">materialbottombar</a>&nbsp;/&nbsp;<a href="../index.html">studio.forface.bottomappbar.panels.params</a>&nbsp;/&nbsp;<a href="./index.html">Badge</a><br/>
+<br/>
+<h1>Badge</h1>
+<code><span class="keyword">interface </span><span class="identifier">Badge</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-param/index.html"><span class="identifier">Param</span></a><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p><strong>Author</strong><br/>
+<p>Davide Giuseppe Farella.
+An interface for items that have a customizable <a href="./index.html">Badge</a></p>
+
+
+<p>Inherit from <a href="../-param/index.html">Param</a></p>
+</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="badge-item.html">badgeItem</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">badgeItem</span><span class="symbol">: </span><a href="../../studio.forface.bottomappbar.panels.items.extra/-badge-item/index.html"><span class="identifier">BadgeItem</span></a></code>
+<p>A reference to <a href="../../studio.forface.bottomappbar.panels.items.extra/-badge-item/index.html">BadgeItem</a> for the Badge</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-param/this-ref.html">thisRef</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">thisRef</span><span class="symbol">: </span><a href="../-param/index.html#T"><span class="identifier">T</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="apply-badge-to.html">applyBadgeTo</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">applyBadgeTo</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$applyBadgeTo(android.widget.TextView)/textView">textView</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/TextView.html"><span class="identifier">TextView</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Apply the <a href="./index.html">Badge</a> to the given <a href="https://developer.android.com/reference/android/widget/TextView.html">TextView</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-background-color.html">badgeBackgroundColor</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeBackgroundColor</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeBackgroundColor(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the <a href="#">ColorInt</a> to the Background of <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-background-color-res.html">badgeBackgroundColorRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeBackgroundColorRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeBackgroundColorRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the <a href="#">ColorRes</a> to the Background of <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-background-corner-radius-dp.html">badgeBackgroundCornerRadiusDp</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeBackgroundCornerRadiusDp</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeBackgroundCornerRadiusDp(kotlin.Float)/dp">dp</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the corner radius in DP size to the Background of <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-background-corner-radius-pixel.html">badgeBackgroundCornerRadiusPixel</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeBackgroundCornerRadiusPixel</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeBackgroundCornerRadiusPixel(kotlin.Float)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the corner radius in Pixel size to the Background of <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-content-bold.html">badgeContentBold</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeContentBold</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeContentBold(kotlin.Boolean)/bold">bold</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the bold to the Style of Content of the <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-content-color.html">badgeContentColor</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeContentColor</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeContentColor(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the <a href="#">ColorInt</a> to the Content of <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-content-color-res.html">badgeContentColorRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeContentColorRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeContentColorRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the <a href="#">ColorRes</a> to the Content of <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-content-dp-size.html">badgeContentDpSize</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeContentDpSize</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeContentDpSize(kotlin.Float)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the size in DP to the Content of the <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-content-pixel-size.html">badgeContentPixelSize</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeContentPixelSize</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeContentPixelSize(kotlin.Float)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the size in Pixel to the Content of the <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-content-sp-size.html">badgeContentSpSize</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeContentSpSize</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeContentSpSize(kotlin.Float)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the size in SP to the Content of the <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-content-spannable.html">badgeContentSpannable</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeContentSpannable</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeContentSpannable(android.text.Spannable)/spannable">spannable</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/text/Spannable.html"><span class="identifier">Spannable</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the <a href="https://developer.android.com/reference/android/text/Spannable.html">Spannable</a> to the Content of <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-content-string-res.html">badgeContentStringRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeContentStringRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeContentStringRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the <a href="#">StringRes</a> to the Content of <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-content-text.html">badgeContentText</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeContentText</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeContentText(kotlin.CharSequence)/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html">CharSequence</a> to the Content of <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-content-text-res.html">badgeContentTextRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeContentTextRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeContentTextRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Apply the <a href="#">StringRes</a> as styled text to the Content of <a href="badge-item.html">badgeItem</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="badge-item.html">badgeItem</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">badgeItem</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Badge$badgeItem(studio.forface.bottomappbar.panels.items.extra.BadgeItem)/badge">badge</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels.items.extra/-badge-item/index.html"><span class="identifier">BadgeItem</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set a new <a href="../../studio.forface.bottomappbar.panels.items.extra/-badge-item/index.html">BadgeItem</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Extension Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../badge-background-color.html">badgeBackgroundColor</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeBackgroundColor</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-background-color.html">Badge.badgeBackgroundColor</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-background-color-res.html">badgeBackgroundColorRes</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeBackgroundColorRes</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-background-color-res.html">Badge.badgeBackgroundColorRes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-background-corner-radius-dp.html">badgeBackgroundCornerRadiusDp</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeBackgroundCornerRadiusDp</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-background-corner-radius-dp.html">Badge.badgeBackgroundCornerRadiusDp</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-background-corner-radius-pixel.html">badgeBackgroundCornerRadiusPixel</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeBackgroundCornerRadiusPixel</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-background-corner-radius-pixel.html">Badge.badgeBackgroundCornerRadiusPixel</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-content-bold.html">badgeContentBold</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeContentBold</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-content-bold.html">Badge.badgeContentBold</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-content-color.html">badgeContentColor</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeContentColor</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-content-color.html">Badge.badgeContentColor</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-content-color-res.html">badgeContentColorRes</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeContentColorRes</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-content-color-res.html">Badge.badgeContentColorRes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-content-dp-size.html">badgeContentDpSize</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeContentDpSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-content-dp-size.html">Badge.badgeContentDpSize</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-content-pixel-size.html">badgeContentPixelSize</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeContentPixelSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-content-pixel-size.html">Badge.badgeContentPixelSize</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-content-sp-size.html">badgeContentSpSize</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeContentSpSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-content-sp-size.html">Badge.badgeContentSpSize</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-content-spannable.html">badgeContentSpannable</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeContentSpannable</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/text/Spannable.html"><span class="identifier">Spannable</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-content-spannable.html">Badge.badgeContentSpannable</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-content-string-res.html">badgeContentStringRes</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeContentStringRes</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-content-string-res.html">Badge.badgeContentStringRes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-content-text.html">badgeContentText</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeContentText</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-content-text.html">Badge.badgeContentText</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../badge-content-text-res.html">badgeContentTextRes</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badgeContentTextRes</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="badge-content-text-res.html">Badge.badgeContentTextRes</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Extension Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../badge.html">badge</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">badge</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params$badge(studio.forface.bottomappbar.panels.params.Badge((kotlin.Any)), kotlin.Function1((studio.forface.bottomappbar.panels.items.extra.BadgeItem, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels.items.extra/-badge-item/index.html"><span class="identifier">BadgeItem</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>A function for style a <a href="./index.html">Badge</a> within a DSL</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../studio.forface.bottomappbar.panels.items/-base-panel-item/index.html">BasePanelItem</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BasePanelItem</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels.items/-panel-item.html"><span class="identifier">PanelItem</span></a><span class="symbol">, </span><a href="../-title/index.html"><span class="identifier">Title</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels.items/-base-panel-item/index.html"><span class="identifier">BasePanelItem</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../-icon/index.html"><span class="identifier">Icon</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels.items/-base-panel-item/index.html"><span class="identifier">BasePanelItem</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../-identifier/index.html"><span class="identifier">Identifier</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels.items/-base-panel-item/index.html"><span class="identifier">BasePanelItem</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="./index.html"><span class="identifier">Badge</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels.items/-base-panel-item/index.html"><span class="identifier">BasePanelItem</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../-panel-button/index.html"><span class="identifier">PanelButton</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels.items/-base-panel-item/index.html"><span class="identifier">BasePanelItem</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-cloneable/index.html"><span class="identifier">Cloneable</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

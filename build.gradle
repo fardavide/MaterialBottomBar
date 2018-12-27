@@ -95,7 +95,7 @@ buildscript {
         gradle: [
             android:            "com.android.tools.build:gradle:$versions.buildTools",
             bintray:            "com.jfrog.bintray.gradle:gradle-bintray-plugin:$versions.bintrayPlugin",
-            dokka:              "org.jetbrains.dokka:dokka-gradle-plugin:$versions.dokka",
+            dokka:              "org.jetbrains.dokka:dokka-android-gradle-plugin:$versions.dokka",
             kotlin:             "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
             maven:              "com.github.dcendents:android-maven-gradle-plugin:$versions.mavenPlugin",
         ],

@@ -1,0 +1,374 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MaterialPanel.BaseHeader - materialbottombar</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">materialbottombar</a>&nbsp;/&nbsp;<a href="../../index.html">studio.forface.bottomappbar.panels</a>&nbsp;/&nbsp;<a href="../index.html">MaterialPanel</a>&nbsp;/&nbsp;<a href="./index.html">BaseHeader</a><br/>
+<br/>
+<h1>BaseHeader</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseHeader</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-i-header.html"><span class="identifier">IHeader</span></a><span class="symbol">, </span><a href="../../../studio.forface.bottomappbar.panels.params/-background/index.html"><span class="identifier">Background</span></a><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html"><span class="identifier">Title</span></a><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html"><span class="identifier">Icon</span></a><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>An abstract class that implements business logic of a base header.
+This class is needed since if will be inherited from <a href="../../../studio.forface.bottomappbar.drawer/-material-drawer/-header/index.html">MaterialDrawer.Header</a></p>
+<p>Inherit from <a href="../-i-header.html">IHeader</a>, <a href="../../../studio.forface.bottomappbar.panels.params/-background/index.html">Background</a>, <a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html">Title</a> and <a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html">Icon</a></p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="background-color-holder.html">backgroundColorHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">var </span><span class="identifier">backgroundColorHolder</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.holders/-color-holder/index.html"><span class="identifier">ColorHolder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="background-corner-radius-size-holder.html">backgroundCornerRadiusSizeHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">var </span><span class="identifier">backgroundCornerRadiusSizeHolder</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.holders/-size-holder/index.html"><span class="identifier">SizeHolder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="icon-color-holder.html">iconColorHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">var </span><span class="identifier">iconColorHolder</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.holders/-color-holder/index.html"><span class="identifier">ColorHolder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="icon-image-holder.html">iconImageHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">var </span><span class="identifier">iconImageHolder</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.holders/-image-holder/index.html"><span class="identifier">ImageHolder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="icon-size-holder.html">iconSizeHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">var </span><span class="identifier">iconSizeHolder</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.holders/-size-holder/index.html"><span class="identifier">SizeHolder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="title-color-holder.html">titleColorHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">var </span><span class="identifier">titleColorHolder</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.holders/-color-holder/index.html"><span class="identifier">ColorHolder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="title-text-holder.html">titleTextHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">var </span><span class="identifier">titleTextHolder</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.holders/-text-holder/index.html"><span class="identifier">TextHolder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="title-text-size-holder.html">titleTextSizeHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">var </span><span class="identifier">titleTextSizeHolder</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.holders/-text-size-holder/index.html"><span class="identifier">TextSizeHolder</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="title-text-style-holder.html">titleTextStyleHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">var </span><span class="identifier">titleTextStyleHolder</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.holders/-text-style-holder/index.html"><span class="identifier">TextStyleHolder</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="apply-icon-to.html">applyIconTo</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">applyIconTo</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.MaterialPanel.BaseHeader$applyIconTo(android.widget.ImageView, kotlin.Boolean)/imageView">imageView</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/ImageView.html"><span class="identifier">ImageView</span></a><span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.panels.MaterialPanel.BaseHeader$applyIconTo(android.widget.ImageView, kotlin.Boolean)/applyOrHide">applyOrHide</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="icon-shape.html">iconShape</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">iconShape</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.MaterialPanel.BaseHeader$iconShape(studio.forface.bottomappbar.panels.holders.ImageShape)/imageShape">imageShape</span><span class="symbol">:</span>&nbsp;<a href="../../../studio.forface.bottomappbar.panels.holders/-image-shape/index.html"><span class="identifier">ImageShape</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-background/apply-background-to.html">applyBackgroundTo</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">applyBackgroundTo</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$applyBackgroundTo(android.view.View, kotlin.Boolean)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$applyBackgroundTo(android.view.View, kotlin.Boolean)/scaleToSquare">scaleToSquare</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Apply the <a href="../../../studio.forface.bottomappbar.panels.params/-background/index.html">Background</a> to the given <a href="https://developer.android.com/reference/android/view/View.html">View</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-title/apply-title-to.html">applyTitleTo</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">applyTitleTo</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Title$applyTitleTo(android.widget.TextView)/textView">textView</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/TextView.html"><span class="identifier">TextView</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Apply the <a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html">Title</a> to the given <a href="https://developer.android.com/reference/android/widget/TextView.html">TextView</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-background/background-color.html">backgroundColor</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">backgroundColor</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$backgroundColor(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-background/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-background/background-color-holder.html">backgroundColorHolder</a> with the given <a href="#">ColorInt</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-background/background-color-hex.html">backgroundColorHex</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">backgroundColorHex</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$backgroundColorHex(kotlin.String)/hex">hex</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-background/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-background/background-color-holder.html">backgroundColorHolder</a> with the given color HEX <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-background/background-color-res.html">backgroundColorRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">backgroundColorRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$backgroundColorRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-background/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-background/background-color-holder.html">backgroundColorHolder</a> with the given <a href="#">ColorRes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-background/background-corner-radius-dp.html">backgroundCornerRadiusDp</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">backgroundCornerRadiusDp</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$backgroundCornerRadiusDp(kotlin.Float)/dp">dp</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-background/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-background/background-corner-radius-size-holder.html">backgroundCornerRadiusSizeHolder</a> with the given size in DP <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-background/background-corner-radius-pixel.html">backgroundCornerRadiusPixel</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">backgroundCornerRadiusPixel</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$backgroundCornerRadiusPixel(kotlin.Float)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-background/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-background/background-corner-radius-size-holder.html">backgroundCornerRadiusSizeHolder</a> with the given size in pixel <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-bitmap.html">iconBitmap</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">iconBitmap</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Icon$iconBitmap(android.graphics.Bitmap)/bitmap">bitmap</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/Bitmap.html"><span class="identifier">Bitmap</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-image-holder.html">iconImageHolder</a> with the given <a href="https://developer.android.com/reference/android/graphics/Bitmap.html">Bitmap</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-color.html">iconColor</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">iconColor</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Icon$iconColor(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-color-holder.html">iconColorHolder</a> with the given <a href="#">ColorInt</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-color-res.html">iconColorRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">iconColorRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Icon$iconColorRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-color-holder.html">iconColorHolder</a> with the given <a href="#">ColorRes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-dp-size.html">iconDpSize</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">iconDpSize</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Icon$iconDpSize(kotlin.Float)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-size-holder.html">iconSizeHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a> size in Dp</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-drawable.html">iconDrawable</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">iconDrawable</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Icon$iconDrawable(android.graphics.drawable.Drawable)/drawable">drawable</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/drawable/Drawable.html"><span class="identifier">Drawable</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-image-holder.html">iconImageHolder</a> with the given <a href="https://developer.android.com/reference/android/graphics/drawable/Drawable.html">Drawable</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-file.html">iconFile</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">iconFile</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Icon$iconFile(java.io.File)/file">file</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/io/File.html"><span class="identifier">File</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-image-holder.html">iconImageHolder</a> with the given <a href="https://developer.android.com/reference/java/io/File.html">File</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-pixel-size.html">iconPixelSize</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">iconPixelSize</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Icon$iconPixelSize(kotlin.Float)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-size-holder.html">iconSizeHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a> size in Pixel</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-resource.html">iconResource</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">iconResource</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Icon$iconResource(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-image-holder.html">iconImageHolder</a> with the given <a href="#">DrawableRes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-uri.html">iconUri</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">iconUri</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Icon$iconUri(android.net.Uri)/uri">uri</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/net/Uri.html"><span class="identifier">Uri</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-image-holder.html">iconImageHolder</a> with the given <a href="https://developer.android.com/reference/android/net/Uri.html">Uri</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-url.html">iconUrl</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">iconUrl</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Icon$iconUrl(kotlin.String)/url">url</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-icon/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-icon/icon-image-holder.html">iconImageHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a> url</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-title/title-bold.html">titleBold</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">titleBold</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Title$titleBold(kotlin.Boolean)/bold">bold</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-title/title-text-style-holder.html">titleTextStyleHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> bold value</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-title/title-color.html">titleColor</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">titleColor</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Title$titleColor(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-title/title-color-holder.html">titleColorHolder</a> with the given <a href="#">ColorInt</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-title/title-color-res.html">titleColorRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">titleColorRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Title$titleColorRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-title/title-color-holder.html">titleColorHolder</a> with the given <a href="#">ColorRes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-title/title-dp-size.html">titleDpSize</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">titleDpSize</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Title$titleDpSize(kotlin.Float)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-title/title-text-size-holder.html">titleTextSizeHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a> size in DP</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-title/title-pixel-size.html">titlePixelSize</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">titlePixelSize</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Title$titlePixelSize(kotlin.Float)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-title/title-text-size-holder.html">titleTextSizeHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a> size in Pixel</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-title/title-sp-size.html">titleSpSize</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">titleSpSize</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Title$titleSpSize(kotlin.Float)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-title/title-text-size-holder.html">titleTextSizeHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a> size in SP</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-title/title-spannable.html">titleSpannable</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">titleSpannable</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Title$titleSpannable(android.text.Spannable)/spannable">spannable</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/text/Spannable.html"><span class="identifier">Spannable</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-title/title-text-holder.html">titleTextHolder</a> with the given <a href="https://developer.android.com/reference/android/text/Spannable.html">Spannable</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-title/title-string-res.html">titleStringRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">titleStringRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Title$titleStringRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-title/title-text-holder.html">titleTextHolder</a> with the given <a href="#">StringRes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-title/title-text.html">titleText</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">titleText</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Title$titleText(kotlin.CharSequence)/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-title/title-text-holder.html">titleTextHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html">CharSequence</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.panels.params/-title/title-text-res.html">titleTextRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">titleTextRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Title$titleTextRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../studio.forface.bottomappbar.panels.params/-title/index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="../../../studio.forface.bottomappbar.panels.params/-title/title-text-holder.html">titleTextHolder</a> with the given <a href="#">StringRes</a> ( styled text )</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../../studio.forface.bottomappbar.drawer/-material-drawer/-header/index.html">Header</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Header</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">BaseHeader</span></a><span class="symbol">&lt;</span><a href="../../../studio.forface.bottomappbar.drawer/-material-drawer/-header/index.html"><span class="identifier">Header</span></a><span class="symbol">&gt;</span></code>
+<p>A solid implementation of <a href="./index.html">MaterialPanel.BaseHeader</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-header/index.html">Header</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Header</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">BaseHeader</span></a><span class="symbol">&lt;</span><a href="../-header/index.html"><span class="identifier">Header</span></a><span class="symbol">&gt;</span></code>
+<p>A solid implementation of <a href="./index.html">BaseHeader</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

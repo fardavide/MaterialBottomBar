@@ -1,0 +1,150 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>PanelBuilder - materialbottombar</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">materialbottombar</a>&nbsp;/&nbsp;<a href="../index.html">studio.forface.bottomappbar.dsl</a>&nbsp;/&nbsp;<a href="./index.html">PanelBuilder</a><br/>
+<br/>
+<h1>PanelBuilder</h1>
+<code><span class="keyword">class </span><span class="identifier">PanelBuilder</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-abs-panel-builder/index.html"><span class="identifier">AbsPanelBuilder</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels/-material-panel/index.html"><span class="identifier">MaterialPanel</span></a><span class="symbol">&gt;</span></code>
+<p>An <a href="../-abs-panel-builder/index.html">AbsPanelBuilder</a> for create a <a href="../../studio.forface.bottomappbar.panels/-material-panel/index.html">MaterialPanel</a></p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">PanelBuilder</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.PanelBuilder$<init>(kotlin.Boolean)/wrapToContent">wrapToContent</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span></code>
+<p>An <a href="../-abs-panel-builder/index.html">AbsPanelBuilder</a> for create a <a href="../../studio.forface.bottomappbar.panels/-material-panel/index.html">MaterialPanel</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-abs-panel-builder/selected-item.html">selectedItem</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html"><span class="identifier">Body</span></a><span class="symbol">.</span><span class="identifier">selectedItem</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="../../studio.forface.bottomappbar.panels/-material-panel/-base-body/set-selected.html">MaterialPanel.Body.setSelected</a> function</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="build.html">build</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">build</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../studio.forface.bottomappbar.panels/-material-panel/index.html"><span class="identifier">MaterialPanel</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-abs-panel-builder/all-primary.html">allPrimary</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html"><span class="identifier">Body</span></a><span class="symbol">.</span><span class="identifier">allPrimary</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$allPrimary(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.Function1((studio.forface.bottomappbar.panels.items.PrimaryPanelItem, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels.items/-primary-panel-item/index.html"><span class="identifier">PrimaryPanelItem</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Crate a <a href="../../studio.forface.bottomappbar.panels.items/-primary-panel-item/index.html">PrimaryPanelItem</a> that will be used as base for every <a href="../-abs-panel-builder/primary-item.html">Body.primaryItem</a>
+The <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a> receiver is useful for call this function only within a <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a>, even if unused</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-abs-panel-builder/all-secondary.html">allSecondary</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html"><span class="identifier">Body</span></a><span class="symbol">.</span><span class="identifier">allSecondary</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$allSecondary(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.Function1((studio.forface.bottomappbar.panels.items.SecondaryPanelItem, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels.items/-secondary-panel-item/index.html"><span class="identifier">SecondaryPanelItem</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Crate a <a href="../../studio.forface.bottomappbar.panels.items/-secondary-panel-item/index.html">SecondaryPanelItem</a> that will be used as base for every <a href="../-abs-panel-builder/secondary-item.html">Body.secondaryItem</a>
+The <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a> receiver is useful for call this function only within a <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a>, even if unused</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-abs-panel-builder/body.html">body</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">body</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$body(kotlin.Function1((studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html"><span class="identifier">Body</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Create a <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a> for the <a href="../../studio.forface.bottomappbar.panels/-material-panel/index.html">MaterialPanel</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-abs-panel-builder/custom-body.html">customBody</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">customBody</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$customBody(android.view.View, kotlin.Function1((studio.forface.bottomappbar.panels.MaterialPanel.CustomBody, kotlin.Unit)))/contentView">contentView</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$customBody(android.view.View, kotlin.Function1((studio.forface.bottomappbar.panels.MaterialPanel.CustomBody, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels/-material-panel/-custom-body/index.html"><span class="identifier">CustomBody</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Create a <a href="../../studio.forface.bottomappbar.panels/-material-panel/-custom-body/index.html">CustomBody</a> for the <a href="../../studio.forface.bottomappbar.panels/-material-panel/index.html">MaterialPanel</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-abs-panel-builder/custom-header.html">customHeader</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">customHeader</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$customHeader(android.view.View, kotlin.Function1((studio.forface.bottomappbar.panels.MaterialPanel.CustomHeader, kotlin.Unit)))/contentView">contentView</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$customHeader(android.view.View, kotlin.Function1((studio.forface.bottomappbar.panels.MaterialPanel.CustomHeader, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels/-material-panel/-custom-header/index.html"><span class="identifier">CustomHeader</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Create a <a href="../../studio.forface.bottomappbar.panels/-material-panel/-custom-header/index.html">CustomHeader</a> for the <a href="../../studio.forface.bottomappbar.panels/-material-panel/index.html">MaterialPanel</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-abs-panel-builder/divider.html">divider</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html"><span class="identifier">Body</span></a><span class="symbol">.</span><span class="identifier">divider</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Crate a <a href="../../studio.forface.bottomappbar.panels.items/-divider/index.html">Divider</a> and add to the receiver <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-abs-panel-builder/header.html">header</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">header</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$header(kotlin.Function1((studio.forface.bottomappbar.panels.MaterialPanel.Header, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels/-material-panel/-header/index.html"><span class="identifier">Header</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Create an <a href="../../studio.forface.bottomappbar.panels/-material-panel/-header/index.html">Header</a> for the <a href="../../studio.forface.bottomappbar.panels/-material-panel/index.html">MaterialPanel</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-abs-panel-builder/primary-item.html">primaryItem</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html"><span class="identifier">Body</span></a><span class="symbol">.</span><span class="identifier">primaryItem</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$primaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.Function1((studio.forface.bottomappbar.panels.items.PrimaryPanelItem, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels.items/-primary-panel-item/index.html"><span class="identifier">PrimaryPanelItem</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Crate a <a href="../../studio.forface.bottomappbar.panels.items/-primary-panel-item/index.html">PrimaryPanelItem</a> and add to the receiver <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a></p>
+<code><span class="keyword">fun </span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html"><span class="identifier">Body</span></a><span class="symbol">.</span><span class="identifier">primaryItem</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$primaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.CharSequence, kotlin.Function1((studio.forface.bottomappbar.panels.items.PrimaryPanelItem, kotlin.Unit)))/titleText">titleText</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a><span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$primaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.CharSequence, kotlin.Function1((studio.forface.bottomappbar.panels.items.PrimaryPanelItem, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels.items/-primary-panel-item/index.html"><span class="identifier">PrimaryPanelItem</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Crate a <a href="../../studio.forface.bottomappbar.panels.items/-primary-panel-item/index.html">PrimaryPanelItem</a> with the given <a href="../-abs-panel-builder/primary-item.html#studio.forface.bottomappbar.dsl.AbsPanelBuilder$primaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.CharSequence, kotlin.Function1((studio.forface.bottomappbar.panels.items.PrimaryPanelItem, kotlin.Unit)))/titleText">titleText</a> and add to the receiver <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a></p>
+<code><span class="keyword">fun </span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html"><span class="identifier">Body</span></a><span class="symbol">.</span><span class="identifier">primaryItem</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$primaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.Int, kotlin.Function1((studio.forface.bottomappbar.panels.items.PrimaryPanelItem, kotlin.Unit)))/titleStringRes">titleStringRes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$primaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.Int, kotlin.Function1((studio.forface.bottomappbar.panels.items.PrimaryPanelItem, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels.items/-primary-panel-item/index.html"><span class="identifier">PrimaryPanelItem</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Crate a <a href="../../studio.forface.bottomappbar.panels.items/-primary-panel-item/index.html">PrimaryPanelItem</a> with the given <a href="../-abs-panel-builder/primary-item.html#studio.forface.bottomappbar.dsl.AbsPanelBuilder$primaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.Int, kotlin.Function1((studio.forface.bottomappbar.panels.items.PrimaryPanelItem, kotlin.Unit)))/titleStringRes">titleStringRes</a> and add to the receiver <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-abs-panel-builder/secondary-item.html">secondaryItem</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html"><span class="identifier">Body</span></a><span class="symbol">.</span><span class="identifier">secondaryItem</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$secondaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.Function1((studio.forface.bottomappbar.panels.items.SecondaryPanelItem, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels.items/-secondary-panel-item/index.html"><span class="identifier">SecondaryPanelItem</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Crate a <a href="../../studio.forface.bottomappbar.panels.items/-secondary-panel-item/index.html">SecondaryPanelItem</a> and add to the receiver <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a></p>
+<code><span class="keyword">fun </span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html"><span class="identifier">Body</span></a><span class="symbol">.</span><span class="identifier">secondaryItem</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$secondaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.CharSequence, kotlin.Function1((studio.forface.bottomappbar.panels.items.SecondaryPanelItem, kotlin.Unit)))/titleText">titleText</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a><span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$secondaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.CharSequence, kotlin.Function1((studio.forface.bottomappbar.panels.items.SecondaryPanelItem, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels.items/-secondary-panel-item/index.html"><span class="identifier">SecondaryPanelItem</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Crate a <a href="../../studio.forface.bottomappbar.panels.items/-secondary-panel-item/index.html">SecondaryPanelItem</a> with the given <a href="../-abs-panel-builder/secondary-item.html#studio.forface.bottomappbar.dsl.AbsPanelBuilder$secondaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.CharSequence, kotlin.Function1((studio.forface.bottomappbar.panels.items.SecondaryPanelItem, kotlin.Unit)))/titleText">titleText</a> and add to the receiver <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a></p>
+<code><span class="keyword">fun </span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html"><span class="identifier">Body</span></a><span class="symbol">.</span><span class="identifier">secondaryItem</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$secondaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.Int, kotlin.Function1((studio.forface.bottomappbar.panels.items.SecondaryPanelItem, kotlin.Unit)))/titleStringRes">titleStringRes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.dsl.AbsPanelBuilder$secondaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.Int, kotlin.Function1((studio.forface.bottomappbar.panels.items.SecondaryPanelItem, kotlin.Unit)))/f">f</span><span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels.items/-secondary-panel-item/index.html"><span class="identifier">SecondaryPanelItem</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Crate a <a href="../../studio.forface.bottomappbar.panels.items/-secondary-panel-item/index.html">SecondaryPanelItem</a> with the given <a href="../-abs-panel-builder/secondary-item.html#studio.forface.bottomappbar.dsl.AbsPanelBuilder$secondaryItem(studio.forface.bottomappbar.panels.MaterialPanel.Body, kotlin.Int, kotlin.Function1((studio.forface.bottomappbar.panels.items.SecondaryPanelItem, kotlin.Unit)))/titleStringRes">titleStringRes</a> and add to the receiver <a href="../../studio.forface.bottomappbar.panels/-material-panel/-body/index.html">Body</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

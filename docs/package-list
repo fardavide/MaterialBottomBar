@@ -1,0 +1,19 @@
+$dokka.format:html
+$dokka.linkExtension:html
+$dokka.location:studio.forface.bottomappbar.panels$forEachBasePanelItem(kotlin.collections.List((studio.forface.bottomappbar.panels.items.PanelItem)), kotlin.Function1((studio.forface.bottomappbar.panels.items.BasePanelItem, kotlin.Unit)))studio.forface.bottomappbar.panels/kotlin.collections.-list/for-each-base-panel-item.html
+$dokka.location:studio.forface.bottomappbar.panels$mapBasePanelItems(kotlin.collections.List((studio.forface.bottomappbar.panels.items.PanelItem)), kotlin.Function1((studio.forface.bottomappbar.panels.items.BasePanelItem, kotlin.Unit)))studio.forface.bottomappbar.panels/kotlin.collections.-list/map-base-panel-items.html
+$dokka.location:studio.forface.bottomappbar.utils$getColorCompat(android.content.Context, kotlin.Int)studio.forface.bottomappbar.utils/android.content.-context/get-color-compat.html
+$dokka.location:studio.forface.bottomappbar.utils$times(kotlin.collections.List((studio.forface.bottomappbar.utils.times.T)), kotlin.Int)studio.forface.bottomappbar.utils/kotlin.collections.-list/times.html
+studio.forface.bottomappbar.appbar
+studio.forface.bottomappbar.drawer
+studio.forface.bottomappbar.drawer.items
+studio.forface.bottomappbar.dsl
+studio.forface.bottomappbar.layout
+studio.forface.bottomappbar.panels
+studio.forface.bottomappbar.panels.adapter
+studio.forface.bottomappbar.panels.holders
+studio.forface.bottomappbar.panels.items
+studio.forface.bottomappbar.panels.items.extra
+studio.forface.bottomappbar.panels.params
+studio.forface.bottomappbar.utils
+studio.forface.bottomappbar.view

@@ -1,0 +1,183 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Background - materialbottombar</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">materialbottombar</a>&nbsp;/&nbsp;<a href="../index.html">studio.forface.bottomappbar.panels.params</a>&nbsp;/&nbsp;<a href="./index.html">Background</a><br/>
+<br/>
+<h1>Background</h1>
+<code><span class="keyword">interface </span><span class="identifier">Background</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-param/index.html"><span class="identifier">Param</span></a><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p><strong>Author</strong><br/>
+Davide Giuseppe Farella.
+An interface for items that have a customizable Background.
+Inherit from <a href="../-param/index.html">Param</a></p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="background-color-holder.html">backgroundColorHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">backgroundColorHolder</span><span class="symbol">: </span><a href="../../studio.forface.bottomappbar.panels.holders/-color-holder/index.html"><span class="identifier">ColorHolder</span></a></code>
+<p>A reference to a <a href="../../studio.forface.bottomappbar.panels.holders/-color-holder/index.html">ColorHolder</a> for the Background Color</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="background-corner-radius-size-holder.html">backgroundCornerRadiusSizeHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">backgroundCornerRadiusSizeHolder</span><span class="symbol">: </span><a href="../../studio.forface.bottomappbar.panels.holders/-size-holder/index.html"><span class="identifier">SizeHolder</span></a></code>
+<p>A reference to a <a href="../../studio.forface.bottomappbar.panels.holders/-size-holder/index.html">SizeHolder</a> for the Corner Radius of the Background</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-param/this-ref.html">thisRef</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">thisRef</span><span class="symbol">: </span><a href="../-param/index.html#T"><span class="identifier">T</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="apply-background-to.html">applyBackgroundTo</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">applyBackgroundTo</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$applyBackgroundTo(android.view.View, kotlin.Boolean)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$applyBackgroundTo(android.view.View, kotlin.Boolean)/scaleToSquare">scaleToSquare</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Apply the <a href="./index.html">Background</a> to the given <a href="https://developer.android.com/reference/android/view/View.html">View</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="background-color.html">backgroundColor</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">backgroundColor</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$backgroundColor(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="background-color-holder.html">backgroundColorHolder</a> with the given <a href="#">ColorInt</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="background-color-hex.html">backgroundColorHex</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">backgroundColorHex</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$backgroundColorHex(kotlin.String)/hex">hex</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="background-color-holder.html">backgroundColorHolder</a> with the given color HEX <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="background-color-res.html">backgroundColorRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">backgroundColorRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$backgroundColorRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="background-color-holder.html">backgroundColorHolder</a> with the given <a href="#">ColorRes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="background-corner-radius-dp.html">backgroundCornerRadiusDp</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">backgroundCornerRadiusDp</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$backgroundCornerRadiusDp(kotlin.Float)/dp">dp</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="background-corner-radius-size-holder.html">backgroundCornerRadiusSizeHolder</a> with the given size in DP <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="background-corner-radius-pixel.html">backgroundCornerRadiusPixel</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">backgroundCornerRadiusPixel</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Background$backgroundCornerRadiusPixel(kotlin.Float)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="background-corner-radius-size-holder.html">backgroundCornerRadiusSizeHolder</a> with the given size in pixel <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Extension Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../background-color.html">backgroundColor</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Background</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">backgroundColor</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="background-color.html">Background.backgroundColor</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../background-color-hex.html">backgroundColorHex</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Background</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">backgroundColorHex</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="background-color-hex.html">Background.backgroundColorHex</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../background-color-res.html">backgroundColorRes</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Background</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">backgroundColorRes</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="background-color-res.html">Background.backgroundColorRes</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../background-corner-radius-dp.html">backgroundCornerRadiusDp</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Background</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">backgroundCornerRadiusDp</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="background-corner-radius-dp.html">Background.backgroundCornerRadiusDp</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../background-corner-radius-pixel.html">backgroundCornerRadiusPixel</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Background</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">backgroundCornerRadiusPixel</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="background-corner-radius-pixel.html">Background.backgroundCornerRadiusPixel</a> function</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../studio.forface.bottomappbar.panels/-material-panel/-base-header/index.html">BaseHeader</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseHeader</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../studio.forface.bottomappbar.panels/-material-panel/-i-header.html"><span class="identifier">IHeader</span></a><span class="symbol">, </span><a href="./index.html"><span class="identifier">Background</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-base-header/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../-title/index.html"><span class="identifier">Title</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-base-header/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../-icon/index.html"><span class="identifier">Icon</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels/-material-panel/-base-header/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>An abstract class that implements business logic of a base header.
+This class is needed since if will be inherited from <a href="../../studio.forface.bottomappbar.drawer/-material-drawer/-header/index.html">MaterialDrawer.Header</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../studio.forface.bottomappbar.panels.items.extra/-simple-extra-item/index.html">SimpleExtraItem</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">SimpleExtraItem</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-content/index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels.items.extra/-simple-extra-item/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="./index.html"><span class="identifier">Background</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels.items.extra/-simple-extra-item/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-cloneable/index.html"><span class="identifier">Cloneable</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

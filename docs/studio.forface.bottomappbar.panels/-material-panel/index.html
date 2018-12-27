@@ -1,0 +1,180 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MaterialPanel - materialbottombar</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">materialbottombar</a>&nbsp;/&nbsp;<a href="../index.html">studio.forface.bottomappbar.panels</a>&nbsp;/&nbsp;<a href="./index.html">MaterialPanel</a><br/>
+<br/>
+<h1>MaterialPanel</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">MaterialPanel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/util/Observable.html"><span class="identifier">Observable</span></a></code>
+<p><strong>Author</strong><br/>
+<p>Davide Giuseppe Farella.
+A Panel that can appear from a <a href="../../studio.forface.bottomappbar.appbar/-material-bottom-app-bar/index.html">MaterialBottomAppBar</a></p>
+
+
+<p>Inherit from <a href="https://developer.android.com/reference/java/util/Observable.html">Observable</a></p>
+</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-base-body/index.html">BaseBody</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseBody</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/util/Observable.html"><span class="identifier">Observable</span></a><span class="symbol">, </span><a href="-i-body.html"><span class="identifier">IBody</span></a><span class="symbol">, </span><a href="../../studio.forface.bottomappbar.panels.params/-selection/index.html"><span class="identifier">Selection</span></a><span class="symbol">&lt;</span><a href="-base-body/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>An abstract class that implements business logic of a base body.
+This class is needed since if will be inherited from <a href="../../studio.forface.bottomappbar.drawer/-material-drawer/-body/index.html">MaterialDrawer.Body</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-base-header/index.html">BaseHeader</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseHeader</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-i-header.html"><span class="identifier">IHeader</span></a><span class="symbol">, </span><a href="../../studio.forface.bottomappbar.panels.params/-background/index.html"><span class="identifier">Background</span></a><span class="symbol">&lt;</span><a href="-base-header/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../../studio.forface.bottomappbar.panels.params/-title/index.html"><span class="identifier">Title</span></a><span class="symbol">&lt;</span><a href="-base-header/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../../studio.forface.bottomappbar.panels.params/-icon/index.html"><span class="identifier">Icon</span></a><span class="symbol">&lt;</span><a href="-base-header/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>An abstract class that implements business logic of a base header.
+This class is needed since if will be inherited from <a href="../../studio.forface.bottomappbar.drawer/-material-drawer/-header/index.html">MaterialDrawer.Header</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-body/index.html">Body</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Body</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-base-body/index.html"><span class="identifier">BaseBody</span></a><span class="symbol">&lt;</span><a href="-body/index.html"><span class="identifier">Body</span></a><span class="symbol">&gt;</span></code>
+<p>A solid implementation of <a href="-base-body/index.html">BaseBody</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-custom-body/index.html">CustomBody</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">CustomBody</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/util/Observable.html"><span class="identifier">Observable</span></a><span class="symbol">, </span><a href="-i-body.html"><span class="identifier">IBody</span></a></code>
+<p>An implementation of <a href="-i-body.html">IBody</a> for a type of body that has a custom <a href="https://developer.android.com/reference/android/view/View.html">View</a> as content.
+Inherit from <a href="-i-body.html">IBody</a> and <a href="https://developer.android.com/reference/java/util/Observable.html">Observable</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-custom-header/index.html">CustomHeader</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">CustomHeader</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/util/Observable.html"><span class="identifier">Observable</span></a><span class="symbol">, </span><a href="-i-header.html"><span class="identifier">IHeader</span></a></code>
+<p>An implementation of <a href="-i-header.html">IHeader</a> for a type of header that has a custom <a href="https://developer.android.com/reference/android/view/View.html">View</a> as content.
+Inherit from <a href="-i-header.html">IHeader</a> and <a href="https://developer.android.com/reference/java/util/Observable.html">Observable</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-header/index.html">Header</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Header</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-base-header/index.html"><span class="identifier">BaseHeader</span></a><span class="symbol">&lt;</span><a href="-header/index.html"><span class="identifier">Header</span></a><span class="symbol">&gt;</span></code>
+<p>A solid implementation of <a href="-base-header/index.html">BaseHeader</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-i-body.html">IBody</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">IBody</span></code>
+<p>A common interface for the body of <a href="./index.html">MaterialPanel</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-i-header.html">IHeader</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">IHeader</span></code>
+<p>A common interface for an header for <a href="./index.html">MaterialPanel</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">MaterialPanel</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.MaterialPanel$<init>(studio.forface.bottomappbar.panels.MaterialPanel.IHeader, studio.forface.bottomappbar.panels.MaterialPanel.IBody, kotlin.Boolean)/_header">_header</span><span class="symbol">:</span>&nbsp;<a href="-i-header.html"><span class="identifier">IHeader</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.panels.MaterialPanel$<init>(studio.forface.bottomappbar.panels.MaterialPanel.IHeader, studio.forface.bottomappbar.panels.MaterialPanel.IBody, kotlin.Boolean)/_body">_body</span><span class="symbol">:</span>&nbsp;<a href="-i-body.html"><span class="identifier">IBody</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.panels.MaterialPanel$<init>(studio.forface.bottomappbar.panels.MaterialPanel.IHeader, studio.forface.bottomappbar.panels.MaterialPanel.IBody, kotlin.Boolean)/_wrapToContent">_wrapToContent</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="body.html">body</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">body</span><span class="symbol">: </span><a href="-i-body.html"><span class="identifier">IBody</span></a><span class="symbol">?</span></code>
+<p>The <a href="-i-body.html">IBody</a> for the panel. On Set: <a href="#">notifyChange</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="header.html">header</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">header</span><span class="symbol">: </span><a href="-i-header.html"><span class="identifier">IHeader</span></a><span class="symbol">?</span></code>
+<p>The <a href="-i-header.html">IHeader</a> for the panel. On Set: <a href="#">notifyChange</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="panel-view.html">panelView</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">panelView</span><span class="symbol">: </span><a href="../../studio.forface.bottomappbar.view/-panel-view/index.html"><span class="identifier">PanelView</span></a><span class="symbol">?</span></code>
+<p>Get and Set the <a href="../../studio.forface.bottomappbar.view/-panel-view/index.html">PanelView</a> through a <a href="https://developer.android.com/reference/java/lang/ref/WeakReference.html">WeakReference</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="wrap-to-content.html">wrapToContent</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">wrapToContent</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>A <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> that represents whether the panel, when opened, should have the same height of
+the <a href="#">ViewGroup.children</a>.
+If false, the expanded panel, will have an height equal to 2/3 of the Window.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="delete-observers.html">deleteObservers</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">deleteObservers</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../studio.forface.bottomappbar.drawer/-material-drawer/index.html">MaterialDrawer</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">MaterialDrawer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">MaterialPanel</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

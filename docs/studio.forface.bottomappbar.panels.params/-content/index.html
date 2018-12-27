@@ -1,0 +1,281 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Content - materialbottombar</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">materialbottombar</a>&nbsp;/&nbsp;<a href="../index.html">studio.forface.bottomappbar.panels.params</a>&nbsp;/&nbsp;<a href="./index.html">Content</a><br/>
+<br/>
+<h1>Content</h1>
+<code><span class="keyword">interface </span><span class="identifier">Content</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-param/index.html"><span class="identifier">Param</span></a><span class="symbol">&lt;</span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p><strong>Author</strong><br/>
+Davide Giuseppe Farella.
+An interface for items that have a customizable <a href="./index.html">Content</a>
+Inherit from <a href="../-param/index.html">Param</a></p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="content-color-holder.html">contentColorHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">contentColorHolder</span><span class="symbol">: </span><a href="../../studio.forface.bottomappbar.panels.holders/-color-holder/index.html"><span class="identifier">ColorHolder</span></a></code>
+<p>A reference to <a href="../../studio.forface.bottomappbar.panels.holders/-color-holder/index.html">ColorHolder</a> for the Color of the Content</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-text-holder.html">contentTextHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">contentTextHolder</span><span class="symbol">: </span><a href="../../studio.forface.bottomappbar.panels.holders/-text-holder/index.html"><span class="identifier">TextHolder</span></a></code>
+<p>A reference to <a href="../../studio.forface.bottomappbar.panels.holders/-text-holder/index.html">TextHolder</a> for the Text of the Content</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-text-size-holder.html">contentTextSizeHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">contentTextSizeHolder</span><span class="symbol">: </span><a href="../../studio.forface.bottomappbar.panels.holders/-text-size-holder/index.html"><span class="identifier">TextSizeHolder</span></a></code>
+<p>A reference to <a href="../../studio.forface.bottomappbar.panels.holders/-text-size-holder/index.html">TextSizeHolder</a> for the Size of the Content</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-text-style-holder.html">contentTextStyleHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">contentTextStyleHolder</span><span class="symbol">: </span><a href="../../studio.forface.bottomappbar.panels.holders/-text-style-holder/index.html"><span class="identifier">TextStyleHolder</span></a></code>
+<p>A reference to <a href="../../studio.forface.bottomappbar.panels.holders/-text-style-holder/index.html">TextStyleHolder</a> for the Style of the Content</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-param/this-ref.html">thisRef</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">thisRef</span><span class="symbol">: </span><a href="../-param/index.html#T"><span class="identifier">T</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="apply-content-to.html">applyContentTo</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">applyContentTo</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$applyContentTo(android.widget.TextView, kotlin.Boolean)/textView">textView</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/TextView.html"><span class="identifier">TextView</span></a><span class="symbol">, </span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$applyContentTo(android.widget.TextView, kotlin.Boolean)/applyOrHide">applyOrHide</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Apply the <a href="./index.html">Content</a> to the given <a href="https://developer.android.com/reference/android/widget/TextView.html">TextView</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-bold.html">contentBold</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">contentBold</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$contentBold(kotlin.Boolean)/bold">bold</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="content-text-style-holder.html">contentTextStyleHolder</a> with the given Bold style</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-color.html">contentColor</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">contentColor</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$contentColor(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="content-color-holder.html">contentColorHolder</a> with the given XXX</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-color-res.html">contentColorRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">contentColorRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$contentColorRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="content-color-holder.html">contentColorHolder</a> with the given XXX</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-dp-size.html">contentDpSize</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">contentDpSize</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$contentDpSize(kotlin.Float)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="content-text-size-holder.html">contentTextSizeHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a> DP size</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-pixel-size.html">contentPixelSize</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">contentPixelSize</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$contentPixelSize(kotlin.Float)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="content-text-size-holder.html">contentTextSizeHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a> Pixel size</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-sp-size.html">contentSpSize</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">contentSpSize</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$contentSpSize(kotlin.Float)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="content-text-size-holder.html">contentTextSizeHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a> SP size</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-spannable.html">contentSpannable</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">contentSpannable</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$contentSpannable(android.text.Spannable)/spannable">spannable</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/text/Spannable.html"><span class="identifier">Spannable</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="content-text-holder.html">contentTextHolder</a> with the given <a href="https://developer.android.com/reference/android/text/Spannable.html">Spannable</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-string-res.html">contentStringRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">contentStringRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$contentStringRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="content-text-holder.html">contentTextHolder</a> with the given <a href="#">StringRes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-text.html">contentText</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">contentText</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$contentText(kotlin.CharSequence)/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="content-text-holder.html">contentTextHolder</a> with the given <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html">CharSequence</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="content-text-res.html">contentTextRes</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">contentTextRes</span><span class="symbol">(</span><span class="identifier" id="studio.forface.bottomappbar.panels.params.Content$contentTextRes(kotlin.Int)/res">res</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Set the <a href="content-text-holder.html">contentTextHolder</a> with the given <a href="#">StringRes</a> as styleable text</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Extension Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../content-bold.html">contentBold</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">contentBold</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="content-bold.html">Content.contentBold</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../content-color.html">contentColor</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">contentColor</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="content-color.html">Content.contentColor</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../content-color-res.html">contentColorRes</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">contentColorRes</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="content-color-res.html">Content.contentColorRes</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../content-dp-size.html">contentDpSize</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">contentDpSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="content-dp-size.html">Content.contentDpSize</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../content-pixel-size.html">contentPixelSize</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">contentPixelSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="content-pixel-size.html">Content.contentPixelSize</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../content-sp-size.html">contentSpSize</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">contentSpSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="content-sp-size.html">Content.contentSpSize</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../content-spannable.html">contentSpannable</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">contentSpannable</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/text/Spannable.html"><span class="identifier">Spannable</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="content-spannable.html">Content.contentSpannable</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../content-string-res.html">contentStringRes</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">contentStringRes</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="content-string-res.html">Content.contentStringRes</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../content-text.html">contentText</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">contentText</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="content-text.html">Content.contentText</a> function</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../content-text-res.html">contentTextRes</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><a href="./index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">contentTextRes</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>A <a href="#">DslComponent</a> for call <a href="content-text-res.html">Content.contentTextRes</a> function</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../studio.forface.bottomappbar.panels.items.extra/-simple-extra-item/index.html">SimpleExtraItem</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">SimpleExtraItem</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Content</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels.items.extra/-simple-extra-item/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../-background/index.html"><span class="identifier">Background</span></a><span class="symbol">&lt;</span><a href="../../studio.forface.bottomappbar.panels.items.extra/-simple-extra-item/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-cloneable/index.html"><span class="identifier">Cloneable</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
