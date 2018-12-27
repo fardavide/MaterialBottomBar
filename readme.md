@@ -1,5 +1,9 @@
 # Material Bottom bar
 
+## DOCS
+
+[Documentation link](https://4face-studi0.github.io/MaterialBottomBar/)
+
 ### WITH DSL!!!
 
 **Material Bottom Bar** is an Android library that let you implement a customized **BottomAppBar** and a **bottom drawer** with just few simple steps.
