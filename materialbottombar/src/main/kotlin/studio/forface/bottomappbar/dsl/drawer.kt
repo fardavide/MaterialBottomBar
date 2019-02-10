@@ -15,7 +15,9 @@ inline fun drawer( wrapToContent: Boolean = false, f: DrawerBuilder.() -> Unit )
 }
 
 /** An [AbsPanelBuilder] for create a [MaterialDrawer] */
-class DrawerBuilder( wrapToContent: Boolean ): AbsPanelBuilder<MaterialDrawer>( wrapToContent ) {
+class DrawerBuilder(
+        wrapToContent: Boolean
+): CustomBodyPanelBuilder<MaterialDrawer>( wrapToContent ) {
 
     /**
      * @see DslBuilder.build

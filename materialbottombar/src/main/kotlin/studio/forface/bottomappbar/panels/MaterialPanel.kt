@@ -3,6 +3,8 @@ package studio.forface.bottomappbar.panels
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import studio.forface.bottomappbar.appbar.MaterialBottomAppBar
 import studio.forface.bottomappbar.drawer.MaterialDrawer
 import studio.forface.bottomappbar.panels.holders.*
@@ -20,10 +22,11 @@ import java.util.*
  *
  * Inherit from [Observable]
  */
-open class MaterialPanel(
-    _header: IHeader? = null,
-    _body: IBody? = null,
-    _wrapToContent: Boolean = true
+open class MaterialPanel @RestrictTo(LIBRARY_GROUP) constructor (
+        _header: IHeader?,
+        _body: IBody?,
+        _wrapToContent: Boolean,
+        @Suppress("UNUSED_PARAMETER") nothing: Byte
 ): Observable() {
 
     /** The [IBody] for the panel. On Set: [notifyChange] */
@@ -84,7 +87,7 @@ open class MaterialPanel(
      * Wraps [Observable.addObserver] casting the [Observable] as [MaterialPanel] and the change
      * `any` as [Change]
      */
-    internal inline fun observe( crossinline change: (MaterialPanel, Change) -> Unit ) {
+    inline fun observe( crossinline change: (MaterialPanel, Change) -> Unit ) {
         addObserver { observable, any -> change( observable as MaterialPanel, any as Change ) }
     }
 
@@ -170,8 +173,9 @@ open class MaterialPanel(
      *
      * Inherit from [IBody] and [Selection]
      */
-    abstract class BaseBody<T> internal constructor( _items: List<PanelItem> = listOf() ) :
-            Observable(), IBody, Selection<T> {
+    abstract class BaseBody<T> @RestrictTo(LIBRARY_GROUP) constructor(
+            _items: List<PanelItem> = listOf()
+    ) : Observable(), IBody, Selection<T> {
 
         /** @see Selection.selectionColorHolder */
         override var selectionColorHolder = ColorHolder()
@@ -194,9 +198,14 @@ open class MaterialPanel(
         /** A builder-style function for update [BaseBody.items] */
         fun items( items: List<PanelItem> ) = apply { this.items = items }
 
-        /** Select a [PanelItem] in [items] and de-select all th others */
+        /** Select a [PanelItem] by its [BasePanelItem.id] in [items] and de-select all th others */
         fun setSelected( selectedId: Int? ) = apply {
             items = items.mapBasePanelItems { it.selected = it.id == selectedId && it.selectable }
+        }
+
+        /** Select a [PanelItem] by its [find] lambda in [items] and de-select all th others */
+        fun setSelected( find: (BasePanelItem) -> Boolean ) = apply {
+            items = items.mapBasePanelItems { it.selected = find( it ) && it.selectable }
         }
     }
 
@@ -223,10 +232,18 @@ open class MaterialPanel(
     }
 
     /** An enum representing the changing item in a [MaterialPanel] */
-    internal enum class Change {
+    enum class Change {
         HEADER, BODY, PANEL_VIEW
     }
 }
+
+/** @constructor on [MaterialPanel] */
+@Suppress("FunctionName")
+fun MaterialPanel(
+        header: MaterialPanel.IHeader? = null,
+        body: MaterialPanel.IBody? = null,
+        wrapToContent: Boolean = true
+) = MaterialPanel( header, body, wrapToContent,0 )
 
 /**
  * A function for map [BasePanelItem]s from a [List] of generic [PanelItem]s.

@@ -7,7 +7,7 @@ buildscript {
             minor:      0,
             channel:    1, // 0: build, 1: alpha, 2: beta, 3: RC, 4: stable
             patch:      19,
-            build:      0
+            build:      1
     ]
 
     ext.getVersionName = {
@@ -70,21 +70,21 @@ buildscript {
             targetSdk:                  28,
             sourceCompat:               JavaVersion.VERSION_1_8,
             targetCompat:               JavaVersion.VERSION_1_8,
-            buildTools:                 '3.3.0-rc02',
+            buildTools:                 '3.5.0-alpha03',
 
-            kotlin:                     '1.3.11',
+            kotlin:                     '1.3.20',
             kotlinCoroutines:           '1.0.0',
             kotlinCoroutinesAndroid:    '1.0.0',
 
-            appCompat:                  '1.1.0-alpha01',
+            appCompat:                  '1.1.0-alpha02',
             bintrayPlugin:              '1.8.4',
-            constraintLayout:           '2.0.0-alpha2',
+            constraintLayout:           '2.0.0-alpha3',
             dokka:                      '0.9.17',
             glide:                      '4.8.0',
-            material:                   '1.1.0-alpha02',
+            material:                   '1.1.0-alpha03',
             mavenPlugin:                '2.0',
+            navigation:                 '1.0.0-beta01',
             ktx:                        '1.0.1',
-            timber:                     '4.7.1',
 
             junit:                      '4.12',
             espressoCore:               '3.1.0-alpha3',
@@ -105,17 +105,17 @@ buildscript {
             //design:             "com.android.support:design:$versions.support",
             ktx:                "androidx.core:core-ktx:$versions.ktx",
             material:           "com.google.android.material:material:$versions.material",
+            navigationFragment: "android.arch.navigation:navigation-fragment-ktx:$versions.navigation",
+            navigationUi: "android.arch.navigation:navigation-ui-ktx:$versions.navigation"
         ],
         kotlin: [
             coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.kotlinCoroutines",
             coroutinesAndroid:  "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.kotlinCoroutinesAndroid",
-            //reflection:         "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
             stdlib:             "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin",
         ],
         other: [
             glide:              "com.github.bumptech.glide:glide:$versions.glide",
             glideCompiler:      "com.github.bumptech.glide:compiler:$versions.glide",
-            timber:             "com.jakewharton.timber:timber:$versions.timber",
         ],
         test: [
             androidJunitRunner: "androidx.test.runner.AndroidJUnitRunner",

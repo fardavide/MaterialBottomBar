@@ -22,7 +22,7 @@ import studio.forface.bottomappbar.panels.items.Divider
 import studio.forface.bottomappbar.panels.items.extra.Badge
 import studio.forface.bottomappbar.panels.params.*
 import studio.forface.materialbottombar.demo.R
-import timber.log.Timber
+import studio.forface.materialbottombar.navigation.dsl.navPanel
 
 private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg"
 
@@ -31,7 +31,6 @@ private const val PANEL_SORT_ID = 123
 class DemoActivity: AppCompatActivity() {
 
     override fun onCreate( savedInstanceState: Bundle? ) {
-        Timber.plant( Timber.DebugTree() )
         super.onCreate( savedInstanceState )
         setContentView( R.layout.activity_demo )
         setSupportActionBar( drawerLayout.bottomAppBar )

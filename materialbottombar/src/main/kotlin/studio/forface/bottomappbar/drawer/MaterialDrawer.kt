@@ -3,6 +3,8 @@
 package studio.forface.bottomappbar.drawer
 
 import android.view.View
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import studio.forface.bottomappbar.appbar.MaterialBottomAppBar
 import studio.forface.bottomappbar.panels.MaterialPanel
 import studio.forface.bottomappbar.panels.items.PanelItem
@@ -14,11 +16,12 @@ import java.util.*
  *
  * Inherit from [MaterialPanel] ( inherit from [Observable] )
  */
-class MaterialDrawer(
-    _header: IHeader? = null,
-    _body: IBody? = null,
-    _wrapToContent: Boolean = false
-): MaterialPanel( _header, _body, _wrapToContent ) {
+open class MaterialDrawer @RestrictTo(LIBRARY_GROUP) constructor(
+    _header: IHeader?,
+    _body: IBody?,
+    _wrapToContent: Boolean,
+    nothing: Byte
+): MaterialPanel( _header, _body, _wrapToContent, nothing ) {
 
     /** A solid implementation of [MaterialPanel.BaseHeader] */
     class Header: MaterialPanel.BaseHeader<Header>() {
@@ -40,5 +43,13 @@ class MaterialDrawer(
      * A type of body that has a custom [View] as content.
      * Inherit from [MaterialPanel.CustomBody] ( inherit from [Observable] )
      */
-    class CustomBody( _contentView: View): MaterialPanel.CustomBody( _contentView )
+    class CustomBody( _contentView: View ): MaterialPanel.CustomBody( _contentView )
 }
+
+/** @constructor on [MaterialDrawer] */
+@Suppress("FunctionName")
+fun MaterialDrawer(
+        header: MaterialPanel.IHeader? = null,
+        body: MaterialPanel.IBody? = null,
+        wrapToContent: Boolean = false
+) = MaterialDrawer( header, body, wrapToContent,0 )

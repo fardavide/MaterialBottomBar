@@ -1,10 +1,14 @@
 # Material Bottom bar
 
-## DOCS
+#### [Documentation link](https://4face-studi0.github.io/MaterialBottomBar/)
 
-[Documentation link](https://4face-studi0.github.io/MaterialBottomBar/)
 
-### WITH DSL!!!
+
+#### Dsl ready
+
+#### Navigation Component support coming soon
+
+
 
 **Material Bottom Bar** is an Android library that let you implement a customized **BottomAppBar** and a **bottom drawer** with just few simple steps.
 
@@ -96,7 +100,45 @@ drawerLayout.drawer = drawer {
     
      drawerLayout.drawer = MaterialDrawer( header, body )
 
+
+
+## Android Navigation Components integration
+
+### Installation
+
+```
+implementation "studio.forface.materialbottombar:materialbottombar-navigation:<check last version in Releases tab>"
+```
+
+### Usage 
+
+##### with Dsl ( constructor injected NavController )
+
+```
+navDrawer( navController ) {
+	header { ... }
+    body {
+        primaryItem {
+            navDirections = ...
+            navDestinationId = ...
+            navDestinationBundle = ...
+        }
+    }
+}
+```
+
+##### NavController can also be set later in the following ways:
+
+* `myNavDrawer.navController = navController`
+* `myToolbar.setupWithNavController( navController, myNavDrawer, myNavPanel1, myNavPanel2 )`
+* `myMaterialBottomDrawerLayout.setupWithNavController( navController )`
+
+
+
+## More info
+
 ### Complex usage ( see demo app for more details )
+
     <studio.forface.bottomappbar.layout.MaterialBottomDrawerLayout
     	xmlns:android="http://schemas.android.com/apk/res/android"
     	xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -358,7 +400,10 @@ private val fancyDrawer get() = drawer {
      	return MaterialDrawer( header, body ) 
     }
 
+
+
 ## TIPS
+
 The lib is built on 3 focal points:
 * **Customization**
 * **Easiness**

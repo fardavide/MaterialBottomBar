@@ -15,7 +15,9 @@ inline fun panel( wrapToContent: Boolean = true, f: PanelBuilder.() -> Unit ): M
 }
 
 /** An [AbsPanelBuilder] for create a [MaterialPanel] */
-class PanelBuilder( wrapToContent: Boolean ): AbsPanelBuilder<MaterialPanel>( wrapToContent ) {
+class PanelBuilder(
+        wrapToContent: Boolean
+): CustomBodyPanelBuilder<MaterialPanel>( wrapToContent ) {
 
     /**
      * @see DslBuilder.build

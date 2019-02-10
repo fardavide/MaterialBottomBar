@@ -38,8 +38,6 @@ dokka {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation deps.android.appCompat
     implementation deps.android.constraintLayout
     implementation deps.android.ktx
@@ -51,7 +49,6 @@ dependencies {
 
     implementation deps.other.glide
     kapt deps.other.glideCompiler
-    implementation deps.other.timber
 
     testImplementation deps.test.junit
 

@@ -1,1 +1,1 @@
-include ':materialbottombar', ':demo'
+include ':materialbottombar', ':demo', ':navigation'

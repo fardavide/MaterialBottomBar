@@ -1,0 +1,86 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+group 'studio.forface.materialbottombar'
+
+ext {
+    bintrayRepo = "MaterialBottomBar"
+    bintrayName = "studio.forface.materialbottombar"
+
+    libraryName = 'materialbottombar'
+
+    publishedGroupId = group
+    artifact = 'materialbottombar-navigation'
+    libraryVersion = versions.versionName
+
+    libraryDescription = 'Material Bottom Bar'
+    siteUrl = 'http://4face.studio'
+    gitUrl = 'https://github.com/4face-studi0/MaterialBottomBar'
+    developerId = '4face-studi0'
+    developerName = '4face Studio'
+    developerEmail = 'mail@4face.studio'
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenseS/LICENSEeZ.®.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'aar'
+            groupId publishedGroupId
+            artifactId artifact
+
+            name libraryName
+            description libraryDescription
+            url siteUrl
+
+            licenses {
+                license {
+                    name licenseName
+                    url licenseUrl
+                }
+            }
+            developers {
+                developer {
+                    id developerId
+                    name developerName
+                    email developerEmail
+                }
+            }
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+            }
+        }
+    }
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = bintrayRepo
+        name = bintrayName
+        desc = libraryDescription
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = allLicenses
+        dryRun = false
+        publish = true
+        override = false
+        publicDownloadNumbers = true
+        version {
+            desc = libraryDescription
+        }
+    }
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
