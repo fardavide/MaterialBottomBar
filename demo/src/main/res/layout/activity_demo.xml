@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<studio.forface.bottomappbar.layout.MaterialBottomDrawerLayout
+<studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -89,7 +89,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <studio.forface.bottomappbar.appbar.MaterialBottomAppBar
+    <studio.forface.materialbottombar.appbar.MaterialBottomAppBar
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -119,4 +119,4 @@
 
         app:hideOnScroll="true"/>
 
-</studio.forface.bottomappbar.layout.MaterialBottomDrawerLayout>
+</studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout>

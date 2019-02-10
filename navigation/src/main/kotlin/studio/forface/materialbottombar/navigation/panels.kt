@@ -3,8 +3,8 @@ package studio.forface.materialbottombar.navigation
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import studio.forface.bottomappbar.drawer.MaterialDrawer
-import studio.forface.bottomappbar.panels.MaterialPanel
+import studio.forface.materialbottombar.drawer.MaterialDrawer
+import studio.forface.materialbottombar.panels.MaterialPanel
 
 /** An interface for Panels that implement Android's `Navigation` */
 interface NavigationPanel {

@@ -5,7 +5,7 @@ package studio.forface.materialbottombar.navigation
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupWithNavController
-import studio.forface.bottomappbar.layout.MaterialBottomDrawerLayout
+import studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout
 
 /*
  * Author: Davide Giuseppe Farella

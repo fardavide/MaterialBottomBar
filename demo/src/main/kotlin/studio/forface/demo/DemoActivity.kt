@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomappbar.BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
 import com.google.android.material.bottomappbar.BottomAppBar.FAB_ALIGNMENT_MODE_END
 import kotlinx.android.synthetic.main.activity_demo.*
-import studio.forface.bottomappbar.drawer.MaterialDrawer
-import studio.forface.bottomappbar.drawer.items.PrimaryDrawerItem
-import studio.forface.bottomappbar.drawer.items.SecondaryDrawerItem
-import studio.forface.bottomappbar.dsl.drawer
-import studio.forface.bottomappbar.dsl.panel
-import studio.forface.bottomappbar.panels.items.Divider
-import studio.forface.bottomappbar.panels.items.extra.Badge
-import studio.forface.bottomappbar.panels.params.*
+import studio.forface.materialbottombar.drawer.MaterialDrawer
+import studio.forface.materialbottombar.drawer.items.PrimaryDrawerItem
+import studio.forface.materialbottombar.drawer.items.SecondaryDrawerItem
+import studio.forface.materialbottombar.dsl.drawer
+import studio.forface.materialbottombar.dsl.panel
+import studio.forface.materialbottombar.panels.items.Divider
+import studio.forface.materialbottombar.panels.items.extra.Badge
+import studio.forface.materialbottombar.panels.params.*
 import studio.forface.materialbottombar.demo.R
 
 private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg"

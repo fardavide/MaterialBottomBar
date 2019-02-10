@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDirections
-import studio.forface.bottomappbar.panels.params.Param
+import studio.forface.materialbottombar.panels.params.Param
 
 /**
  * @author Davide Giuseppe Farella.

@@ -1,7 +1,7 @@
 package studio.forface.materialbottombar.navigation.dsl
 
-import studio.forface.bottomappbar.dsl.AbsPanelBuilder
-import studio.forface.bottomappbar.panels.MaterialPanel
+import studio.forface.materialbottombar.dsl.AbsPanelBuilder
+import studio.forface.materialbottombar.panels.MaterialPanel
 import studio.forface.materialbottombar.navigation.MaterialNavPanel
 import studio.forface.materialbottombar.navigation.MaterialNavPanel.Body
 import studio.forface.materialbottombar.navigation.PrimaryNavPanelItem

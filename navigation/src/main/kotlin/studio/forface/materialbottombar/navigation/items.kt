@@ -4,10 +4,10 @@ package studio.forface.materialbottombar.navigation
 
 import android.os.Bundle
 import androidx.navigation.NavDirections
-import studio.forface.bottomappbar.panels.items.BasePanelItem
-import studio.forface.bottomappbar.panels.items.PanelItem
-import studio.forface.bottomappbar.panels.items.PrimaryPanelItem
-import studio.forface.bottomappbar.panels.items.SecondaryPanelItem
+import studio.forface.materialbottombar.panels.items.BasePanelItem
+import studio.forface.materialbottombar.panels.items.PanelItem
+import studio.forface.materialbottombar.panels.items.PrimaryPanelItem
+import studio.forface.materialbottombar.panels.items.SecondaryPanelItem
 
 /** An interface of [PanelItem] that implements [Navigation] */
 interface NavItem: PanelItem, Navigation<BasePanelItem>
