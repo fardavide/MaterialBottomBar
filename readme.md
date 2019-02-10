@@ -112,12 +112,12 @@ implementation "studio.forface.materialbottombar:materialbottombar-navigation:<c
 
 ### Usage 
 
-##### with Dsl ( constructor injected NavController )
+##### with DSL ( constructor injected NavController )
 
 ```
 navDrawer( navController ) {
 	header { ... }
-    body {
+	body {
         primaryItem {
             navDirections = ...
             navDestinationId = ...
@@ -127,11 +127,39 @@ navDrawer( navController ) {
 }
 ```
 
-##### NavController can also be set later in the following ways:
+##### NavController can also be set later
+
+```
+navDrawer {
+    ...
+}
+```
+
+#####  in the following ways:
 
 * `myNavDrawer.navController = navController`
 * `myToolbar.setupWithNavController( navController, myNavDrawer, myNavPanel1, myNavPanel2 )`
 * `myMaterialBottomDrawerLayout.setupWithNavController( navController )`
+
+##### without DSL
+
+```
+val header = MaterialDrawer.Header()
+	.iconUrl( IMAGE_URL )
+    .titleText( "My drawer" )
+
+val messages = PrimaryNavDrawerItem()
+	.titeText( "messages" )
+    .navDestinationId( myDestinationId )
+    .navDestinationBundle( bundleOf( ... ) )
+    .iconResource( R.drawable.ic_message_black_24dp )
+
+val body = MaterialNavPanel.Body()
+	.itemClickListener { id, title -> /* do something */ }
+    .items( listOf( messages ) )
+
+drawerLayout.drawer = MaterialNavDrawer( header, body )
+```
 
 
 
