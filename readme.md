@@ -1,3 +1,5 @@
+[![Download](https://api.bintray.com/packages/4face/MaterialBottomBar/studio.forface.materialbottombar/images/download.svg)](https://bintray.com/4face/MaterialBottomBar/studio.forface.materialbottombar/_latestVersion)
+
 # Material Bottom bar
 
 #### [Documentation link](https://4face-studi0.github.io/MaterialBottomBar/)
@@ -21,7 +23,7 @@ Actually the library is in alpha and I basically want to read your feedbacks and
 ## Installation
 Add the library to your Gradle dependecies:
 
-    implementation "studio.forface.materialbottombar:materialbottombar:<check last version in Releases tab>"
+    implementation "studio.forface.materialbottombar:materialbottombar:$version"
 
 ## Usage
 ### Basic usage ( more complex example and TIPS below )
@@ -107,7 +109,7 @@ drawerLayout.drawer = drawer {
 ### Installation
 
 ```
-implementation "studio.forface.materialbottombar:materialbottombar-navigation:<check last version in Releases tab>"
+implementation "studio.forface.materialbottombar:materialbottombar-navigation:$version"
 ```
 
 ### Usage 

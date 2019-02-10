@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package studio.forface.materialbottombar.navigation
 
 import android.os.Bundle
