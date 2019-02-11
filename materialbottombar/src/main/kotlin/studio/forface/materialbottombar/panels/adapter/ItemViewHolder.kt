@@ -19,7 +19,7 @@ class ItemViewHolder internal constructor(
     fun bind(panelItem: PanelItem ) {
 
         when( panelItem ) {
-            is BasePanelItem -> {
+            is BasePanelItem<*> -> {
                 itemView.item_icon.alpha = panelItem.iconAlpha
                 itemView.item_icon.constraintParams!!.marginStart =
                         dpToPixels( panelItem.iconMarginStartDp ).toInt()
@@ -41,7 +41,7 @@ class ItemViewHolder internal constructor(
         }
     }
 
-    private val itemClickListener: (BasePanelItem) -> (View) -> Unit get() = { item -> {
+    private val itemClickListener: (BasePanelItem<*>) -> (View) -> Unit get() = { item -> {
         panelBody.onItemClick( item.id, itemView.item_title.text )
 
         Handler().postDelayed({

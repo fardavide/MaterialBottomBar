@@ -8,9 +8,7 @@ import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.annotation.StringRes
 import studio.forface.materialbottombar.panels.MaterialPanel
 import studio.forface.materialbottombar.panels.MaterialPanel.*
-import studio.forface.materialbottombar.panels.items.Divider
-import studio.forface.materialbottombar.panels.items.PrimaryPanelItem
-import studio.forface.materialbottombar.panels.items.SecondaryPanelItem
+import studio.forface.materialbottombar.panels.items.*
 import studio.forface.materialbottombar.panels.params.titleStringRes
 import studio.forface.materialbottombar.panels.params.titleText
 
@@ -27,8 +25,8 @@ import studio.forface.materialbottombar.panels.params.titleText
 abstract class AbsPanelBuilder<
         T: MaterialPanel,
         B: IBody,
-        P: PrimaryPanelItem,
-        S: SecondaryPanelItem
+        P: AbsPrimaryPanelItem<*>,
+        S: AbsSecondaryPanelItem<*>
 > @RestrictTo(LIBRARY_GROUP) constructor (
         @RestrictTo(LIBRARY_GROUP) val wrapToContent: Boolean
 ): DslBuilder<T> {
