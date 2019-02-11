@@ -12,10 +12,10 @@ interface NavigationPanel {
      * A reference to the old [MaterialNavPanel.Body] for call
      * [MaterialNavPanel.Body.removeNavListener] when the body is changed.
      */
-    var oldNavBody: MaterialNavPanel.Body?
+    var oldNavBody: MaterialNavPanel.BaseBody<*>?
 
     /** A reference to [MaterialPanel.body] for abstract [navController] behaviors */
-    val navBody: MaterialNavPanel.Body?
+    val navBody: MaterialNavPanel.BaseBody<*>?
 
     /** A reference to [MaterialPanel.body]'s [NavController] */
     var navController: NavController?
@@ -45,14 +45,20 @@ class MaterialNavPanel(
     }
 
     /** @see NavigationPanel.navBody */
-    override val navBody get() = body as MaterialNavPanel.Body?
+    override val navBody get() = body as MaterialNavPanel.BaseBody<*>?
 
     /** @see NavigationPanel.oldNavBody */
-    override var oldNavBody: MaterialNavPanel.Body? = null
+    override var oldNavBody: MaterialNavPanel.BaseBody<*>? = null
 
-    /** An implementation of [MaterialPanel.BaseBody] that implements Android's `Navigation` */
-    class Body( items: List<NavItem> = listOf() ): BaseBody<Body>( items ), NavSelection<Body> {
-        override val thisRef: Body get() = this
+    /**
+     * An abstract class that implements business logic of a base body.
+     * This class is needed since if will be inherited from [MaterialNavDrawer.Body]
+     *
+     * Inherit from [MaterialPanel.BaseBody] and [NavSelection]
+     */
+    abstract class BaseBody<T>(
+            items: List<NavItem<*>> = listOf()
+    ): MaterialPanel.BaseBody<T>( items ), NavSelection<T> {
 
         /** @see NavSelection.onItemNavigation */
         override var onItemNavigation: OnItemNavigationListener = { directions, navParams ->
@@ -72,7 +78,7 @@ class MaterialNavPanel(
 
         /** A change listener for [navController] */
         private var navChangeListener: NavChange = { _, destination, _ ->
-            setSelected { ( it as NavItem ).navDestinationId == destination.id }
+            setSelected { ( it as NavItem<*> ).navDestinationId == destination.id }
         }
 
         /** Add [navChangeListener] to [navController] */
@@ -85,6 +91,11 @@ class MaterialNavPanel(
             navController?.removeOnDestinationChangedListener( navChangeListener )
         }
     }
+
+    /** A solid implementation of [MaterialNavPanel.BaseBody] */
+    class Body( items: List<NavItem<*>> = listOf() ): BaseBody<Body>( items ) {
+        override val thisRef: Body get() = this
+    }
 }
 
 /**
@@ -93,7 +104,7 @@ class MaterialNavPanel(
  */
 class MaterialNavDrawer(
         header: MaterialPanel.IHeader? = null,
-        body: MaterialNavPanel.Body? = null,
+        body: MaterialNavPanel.BaseBody<*>? = null,
         wrapToContent: Boolean = false
 ): MaterialDrawer( header, body, wrapToContent,0 ), NavigationPanel {
 
@@ -102,10 +113,15 @@ class MaterialNavDrawer(
     }
 
     /** @see NavigationPanel.navBody */
-    override val navBody get() = body as MaterialNavPanel.Body?
+    override val navBody get() = body as MaterialNavPanel.BaseBody<*>?
 
     /** @see NavigationPanel.oldNavBody */
-    override var oldNavBody: MaterialNavPanel.Body? = null
+    override var oldNavBody: MaterialNavPanel.BaseBody<*>? = null
+
+    /** A solid implementation of [MaterialNavPanel.BaseBody] */
+    class Body( items: List<NavItem<*>> = listOf() ): MaterialNavPanel.BaseBody<Body>( items ) {
+        override val thisRef: Body get() = this
+    }
 }
 
 /**

@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.jetbrains.dokka-android'
 
+archivesBaseName = 'materialbottombar-navigation'
+
 android {
     compileSdkVersion       versions.targetSdk
 
@@ -32,6 +34,7 @@ android {
 dependencies {
     implementation project(":materialbottombar")
 
+    implementation deps.android.ktx
     implementation deps.android.navigationFragment
     implementation deps.android.navigationUi
 

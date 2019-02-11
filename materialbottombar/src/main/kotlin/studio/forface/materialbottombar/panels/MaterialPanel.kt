@@ -8,13 +8,13 @@ import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import studio.forface.materialbottombar.appbar.MaterialBottomAppBar
 import studio.forface.materialbottombar.drawer.MaterialDrawer
 import studio.forface.materialbottombar.panels.holders.*
-import studio.forface.materialbottombar.panels.items.BasePanelItem
 import studio.forface.materialbottombar.panels.items.PanelItem
 import studio.forface.materialbottombar.panels.params.*
 import studio.forface.materialbottombar.utils.Drawables
 import studio.forface.materialbottombar.view.PanelView
 import java.lang.ref.WeakReference
 import java.util.*
+import studio.forface.materialbottombar.panels.items.BasePanelItem as BasePanelItemT
 
 /**
  * @author Davide Giuseppe Farella.
@@ -196,9 +196,9 @@ open class MaterialPanel @RestrictTo(LIBRARY_GROUP) constructor (
             }
 
         /** A builder-style function for update [BaseBody.items] */
-        fun items( items: List<PanelItem> ) = apply { this.items = items }
+        fun items( items: List<PanelItem> ) = thisRef.apply { this@BaseBody.items = items }
 
-        /** Select a [PanelItem] by its [BasePanelItem.id] in [items] and de-select all th others */
+        /** Select a [PanelItem] by its [BasePanelItemT.id] in [items] and de-select all th others */
         fun setSelected( selectedId: Int? ) = apply {
             items = items.mapBasePanelItems { it.selected = it.id == selectedId && it.selectable }
         }
@@ -256,3 +256,6 @@ inline fun List<PanelItem>.mapBasePanelItems( mapper: (BasePanelItem) -> Unit ) 
 inline fun List<PanelItem>.forEachBasePanelItem( block: (BasePanelItem) -> Unit ) {
     forEach { ( it as? BasePanelItem )?.run( block ) }
 }
+
+/** A type alias for a avoid to spread `<*>` everywhere */
+private typealias BasePanelItem = BasePanelItemT<*>

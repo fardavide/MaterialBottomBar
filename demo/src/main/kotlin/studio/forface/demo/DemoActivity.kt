@@ -22,6 +22,10 @@ import studio.forface.materialbottombar.panels.items.Divider
 import studio.forface.materialbottombar.panels.items.extra.Badge
 import studio.forface.materialbottombar.panels.params.*
 import studio.forface.materialbottombar.demo.R
+import studio.forface.materialbottombar.navigation.MaterialNavDrawer
+import studio.forface.materialbottombar.navigation.MaterialNavPanel
+import studio.forface.materialbottombar.navigation.PrimaryNavDrawerItem
+import studio.forface.materialbottombar.navigation.dsl.navPanel
 
 private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg"
 

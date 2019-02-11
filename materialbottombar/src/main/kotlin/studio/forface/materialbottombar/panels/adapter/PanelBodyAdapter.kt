@@ -30,10 +30,8 @@ internal class PanelBodyAdapter( val body: MaterialPanel.BaseBody<*> )
     }
 
     private fun getLayoutRes( position: Int ) = when ( items[position] ) {
-        is BasePanelItem ->    R.layout.drawer_item_base
+        is BasePanelItem<*> -> R.layout.drawer_item_base
         is Divider ->          R.layout.drawer_item_divider
         else -> throw NotImplementedError()
     }
-
-
 }

@@ -5,15 +5,14 @@ import studio.forface.materialbottombar.panels.items.extra.ButtonItem
 import studio.forface.materialbottombar.panels.holders.*
 import studio.forface.materialbottombar.panels.params.*
 
-abstract class BasePanelItem: PanelItem,
-        Title<BasePanelItem>,
-        Icon<BasePanelItem>,
-        Identifier<BasePanelItem>,
-        Badge<BasePanelItem>,
-        PanelButton<BasePanelItem>,
+abstract class BasePanelItem<T: PanelItem>: PanelItem,
+        Title<T>,
+        Icon<T>,
+        Identifier<T>,
+        Badge<T>,
+        PanelButton<T>,
         Cloneable
 {
-    override val thisRef get() = this
     abstract val iconMarginStartDp: Float
     abstract val iconMarginEndDp: Float
     abstract val iconAlpha: Float

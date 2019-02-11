@@ -120,10 +120,15 @@ implementation "studio.forface.materialbottombar:materialbottombar-navigation:$v
 navDrawer( navController ) {
     header { ... }
     body {
-        primaryItem {
-            navDirections = ...
-            navDestinationId = ...
-            navDestinationBundle = ...
+        primaryItem( "messages" ) {
+            navDestinationId = myDestinationId
+            navDestinationBundle = myBundle
+        }
+        primaryItem( "contacts" ) {
+            navDestination( myDestinationId ) { mapOf( "arg1" to 15 ) }
+        }
+        secondaryItem( "favorites" ) {
+            navDirections = myNavDirections
         }
     }
 }
@@ -152,13 +157,16 @@ val header = MaterialDrawer.Header()
 
 val messages = PrimaryNavDrawerItem()
     .titeText( "messages" )
-    .navDestinationId( myDestinationId )
-    .navDestinationBundle( bundleOf( ... ) )
-    .iconResource( R.drawable.ic_message_black_24dp )
+    .navDestination( myDestinationId )
+    .navDestinationBundle( myBundle )
+    
+val contacts = PrimaryNavDrawerItem()
+    .titeText( "contacts" )
+    .navDestination( myDestinationId ) { mapOf( "arg1" to "hello" ) }
 
 val body = MaterialNavPanel.Body()
     .itemClickListener { id, title -> /* do something */ }
-    .items( listOf( messages ) )
+    .items( listOf( messages, contacts ) )
 
 drawerLayout.drawer = MaterialNavDrawer( header, body )
 ```

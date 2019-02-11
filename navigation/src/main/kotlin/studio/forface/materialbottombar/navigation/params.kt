@@ -2,6 +2,7 @@ package studio.forface.materialbottombar.navigation
 
 import android.os.Bundle
 import androidx.annotation.IdRes
+import androidx.core.os.bundleOf
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDirections
 import studio.forface.materialbottombar.panels.params.Param
@@ -23,6 +24,20 @@ interface Navigation<T>: Param<T> {
     var navDirections: NavDirections?
 
     /**
+     * Set an [IdRes] destination of the item and optionally a [Bundle] created from a [Map]
+     * returned from [bundleArgsBlock]
+     * @return [T]
+     */
+    fun navDestination(
+            @IdRes destinationId: Int,
+            bundleArgsBlock: ( () -> Map<String, Any?> )? = null
+    ) = thisRef.apply {
+        navDestinationId = destinationId
+        val bundleArgs = bundleArgsBlock?.invoke()?.toList()?.toTypedArray() ?: return@apply
+        navDestinationBundle = bundleOf( *bundleArgs )
+    }
+
+    /**
      * Set a [Bundle] for the destination of the item
      * @return [T]
      */
@@ -30,17 +45,10 @@ interface Navigation<T>: Param<T> {
             thisRef.apply { navDestinationBundle = bundle }
 
     /**
-     * Set an [IdRes] destination of the item
-     * @return [T]
-     */
-    fun navDestinationId( @IdRes id: Int ) = thisRef.apply { navDestinationId = id }
-
-    /**
      * Set a [NavDirections] for the item
      * @return [T]
      */
-    fun navDirections( directions: NavDirections ) =
-            thisRef.apply { navDirections = directions }
+    fun navDirections( directions: NavDirections ) = thisRef.apply { navDirections = directions }
 }
 
 /**

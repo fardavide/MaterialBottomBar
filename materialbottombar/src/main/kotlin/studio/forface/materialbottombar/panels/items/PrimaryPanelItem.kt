@@ -4,8 +4,7 @@ import studio.forface.materialbottombar.panels.holders.SizeHolder
 import studio.forface.materialbottombar.panels.holders.TextSizeHolder
 import studio.forface.materialbottombar.panels.holders.TextStyleHolder
 
-open class PrimaryPanelItem: BasePanelItem() {
-    override val thisRef get() = this
+abstract class AbsPrimaryPanelItem<T: AbsPrimaryPanelItem<T>>: BasePanelItem<T>() {
     override val iconMarginStartDp = 24f
     override val iconMarginEndDp = 24f
     override val iconAlpha = 0.7f
@@ -14,10 +13,15 @@ open class PrimaryPanelItem: BasePanelItem() {
     override var titleTextStyleHolder = TextStyleHolder( bold = true )
     override var iconSizeHolder =       SizeHolder( dp = 24f )
 
-    public override fun clone(): PrimaryPanelItem {
-        val item = super.clone() as PrimaryPanelItem
+    public override fun clone(): T {
+        @Suppress("UNCHECKED_CAST")
+        val item = super.clone() as T
         item.badgeItem = badgeItem.cloneRef()
         item.buttonItem = buttonItem.cloneRef()
         return item
     }
+}
+
+open class PrimaryPanelItem: AbsPrimaryPanelItem<PrimaryPanelItem>() {
+    override val thisRef get() = this
 }
