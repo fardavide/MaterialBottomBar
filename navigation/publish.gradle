@@ -5,9 +5,9 @@ group 'studio.forface.materialbottombar'
 
 ext {
     bintrayRepo = "MaterialBottomBar"
-    bintrayName = "studio.forface.materialbottombar"
+    bintrayName = "studio.forface.materialbottombar-navigation"
 
-    libraryName = 'materialbottombar'
+    libraryName = 'materialbottombar-navigation'
 
     publishedGroupId = group
     artifact = 'materialbottombar-navigation'

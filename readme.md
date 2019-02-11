@@ -112,9 +112,6 @@ drawerLayout.drawer = drawer {
 implementation "studio.forface.materialbottombar:materialbottombar-navigation:$version"
 ```
 
-*( temporary issue )*
-Due to jCenter linking issue, for use this artifact `maven( "https://dl.bintray.com/4face/MaterialBottomBar" )` needs to be added to your repositories
-
 ### Usage 
 
 ##### with DSL ( constructor injected NavController )
