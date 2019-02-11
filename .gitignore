@@ -65,3 +65,6 @@ fastlane/test_output
 fastlane/readme.md
 .idea/misc.xml
 .idea/misc.xml
+
+
+*.html
