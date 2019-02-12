@@ -31,7 +31,7 @@ fun Toolbar.setupWithNavController(
 }
 
 /** @see Toolbar.setupWithNavController and set the [NavController] to the given [materialDrawer] */
-fun Toolbar.setupWithNavController( controller: NavController, materialDrawer: MaterialNavDrawer ) {
+fun Toolbar.setupWithNavController( controller: NavController, materialDrawer: MaterialNavPanel ) {
     setupWithNavController( controller, materialDrawer )
 }
 

@@ -22,6 +22,13 @@ abstract class AbsPrimaryPanelItem<T: AbsPrimaryPanelItem<T>>: BasePanelItem<T>(
     }
 }
 
+/**
+ * A [BasePanelItem] that is styled as primary item
+ * Inherit from [AbsPrimaryPanelItem]
+ */
 open class PrimaryPanelItem: AbsPrimaryPanelItem<PrimaryPanelItem>() {
     override val thisRef get() = this
 }
+
+/** A typealias of [PrimaryPanelItem] for Drawer */
+typealias PrimaryDrawerItem = PrimaryPanelItem

@@ -1,12 +1,12 @@
 package studio.forface.materialbottombar.dsl
 
-import studio.forface.materialbottombar.drawer.MaterialDrawer
+import studio.forface.materialbottombar.panels.AbsMaterialPanel
 
 /**
  * @author Davide Giuseppe Farella
  * Crate a [MaterialDrawer] via dsl
  *
- * @see DrawerBuilder
+ * @see CustomBodyPanelBuilder
  */
 inline fun drawer( wrapToContent: Boolean = false, f: DrawerBuilder.() -> Unit ): MaterialDrawer {
     val builder = DrawerBuilder( wrapToContent )
@@ -14,14 +14,8 @@ inline fun drawer( wrapToContent: Boolean = false, f: DrawerBuilder.() -> Unit )
     return builder.build()
 }
 
-/** An [AbsPanelBuilder] for create a [MaterialDrawer] */
-class DrawerBuilder(
-        wrapToContent: Boolean
-): CustomBodyPanelBuilder<MaterialDrawer>( wrapToContent ) {
+/** A typealias of [AbsPanelBuilder] for Drawer */
+typealias DrawerBuilder = CustomBodyPanelBuilder
 
-    /**
-     * @see DslBuilder.build
-     * @throws UninitializedPropertyAccessException if [_header] or [_body] has not been created
-     */
-    override fun build() = MaterialDrawer( _header, _body, wrapToContent )
-}
+/** A typealias of [AbsMaterialPanel] for Drawer */
+typealias MaterialDrawer = AbsMaterialPanel

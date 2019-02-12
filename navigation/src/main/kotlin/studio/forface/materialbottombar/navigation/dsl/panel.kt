@@ -1,7 +1,7 @@
 package studio.forface.materialbottombar.navigation.dsl
 
 import androidx.navigation.NavController
-import studio.forface.materialbottombar.navigation.MaterialNavPanel
+import studio.forface.materialbottombar.navigation.AbsMaterialNavPanel
 
 /**
  * @author Davide Giuseppe Farella
@@ -20,16 +20,5 @@ inline fun navPanel(
     return builder.build()
 }
 
-/** An [AbsNavPanelBuilder] for create a [MaterialNavPanel] */
-class NavPanelBuilder(
-        private val navController: NavController?,
-        wrapToContent: Boolean
-): AbsNavPanelBuilder<MaterialNavPanel>( wrapToContent ) {
-
-    /**
-     * @return [MaterialNavPanel]
-     * @throws UninitializedPropertyAccessException if [_header] or [_body] has not been created
-     */
-    override fun build() = MaterialNavPanel( _header, _body, wrapToContent )
-            .apply { navController = this@NavPanelBuilder.navController }
-}
+/** A typealias of [AbsMaterialNavPanel] for Panel */
+typealias MaterialNavPanel = AbsMaterialNavPanel

@@ -1,12 +1,12 @@
+@file:Suppress("FunctionName")
+
 package studio.forface.materialbottombar.panels
 
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.annotation.RestrictTo
-import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import studio.forface.materialbottombar.appbar.MaterialBottomAppBar
-import studio.forface.materialbottombar.drawer.MaterialDrawer
+import studio.forface.materialbottombar.panels.adapter.ItemViewHolder
 import studio.forface.materialbottombar.panels.holders.*
 import studio.forface.materialbottombar.panels.items.PanelItem
 import studio.forface.materialbottombar.panels.params.*
@@ -22,11 +22,10 @@ import studio.forface.materialbottombar.panels.items.BasePanelItem as BasePanelI
  *
  * Inherit from [Observable]
  */
-open class MaterialPanel @RestrictTo(LIBRARY_GROUP) constructor (
+abstract class AbsMaterialPanel (
         _header: IHeader?,
         _body: IBody?,
-        _wrapToContent: Boolean,
-        @Suppress("UNUSED_PARAMETER") nothing: Byte
+        _wrapToContent: Boolean
 ): Observable() {
 
     /** The [IBody] for the panel. On Set: [notifyChange] */
@@ -87,8 +86,8 @@ open class MaterialPanel @RestrictTo(LIBRARY_GROUP) constructor (
      * Wraps [Observable.addObserver] casting the [Observable] as [MaterialPanel] and the change
      * `any` as [Change]
      */
-    inline fun observe( crossinline change: (MaterialPanel, Change) -> Unit ) {
-        addObserver { observable, any -> change( observable as MaterialPanel, any as Change ) }
+    inline fun observe( crossinline change: (AbsMaterialPanel, Change) -> Unit ) {
+        addObserver { observable, any -> change( observable as AbsMaterialPanel, any as Change ) }
     }
 
 
@@ -97,7 +96,7 @@ open class MaterialPanel @RestrictTo(LIBRARY_GROUP) constructor (
 
     /**
      * An abstract class that implements business logic of a base header.
-     * This class is needed since if will be inherited from [MaterialDrawer.Header]
+     * This class is needed since if will be inherited from [ MaterialDrawer.Header]
      *
      * Inherit from [IHeader], [Background], [Title] and [Icon]
      */
@@ -173,9 +172,8 @@ open class MaterialPanel @RestrictTo(LIBRARY_GROUP) constructor (
      *
      * Inherit from [IBody] and [Selection]
      */
-    abstract class BaseBody<T> @RestrictTo(LIBRARY_GROUP) constructor(
-            _items: List<PanelItem> = listOf()
-    ) : Observable(), IBody, Selection<T> {
+    abstract class BaseBody<T: BaseBody<T>>( _items: List<PanelItem> = listOf() )
+        : Observable(), IBody, Selection<T> {
 
         /** @see Selection.selectionColorHolder */
         override var selectionColorHolder = ColorHolder()
@@ -195,7 +193,12 @@ open class MaterialPanel @RestrictTo(LIBRARY_GROUP) constructor (
                 notifyObservers()
             }
 
-        /** A builder-style function for update [BaseBody.items] */
+        /** @return an [ItemViewHolder] for this [Body] */
+        @Suppress("UNCHECKED_CAST")
+        open fun <VH: ItemViewHolder<*>> createViewHolder(itemView: View ) =
+                ItemViewHolder( itemView,this ) as VH
+
+        /** A builder-style function for update [Body.items] */
         fun items( items: List<PanelItem> ) = thisRef.apply { this@BaseBody.items = items }
 
         /** Select a [PanelItem] by its [BasePanelItemT.id] in [items] and de-select all th others */
@@ -237,14 +240,6 @@ open class MaterialPanel @RestrictTo(LIBRARY_GROUP) constructor (
     }
 }
 
-/** @constructor on [MaterialPanel] */
-@Suppress("FunctionName")
-fun MaterialPanel(
-        header: MaterialPanel.IHeader? = null,
-        body: MaterialPanel.IBody? = null,
-        wrapToContent: Boolean = true
-) = MaterialPanel( header, body, wrapToContent,0 )
-
 /**
  * A function for map [BasePanelItem]s from a [List] of generic [PanelItem]s.
  * @return [List] of [PanelItem]
@@ -259,3 +254,36 @@ inline fun List<PanelItem>.forEachBasePanelItem( block: (BasePanelItem) -> Unit 
 
 /** A type alias for a avoid to spread `<*>` everywhere */
 private typealias BasePanelItem = BasePanelItemT<*>
+
+/** @constructor of [AbsMaterialPanel] for Panel */
+@Suppress("FunctionName")
+fun MaterialPanel(
+        header: AbsMaterialPanel.IHeader? = null,
+        body: AbsMaterialPanel.IBody? = null,
+        wrapToContent: Boolean = true
+) = object : AbsMaterialPanel( header, body, wrapToContent ) {}
+
+/** A set of constructors for Header and Body of [AbsMaterialPanel] for Panel */
+@Suppress("unused")
+object MaterialPanel {
+    fun Header() = AbsMaterialPanel.Header()
+    fun Body() = AbsMaterialPanel.Body()
+    fun CustomHeader( contentView: View ) = AbsMaterialPanel.CustomHeader( contentView )
+    fun CustomBody( contentView: View ) = AbsMaterialPanel.CustomBody( contentView )
+}
+
+/** @constructor of [AbsMaterialPanel] for Drawer */
+fun MaterialDrawer(
+        header: AbsMaterialPanel.IHeader? = null,
+        body: AbsMaterialPanel.IBody? = null,
+        wrapToContent: Boolean = false
+) = MaterialPanel( header, body, wrapToContent )
+
+/** A set of constructors for Header and Body of [AbsMaterialPanel] for Drawer */
+@Suppress("unused")
+object MaterialDrawer {
+    fun Header() = AbsMaterialPanel.Header()
+    fun Body() = AbsMaterialPanel.Body()
+    fun CustomHeader( contentView: View ) = AbsMaterialPanel.CustomHeader( contentView )
+    fun CustomBody( contentView: View ) = AbsMaterialPanel.CustomBody( contentView )
+}

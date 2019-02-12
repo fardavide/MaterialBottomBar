@@ -15,24 +15,28 @@ import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.graphics.ColorUtils
-import androidx.core.view.*
+import androidx.core.view.children
+import androidx.core.view.doOnNextLayout
+import androidx.core.view.doOnPreDraw
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.animation.AnimationUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.internal.Experimental
 import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.android.synthetic.main.drawer_header.view.*
 import studio.forface.materialbottombar.appbar.MaterialBottomAppBar
-import studio.forface.materialbottombar.drawer.MaterialDrawer
+import studio.forface.materialbottombar.panels.AbsMaterialPanel
 import studio.forface.materialbottombar.panels.MaterialPanel
 import studio.forface.materialbottombar.panels.adapter.PanelBodyAdapter
 import studio.forface.materialbottombar.panels.holders.ColorHolder
 import studio.forface.materialbottombar.utils.*
 import studio.forface.materialbottombar.view.PanelView
 import java.util.*
-import com.google.android.material.internal.Experimental
+import kotlin.collections.set
 
 
 class MaterialBottomDrawerLayout @JvmOverloads constructor (
@@ -97,7 +101,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /**
      * A [MutableMap] composed by the Panel ID and the [MaterialPanel].
      */
-    var panels = mutableMapOf<Int, MaterialPanel>()
+    var panels = mutableMapOf<Int, AbsMaterialPanel>()
 
     /**
      * The [PanelView] that is currently being dragged by the user.
@@ -107,11 +111,11 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /**
      * It represents the Background Color of the current dragging Panel.
      * If no Panel is being dragged it is null.
-     * If the [MaterialPanel.header] is [MaterialPanel.BaseHeader], it will be
+     * If the [AbsMaterialPanel.header] is [AbsMaterialPanel.BaseHeader], it will be
      * [ColorHolder.resolveColor];
-     * If the [MaterialPanel.header] is [MaterialPanel.CustomHeader] and the [View.getBackground]
-     * [MaterialPanel.CustomHeader.contentView] is [ColorDrawable], it will be
-     * [ColorDrawable.getColor];
+     * If the [AbsMaterialPanel.header] is [AbsMaterialPanel.CustomHeader] and the
+     * [View.getBackground] [AbsMaterialPanel.CustomHeader.contentView] is [ColorDrawable], it will
+     * be [ColorDrawable.getColor];
      * Else it will be null.
      */
     private var draggingPanelHeaderColor: Int? = null
@@ -128,7 +132,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     } else height / 3f
 
     /**
-     * GET a [RecyclerView] if the [draggingPanelView] [MaterialPanel.body] IS or CONTAINS a
+     * GET a [RecyclerView] if the [draggingPanelView] [AbsMaterialPanel.body] IS or CONTAINS a
      * [RecyclerView].
      * We need it for understand if a scroll event should move the [draggingPanelView] or
      * scroll the [RecyclerView].
@@ -137,11 +141,9 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         draggingPanelView?.body as? RecyclerView
                 ?: ( draggingPanelView?.body as? ViewGroup )?.findChildType()
 
-    /**
-     * The Drawer Menu.
-     */
-    var drawer: MaterialDrawer?
-        get() = panels[drawerPanelId] as MaterialDrawer?
+    /** @return The Drawer Menu */
+    var drawer: AbsMaterialPanel?
+        get() = panels[drawerPanelId]
         set( value ) =
             value?.let { addPanel( it, drawerPanelId,true ) }
                     ?: removePanel( drawerPanelId )
@@ -153,7 +155,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private var drawerPanelId = 0
 
     /**
-     * The [MaterialPanel] which represent the [drawer] [MaterialDrawer.panelView].
+     * The [AbsMaterialPanel] which represent the [drawer] [AbsMaterialPanel.panelView].
      */
     val drawerPanel get() = panels[drawerPanelId]?.panelView
 
@@ -264,17 +266,17 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /**
      * @see addPanel
      */
-    fun addPanel( materialPanel: MaterialPanel, id: Int ) {
+    fun addPanel( materialPanel: AbsMaterialPanel, id: Int ) {
         addPanel( materialPanel, id,false )
     }
 
     /**
-     * Adds a new [MaterialPanel] to [panels].
-     * @param materialPanel the [MaterialPanel] to add.
+     * Adds a new [AbsMaterialPanel] to [panels].
+     * @param materialPanel the [AbsMaterialPanel] to add.
      * @param id the ID of the [materialPanel].
      * @param isDrawer whether the [materialPanel] is the main drawer.
      */
-    private fun addPanel( materialPanel: MaterialPanel, id: Int, isDrawer: Boolean ) {
+    private fun addPanel( materialPanel: AbsMaterialPanel, id: Int, isDrawer: Boolean ) {
         // If the panel is not a drawer and the id is the same as drawerPanel and the drawer is
         // not null: Save the drawer in a temporary val, get a new ID for the drawer and
         // set the drawer in the new allocation into panels map.
@@ -306,9 +308,9 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         // if the PanelView, re-set the panel.
         materialPanel.run {
             observe { newPanel, change -> when( change ) {
-                MaterialPanel.Change.HEADER ->       { setHeader( newPanel.header, panelView ) }
-                MaterialPanel.Change.BODY ->         { setBody(   newPanel.body,   panelView ) }
-                MaterialPanel.Change.PANEL_VIEW->    { addPanel(  newPanel, id, isDrawer     ) }
+                AbsMaterialPanel.Change.HEADER ->       { setHeader( newPanel.header, panelView ) }
+                AbsMaterialPanel.Change.BODY ->         { setBody(   newPanel.body,   panelView ) }
+                AbsMaterialPanel.Change.PANEL_VIEW->    { addPanel(  newPanel, id, isDrawer     ) }
             } }
 
             // Set the Header and the Body into the layout.
@@ -322,15 +324,15 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      * @param header
      * @param panelView
      */
-    private fun setHeader( header: MaterialPanel.IHeader?, panelView: PanelView ) {
+    private fun setHeader( header: AbsMaterialPanel.IHeader?, panelView: PanelView ) {
         panelView.setHeader(this, header )
-        ( header as? MaterialPanel.BaseHeader<*> )?.let {
+        ( header as? AbsMaterialPanel.BaseHeader<*> )?.let {
             header.applyIconTo( panelView.header.header_icon )
 
             header.applyTitleTo( panelView.header.header_title )
             header.titleColorHolder.applyToDrawable( panelView.header.header_close )
 
-        } ?: ( header as? MaterialPanel.CustomHeader )?.let {
+        } ?: ( header as? AbsMaterialPanel.CustomHeader )?.let {
             panelView.header = header.contentView
         }
     }
@@ -340,9 +342,9 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      * @param body
      * @param panelView
      */
-    private fun setBody( body: MaterialPanel.IBody?, panelView: PanelView ) {
+    private fun setBody( body: AbsMaterialPanel.IBody?, panelView: PanelView ) {
         panelView.setBody( body )
-        ( body as? MaterialPanel.BaseBody<*> )?.let {
+        ( body as? AbsMaterialPanel.Body )?.let {
             if ( body.selectionColorHolder.resolveColor( context ) == null) {
                 val color = draggingPanelHeaderColor ?: Color.GRAY
                 body.selectionColor( color )
@@ -354,13 +356,13 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             body.addObserver { _, _ -> adapter.notifyDataSetChanged() }
             bodyRecyclerView.adapter = adapter
 
-        } ?: ( body as? MaterialPanel.CustomBody )?.let {
+        } ?: ( body as? AbsMaterialPanel.CustomBody )?.let {
             panelView.body = body.contentView
         }
     }
 
     /**
-     * Remove a [MaterialPanel] from [panels] and its relative [MaterialPanel.panelView] from
+     * Remove a [AbsMaterialPanel] from [panels] and its relative [AbsMaterialPanel.panelView] from
      * the layout.
      * @param id
      */
@@ -379,7 +381,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     /**
      * Open a [PanelView] with the given ID: [grabPanel] and [flyBar].
-     * @param id the ID of the MaterialPanel to open.
+     * @param id the ID of the AbsMaterialPanel to open.
      */
     fun openPanel( id: Int ) {
         grabPanel( id )
@@ -400,7 +402,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     /**
      * Grab a [PanelView] to be dragged by the user.
-     * @param id the ID of the [MaterialPanel] which [MaterialPanel.panelView] needs to be
+     * @param id the ID of the [AbsMaterialPanel] which [AbsMaterialPanel.panelView] needs to be
      * grabbed.
      */
     private fun grabPanel( id: Int ) {
@@ -411,10 +413,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
         // Store the color of the header of the PanelView.
         draggingPanelHeaderColor =
-                ( draggingPanel?.header as? MaterialPanel.BaseHeader<*> )
+                ( draggingPanel?.header as? AbsMaterialPanel.BaseHeader<*> )
                         ?.backgroundColorHolder?.resolveColor( context )
 
-                ?: ( ( draggingPanel?.header as? MaterialPanel.CustomHeader )
+                ?: ( ( draggingPanel?.header as? AbsMaterialPanel.CustomHeader )
                         ?.contentView?.background as? ColorDrawable )?.color
     }
 

@@ -1,7 +1,7 @@
 package studio.forface.materialbottombar.navigation.dsl
 
 import androidx.navigation.NavController
-import studio.forface.materialbottombar.navigation.MaterialNavDrawer
+import studio.forface.materialbottombar.navigation.AbsMaterialNavPanel
 
 /**
  * @author Davide Giuseppe Farella
@@ -20,16 +20,8 @@ inline fun navDrawer(
     return builder.build()
 }
 
-/** An [AbsNavPanelBuilder] for create a [MaterialNavDrawer] */
-class NavDrawerBuilder(
-        private val navController: NavController?,
-        wrapToContent: Boolean
-): AbsNavPanelBuilder<MaterialNavDrawer>( wrapToContent ) {
+/** A typealias of [NavPanelBuilder] for Drawer */
+typealias NavDrawerBuilder = NavPanelBuilder
 
-    /**
-     * @return [MaterialNavDrawer]
-     * @throws UninitializedPropertyAccessException if [_header] or [_body] has not been created
-     */
-    override fun build() = MaterialNavDrawer( _header, _body, wrapToContent )
-            .apply { navController = this@NavDrawerBuilder.navController }
-}
+/** A typealias of [AbsMaterialNavPanel] for Drawer */
+typealias MaterialNavDrawer = AbsMaterialNavPanel

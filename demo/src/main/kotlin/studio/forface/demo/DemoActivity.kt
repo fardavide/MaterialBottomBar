@@ -13,19 +13,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomappbar.BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
 import com.google.android.material.bottomappbar.BottomAppBar.FAB_ALIGNMENT_MODE_END
 import kotlinx.android.synthetic.main.activity_demo.*
-import studio.forface.materialbottombar.drawer.MaterialDrawer
-import studio.forface.materialbottombar.drawer.items.PrimaryDrawerItem
-import studio.forface.materialbottombar.drawer.items.SecondaryDrawerItem
+import studio.forface.materialbottombar.demo.R
 import studio.forface.materialbottombar.dsl.drawer
 import studio.forface.materialbottombar.dsl.panel
+import studio.forface.materialbottombar.navigation.dsl.navPanel
+import studio.forface.materialbottombar.panels.AbsMaterialPanel
+import studio.forface.materialbottombar.panels.MaterialDrawer
 import studio.forface.materialbottombar.panels.items.Divider
+import studio.forface.materialbottombar.panels.items.PrimaryDrawerItem
+import studio.forface.materialbottombar.panels.items.SecondaryDrawerItem
 import studio.forface.materialbottombar.panels.items.extra.Badge
 import studio.forface.materialbottombar.panels.params.*
-import studio.forface.materialbottombar.demo.R
-import studio.forface.materialbottombar.navigation.MaterialNavDrawer
-import studio.forface.materialbottombar.navigation.MaterialNavPanel
-import studio.forface.materialbottombar.navigation.PrimaryNavDrawerItem
-import studio.forface.materialbottombar.navigation.dsl.navPanel
 
 private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg"
 
@@ -106,10 +104,9 @@ class DemoActivity: AppCompatActivity() {
             hideBar.setBackgroundColor( bg )
             bar.hideBarOnScroll = set
         }
-
     }
 
-    private val testDrawer: MaterialDrawer get() {
+    private val testDrawer: AbsMaterialPanel get() {
         val header = MaterialDrawer.Header()
                 .iconUrl( IMAGE_URL )
                 .backgroundColor( Color.RED )
@@ -345,7 +342,7 @@ class DemoActivity: AppCompatActivity() {
         }
     }
 
-    private val oldFancyDrawer: MaterialDrawer get() {
+    private val oldFancyDrawer: AbsMaterialPanel get() {
         val header = MaterialDrawer.Header()
                 .iconUrl( IMAGE_URL )
                 .backgroundColorHex("#30D5C8" )

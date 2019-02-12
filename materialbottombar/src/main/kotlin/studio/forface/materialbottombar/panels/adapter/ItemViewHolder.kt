@@ -2,8 +2,12 @@ package studio.forface.materialbottombar.panels.adapter
 
 import android.os.Handler
 import android.view.View
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
+import androidx.core.os.postDelayed
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.drawer_item_base.view.*
+import studio.forface.materialbottombar.panels.AbsMaterialPanel
 import studio.forface.materialbottombar.panels.MaterialPanel
 import studio.forface.materialbottombar.panels.items.BasePanelItem
 import studio.forface.materialbottombar.panels.items.PanelItem
@@ -11,12 +15,14 @@ import studio.forface.materialbottombar.panels.items.extra.ButtonItem
 import studio.forface.materialbottombar.utils.constraintParams
 import studio.forface.materialbottombar.utils.dpToPixels
 
-class ItemViewHolder internal constructor(
+open class ItemViewHolder<B: AbsMaterialPanel.BaseBody<*>>(
         itemView: View,
-        private val panelBody: MaterialPanel.BaseBody<*>
+        protected val panelBody: B
 ): RecyclerView.ViewHolder( itemView ) {
 
-    fun bind(panelItem: PanelItem ) {
+    protected val title: CharSequence get() = itemView.item_title.text
+
+    fun bind( panelItem: PanelItem ) {
 
         when( panelItem ) {
             is BasePanelItem<*> -> {
@@ -36,22 +42,22 @@ class ItemViewHolder internal constructor(
 
                 itemView.isEnabled = panelItem.selectable
                 itemView.setOnClickListener( itemClickListener( panelItem ) )
-                itemView.item_button.setOnClickListener( buttonItemClickListener( panelItem.buttonItem ) )
+                itemView.item_button
+                        .setOnClickListener( buttonItemClickListener( panelItem.buttonItem ) )
             }
         }
     }
 
-    private val itemClickListener: (BasePanelItem<*>) -> (View) -> Unit get() = { item -> {
-        panelBody.onItemClick( item.id, itemView.item_title.text )
+    protected open val itemClickListener: (BasePanelItem<*>) -> (View) -> Unit get() = { item -> {
+        panelBody.onItemClick( item.id, title )
 
-        Handler().postDelayed({
+        Handler().postDelayed(200 ) {
             item.selected = true
             panelBody.setSelected( item.id )
-        }, 200)
+        }
     } }
 
     private val buttonItemClickListener: (ButtonItem) -> (View) -> Unit get() = { buttonItem -> {
         panelBody.onItemClick( buttonItem.id, itemView.item_button.text )
     } }
-
 }

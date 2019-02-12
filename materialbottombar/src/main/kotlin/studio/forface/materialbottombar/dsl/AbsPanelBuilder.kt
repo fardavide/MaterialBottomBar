@@ -3,11 +3,10 @@
 package studio.forface.materialbottombar.dsl
 
 import android.view.View
-import androidx.annotation.RestrictTo
-import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.annotation.StringRes
+import studio.forface.materialbottombar.panels.AbsMaterialPanel
+import studio.forface.materialbottombar.panels.AbsMaterialPanel.*
 import studio.forface.materialbottombar.panels.MaterialPanel
-import studio.forface.materialbottombar.panels.MaterialPanel.*
 import studio.forface.materialbottombar.panels.items.*
 import studio.forface.materialbottombar.panels.params.titleStringRes
 import studio.forface.materialbottombar.panels.params.titleText
@@ -21,27 +20,23 @@ import studio.forface.materialbottombar.panels.params.titleText
  *
  * Inherit from [DslBuilder]
  */
-@Suppress("UNCHECKED_CAST")
 abstract class AbsPanelBuilder<
-        T: MaterialPanel,
         B: IBody,
-        P: AbsPrimaryPanelItem<*>,
-        S: AbsSecondaryPanelItem<*>
-> @RestrictTo(LIBRARY_GROUP) constructor (
-        @RestrictTo(LIBRARY_GROUP) val wrapToContent: Boolean
-): DslBuilder<T> {
+        P: AbsPrimaryPanelItem<P>,
+        S: AbsSecondaryPanelItem<S>
+> ( val wrapToContent: Boolean ): DslBuilder<AbsMaterialPanel> {
 
     /** A lateinit reference to the body of the [MaterialPanel] */
-    @RestrictTo(LIBRARY_GROUP) lateinit var _body: B
+    lateinit var _body: B
     /** A lateinit reference to the header of the [MaterialPanel] */
-    @RestrictTo(LIBRARY_GROUP) lateinit var _header: IHeader
+    lateinit var _header: IHeader
 
     /** A base [PrimaryPanelItem] that will be used as base for every [Body.primaryItem] */
-    @RestrictTo(LIBRARY_GROUP) var allPrimaryBodyItem = PrimaryPanelItem() as P
+    open var allPrimaryBodyItem = PrimaryPanelItem() as P
     /** A base [SecondaryPanelItem] that will be used as base for every [Body.secondaryItem] */
-    @RestrictTo(LIBRARY_GROUP) var allSecondaryBodyItem = SecondaryPanelItem() as S
+    open var allSecondaryBodyItem = SecondaryPanelItem() as S
 
-    /** A [DslComponent] for call [MaterialPanel.Body.setSelected] function */
+    /** A [DslComponent] for call [Body.setSelected] function */
     var Body.selectedItem: Int by dsl { setSelected( it ) }
 
     /** Create an [Header] for the [MaterialPanel] */
@@ -64,7 +59,7 @@ abstract class AbsPanelBuilder<
      * The [Body] receiver is useful for call this function only within a [Body], even if unused
      */
     @Suppress("unused")
-    fun BaseBody<*>.allPrimary( f: P.() -> Unit ) {
+    fun <B: BaseBody> B.allPrimary( f: P.() -> Unit ) {
         allPrimaryBodyItem.f()
     }
 
@@ -73,24 +68,24 @@ abstract class AbsPanelBuilder<
      * The [Body] receiver is useful for call this function only within a [Body], even if unused
      */
     @Suppress("unused")
-    fun BaseBody<*>.allSecondary( f: S.() -> Unit ) {
+    fun <B: BaseBody> B.allSecondary( f: S.() -> Unit ) {
         allSecondaryBodyItem.f()
     }
 
     /** Crate a [Divider] and add to the receiver [Body] */
-    fun BaseBody<*>.divider() {
+    fun <B: BaseBody> B.divider() {
         items = items + Divider()
     }
 
     /** Crate a [PrimaryPanelItem] and add to the receiver [Body] */
-    fun BaseBody<*>.primaryItem( f: P.() -> Unit ) {
-        val item = allPrimaryBodyItem.clone() as P
+    fun <B: BaseBody> B.primaryItem( f: P.() -> Unit ) {
+        val item = allPrimaryBodyItem.clone()
         item.f()
         items = items + item
     }
 
     /** Crate a [PrimaryPanelItem] with the given [titleText] and add to the receiver [Body] */
-    fun BaseBody<*>.primaryItem( titleText: CharSequence, f: P.() -> Unit ) {
+    fun <B: BaseBody> B.primaryItem( titleText: CharSequence, f: P.() -> Unit ) {
         primaryItem {
             this.titleText = titleText
             f()
@@ -98,7 +93,7 @@ abstract class AbsPanelBuilder<
     }
 
     /** Crate a [PrimaryPanelItem] with the given [titleStringRes] and add to the receiver [Body] */
-    fun BaseBody<*>.primaryItem( @StringRes titleStringRes: Int, f: P.() -> Unit ) {
+    fun <B: BaseBody> B.primaryItem( @StringRes titleStringRes: Int, f: P.() -> Unit ) {
         primaryItem {
             this.titleStringRes = titleStringRes
             f()
@@ -106,14 +101,14 @@ abstract class AbsPanelBuilder<
     }
 
     /** Crate a [SecondaryPanelItem] and add to the receiver [Body] */
-    open fun BaseBody<*>.secondaryItem( f: S.() -> Unit ) {
-        val item = allSecondaryBodyItem.clone() as S
+    open fun <B: BaseBody> B.secondaryItem( f: S.() -> Unit ) {
+        val item = allSecondaryBodyItem.clone()
         item.f()
         items = items + item
     }
 
     /** Crate a [SecondaryPanelItem] with the given [titleText] and add to the receiver [Body] */
-    fun BaseBody<*>.secondaryItem( titleText: CharSequence, f: S.() -> Unit ) {
+    fun <B: BaseBody> B.secondaryItem( titleText: CharSequence, f: S.() -> Unit ) {
         secondaryItem {
             this.titleText = titleText
             f()
@@ -121,7 +116,7 @@ abstract class AbsPanelBuilder<
     }
 
     /** Crate a [SecondaryPanelItem] with the given [titleStringRes] and add to the receiver [Body] */
-    fun BaseBody<*>.secondaryItem( @StringRes titleStringRes: Int, f: S.() -> Unit ) {
+    fun <B: BaseBody> B.secondaryItem( @StringRes titleStringRes: Int, f: S.() -> Unit ) {
         secondaryItem {
             this.titleStringRes = titleStringRes
             f()
@@ -129,10 +124,16 @@ abstract class AbsPanelBuilder<
     }
 }
 
+typealias BaseBody = AbsMaterialPanel.BaseBody<*>
+
 /** An [AbsPanelBuilder] for [MaterialPanel]s that can have a [MaterialPanel.CustomBody] */
-abstract class CustomBodyPanelBuilder<T: MaterialPanel> internal constructor(
+class CustomBodyPanelBuilder @PublishedApi internal constructor(
         wrapToContent: Boolean
-): AbsPanelBuilder<T, IBody, PrimaryPanelItem, SecondaryPanelItem>( wrapToContent ) {
+): AbsPanelBuilder<
+        IBody,
+        PrimaryPanelItem,
+        SecondaryPanelItem
+>( wrapToContent ) {
 
     /** Create a [Body] for the [MaterialPanel] */
     fun body( f: Body.() -> Unit ) {
@@ -147,4 +148,10 @@ abstract class CustomBodyPanelBuilder<T: MaterialPanel> internal constructor(
         body.f()
         _body = body
     }
+
+    /**
+     * @see DslBuilder.build
+     * @throws UninitializedPropertyAccessException if [_header] or [_body] has not been created
+     */
+    override fun build() = MaterialPanel( _header, _body, wrapToContent )
 }

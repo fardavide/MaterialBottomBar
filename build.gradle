@@ -6,7 +6,7 @@ buildscript {
             major:      1,
             minor:      1,
             channel:    1, // 0: build, 1: alpha, 2: beta, 3: RC, 4: stable
-            patch:      0,
+            patch:      2,
             build:      0
     ]
 

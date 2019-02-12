@@ -7,19 +7,20 @@ import studio.forface.materialbottombar.panels.MaterialPanel
 import studio.forface.materialbottombar.panels.items.BasePanelItem
 import studio.forface.materialbottombar.panels.items.Divider
 import studio.forface.materialbottombar.bottomappbar.R
+import studio.forface.materialbottombar.panels.AbsMaterialPanel
 
-internal class PanelBodyAdapter( val body: MaterialPanel.BaseBody<*> )
-    : RecyclerView.Adapter<ItemViewHolder>() {
+internal class PanelBodyAdapter( private val body: AbsMaterialPanel.BaseBody<*> )
+    : RecyclerView.Adapter<ItemViewHolder<*>>() {
 
     val items get() = body.items
 
-    override fun onCreateViewHolder( parent: ViewGroup, viewType: Int ): ItemViewHolder {
+    override fun onCreateViewHolder( parent: ViewGroup, viewType: Int ): ItemViewHolder<*> {
         val view = LayoutInflater.from( parent.context )
                 .inflate( getLayoutRes( viewType ), parent,false )
-        return ItemViewHolder( view, body )
+        return body.createViewHolder( view )
     }
 
-    override fun onBindViewHolder( holder: ItemViewHolder, position: Int ) {
+    override fun onBindViewHolder( holder: ItemViewHolder<*>, position: Int ) {
         holder.bind( items[position] )
     }
 

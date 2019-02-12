@@ -9,11 +9,11 @@ import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.drawer_header.view.*
+import studio.forface.materialbottombar.bottomappbar.R
 import studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout
-import studio.forface.materialbottombar.panels.MaterialPanel
+import studio.forface.materialbottombar.panels.AbsMaterialPanel
 import studio.forface.materialbottombar.utils.children
 import studio.forface.materialbottombar.utils.elevationCompat
-import studio.forface.materialbottombar.bottomappbar.R
 
 class PanelView @JvmOverloads constructor (
         context: Context,
@@ -27,7 +27,7 @@ class PanelView @JvmOverloads constructor (
     else height
 
     constructor(
-            layout: MaterialBottomDrawerLayout, panel: MaterialPanel
+            layout: MaterialBottomDrawerLayout, panel: AbsMaterialPanel
     ) : this( layout.context, layout.attrs, layout.defStyleAttr ) {
         init( layout, panel )
     }
@@ -36,7 +36,7 @@ class PanelView @JvmOverloads constructor (
     internal lateinit var body:         View
     internal lateinit var background:   View
 
-    fun init( layout: MaterialBottomDrawerLayout, panel: MaterialPanel ) {
+    fun init( layout: MaterialBottomDrawerLayout, panel: AbsMaterialPanel ) {
         wrapToContent = panel.wrapToContent
         orientation = LinearLayout.VERTICAL
         y = layout.height.toFloat()
@@ -54,7 +54,7 @@ class PanelView @JvmOverloads constructor (
         }
     }
 
-    internal fun setHeader( layout: MaterialBottomDrawerLayout, panelHeader: MaterialPanel.IHeader? ) {
+    internal fun setHeader( layout: MaterialBottomDrawerLayout, panelHeader: AbsMaterialPanel.IHeader? ) {
         if ( this::header.isInitialized ) removeView( header )
         header = buildHeader( layout, panelHeader )
         fadeHeader(0f,false )
@@ -62,7 +62,7 @@ class PanelView @JvmOverloads constructor (
         layout.bottomAppBar?.height?.let { header.layoutParams.height = it }
     }
 
-    internal fun setBody( panelBody: MaterialPanel.IBody? ) {
+    internal fun setBody( panelBody: AbsMaterialPanel.IBody? ) {
         if ( this::body.isInitialized ) removeView( body )
         body = buildBody( panelBody )
         addView( body,1 )
@@ -76,10 +76,10 @@ class PanelView @JvmOverloads constructor (
         background.layoutParams.height = LinearLayout.LayoutParams.MATCH_PARENT
     }
 
-    private fun buildHeader( layout: MaterialBottomDrawerLayout, header: MaterialPanel.IHeader? )  =
+    private fun buildHeader( layout: MaterialBottomDrawerLayout, header: AbsMaterialPanel.IHeader? )  =
             when ( header ) {
 
-                is MaterialPanel.BaseHeader<*> -> LayoutInflater.from( context )
+                is AbsMaterialPanel.BaseHeader<*> -> LayoutInflater.from( context )
                         .inflate( R.layout.drawer_header,this, false )
                         .apply {
                             header_shadow.elevationCompat = 14f
@@ -87,21 +87,21 @@ class PanelView @JvmOverloads constructor (
                             header_close.setOnClickListener { layout.closePanel() }
                         } as ConstraintLayout
 
-                is MaterialPanel.CustomHeader -> header.contentView
+                is AbsMaterialPanel.CustomHeader -> header.contentView
 
                 null -> View( context )
 
                 else -> throw IllegalStateException( "header is instance of $header" )
             }
 
-    private fun buildBody( body: MaterialPanel.IBody? ) =
+    private fun buildBody( body: AbsMaterialPanel.IBody? ) =
             when( body ) {
 
-                is MaterialPanel.BaseBody<*> -> LayoutInflater.from( context )
+                is AbsMaterialPanel.Body -> LayoutInflater.from( context )
                         .inflate( R.layout.drawer_body,this, false )
                         as RecyclerView
 
-                is MaterialPanel.CustomBody -> body.contentView
+                is AbsMaterialPanel.CustomBody -> body.contentView
 
                 null -> View( context )
 
