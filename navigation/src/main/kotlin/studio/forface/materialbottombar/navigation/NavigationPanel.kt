@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.core.os.postDelayed
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
+import androidx.navigation.*
 import studio.forface.materialbottombar.navigation.adapter.NavItemViewHolder
 import studio.forface.materialbottombar.panels.AbsMaterialPanel
 import studio.forface.materialbottombar.panels.adapter.ItemViewHolder
@@ -64,11 +63,12 @@ abstract class AbsMaterialNavPanel(
 
         /** A change listener for [navController] */
         private var navChangeListener: NavChange = { _, destination, _ ->
-            Handler().postDelayed( 200 ) {
+            // Set the item selected with a delay for let the ripple animation finish first
+            Handler().postDelayed( SELECTION_DELAY_MS ) {
                 setSelected {
                     val item = it as? NavItem<*> ?: return@setSelected false
-                    item.navDestinationId == destination.id ||
-                            item.navDirections == destination
+                    val itemDestinationId = item.navDestinationId ?: item.navDirections?.actionId
+                    itemDestinationId == destination.id
                 }
             }
         }
@@ -81,10 +81,9 @@ abstract class AbsMaterialNavPanel(
             }
 
         /** @see NavSelection.onItemNavigation */
-        override var onItemNavigation: OnItemNavigationListener = { directions, navParams ->
+        override var onItemNavigation: OnItemNavigationListener = { navParams ->
             navController?.let { controller ->
-                if ( directions != null ) controller.navigate( directions )
-                else if ( navParams != null )
+                if ( navParams.destinationId != controller.currentDestination?.id )
                     controller.navigate( navParams.destinationId, navParams.bundle )
             }
         }
@@ -96,8 +95,9 @@ abstract class AbsMaterialNavPanel(
 
         /** @return a [NavItemViewHolder] for this [Body] */
         @Suppress("UNCHECKED_CAST")
-        override fun <VH : ItemViewHolder<*>> createViewHolder( itemView: View ) =
-                NavItemViewHolder( itemView,this ) as VH
+        override fun <VH : ItemViewHolder<*>> createViewHolder(
+                itemView: View, closePanel: () -> Unit
+        ) = NavItemViewHolder( itemView,this, closePanel ) as VH
 
         /** Remove [navChangeListener] from [navController] */
         internal fun removeNavListener() {

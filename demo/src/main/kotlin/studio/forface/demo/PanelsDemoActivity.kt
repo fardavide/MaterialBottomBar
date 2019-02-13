@@ -12,11 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomappbar.BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
 import com.google.android.material.bottomappbar.BottomAppBar.FAB_ALIGNMENT_MODE_END
-import kotlinx.android.synthetic.main.activity_demo.*
+import kotlinx.android.synthetic.main.activity_demo_panels.*
 import studio.forface.materialbottombar.demo.R
 import studio.forface.materialbottombar.dsl.drawer
 import studio.forface.materialbottombar.dsl.panel
-import studio.forface.materialbottombar.navigation.dsl.navPanel
 import studio.forface.materialbottombar.panels.AbsMaterialPanel
 import studio.forface.materialbottombar.panels.MaterialDrawer
 import studio.forface.materialbottombar.panels.items.Divider
@@ -29,11 +28,11 @@ private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2
 
 private const val PANEL_SORT_ID = 123
 
-class DemoActivity: AppCompatActivity() {
+class PanelsDemoActivity: AppCompatActivity() {
 
     override fun onCreate( savedInstanceState: Bundle? ) {
         super.onCreate( savedInstanceState )
-        setContentView( R.layout.activity_demo )
+        setContentView( R.layout.activity_demo_panels )
         setSupportActionBar( drawerLayout.bottomAppBar )
 
         setRecyclerView()
@@ -259,7 +258,7 @@ class DemoActivity: AppCompatActivity() {
             selectionCornerRadiusDp = 16f
             onItemClick = { id, title ->
                 Toast.makeText(
-                        this@DemoActivity,
+                        this@PanelsDemoActivity,
                         "$title - $id clicked",
                         Toast.LENGTH_SHORT
                 ).show()

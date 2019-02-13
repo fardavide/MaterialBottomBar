@@ -352,7 +352,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
             val bodyRecyclerView = panelView.body as RecyclerView
             bodyRecyclerView.layoutManager = LinearLayoutManager( context )
-            val adapter = PanelBodyAdapter( body )
+            val adapter = PanelBodyAdapter( body ) { closePanel() }
             body.addObserver { _, _ -> adapter.notifyDataSetChanged() }
             bodyRecyclerView.adapter = adapter
 
@@ -515,7 +515,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
             val inThreshold = Math.abs( event.y - downY ) > MIN_FLY_DRAG_THRESHOLD
 
-            if (inThreshold) {
+            if ( inThreshold ) {
                 val isDraggingUp = event.y < downY
 
                 val fly = if ( ! isDraggingUp ) Fly.BOTTOM
@@ -588,14 +588,15 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private fun setViewsY( y: Float ) {
         if ( y < 0f ) return
 
-        bottomAppBar!!.y =  y
-        draggingPanelView?.y =      y
+        bottomAppBar!!.y = y
+        draggingPanelView?.y = y
 
         val height = height - bottomAppBar!!.height
 
         //val totalPercentage =   1f / ( height / y )
         val topPercentage =     1f / ( matchPanelY / y.coerceAtMost( matchPanelY ) )
-        val bottomPercentage =  1f / ( ( height - matchPanelY ) / ( y - matchPanelY ).coerceAtLeast(0f ) )
+        val bottomPercentage =  1f / ( ( height - matchPanelY ) / ( y - matchPanelY )
+                .coerceAtLeast(0f ) )
 
         bottomAppBar!!.cornersInterpolation =   topPercentage
 
@@ -629,20 +630,14 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     }
 
 
-    /**
-     * EXPERIMENTAL: Set true for auto-hide [bottomAppBar] when a soft keyboard is open / visible.
-     */
+    /** EXPERIMENTAL: Set true for auto-hide [bottomAppBar] when a soft keyboard is open / visible */
     @Experimental
     var hideBottomAppBarOnSoftKeyboard = false
 
-    /**
-     * The [Rect] that will receive the [getWindowVisibleDisplayFrame].
-     */
+    /** The [Rect] that will receive the [getWindowVisibleDisplayFrame] */
     private val rect = Rect()
 
-    /**
-     * Whether the soft keyboard is currently open / visible.
-     */
+    /** Whether the soft keyboard is currently open / visible */
     private var isSoftKeyboardOpen = false
 
     /**
@@ -676,5 +671,4 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             if ( open ) it.hide(true ) else it.show()
         }
     }
-
 }

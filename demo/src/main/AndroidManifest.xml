@@ -8,7 +8,7 @@
         android:icon="@mipmap/ic_launcher_square"
         android:roundIcon="@mipmap/ic_launcher_circle">
 
-        <activity android:name="studio.forface.demo.DemoActivity"
+        <activity android:name="studio.forface.demo.PanelsDemoActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -9,15 +9,21 @@ import studio.forface.materialbottombar.panels.items.Divider
 import studio.forface.materialbottombar.bottomappbar.R
 import studio.forface.materialbottombar.panels.AbsMaterialPanel
 
-internal class PanelBodyAdapter( private val body: AbsMaterialPanel.BaseBody<*> )
-    : RecyclerView.Adapter<ItemViewHolder<*>>() {
+/**
+ * @author Davide Giuseppe Farella
+ * A [RecyclerView.Adapter] for [AbsMaterialPanel.BaseBody]
+ */
+internal class PanelBodyAdapter(
+        private val body: AbsMaterialPanel.BaseBody<*>,
+        private val closePanel: () -> Unit
+) : RecyclerView.Adapter<ItemViewHolder<*>>() {
 
     val items get() = body.items
 
     override fun onCreateViewHolder( parent: ViewGroup, viewType: Int ): ItemViewHolder<*> {
         val view = LayoutInflater.from( parent.context )
                 .inflate( getLayoutRes( viewType ), parent,false )
-        return body.createViewHolder( view )
+        return body.createViewHolder( view, closePanel )
     }
 
     override fun onBindViewHolder( holder: ItemViewHolder<*>, position: Int ) {

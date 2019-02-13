@@ -175,12 +175,23 @@ abstract class AbsMaterialPanel (
     abstract class BaseBody<T: BaseBody<T>>( _items: List<PanelItem> = listOf() )
         : Observable(), IBody, Selection<T> {
 
+        companion object {
+            /**
+             * A delay before the item should be set as selected, for let the ripple animation
+             * finish first
+             */
+            const val SELECTION_DELAY_MS = 200L
+        }
+
         /** @see Selection.selectionColorHolder */
         override var selectionColorHolder = ColorHolder()
         /** @see Selection.selectionCornerRadiusSizeHolder */
         override var selectionCornerRadiusSizeHolder = SizeHolder( dp = Drawables.CORNER_RADIUS_SOFT )
         /** @see Selection.onItemClick */
         override var onItemClick: OnItemClickListener = { _, _ ->  }
+
+        /** A [Boolean] representing whether the Panel must be closed when an item in clicked */
+        var closeOnClick = false
 
         /**
          * A [List] of [PanelItem] for the body. On Set: [Observable.setChanged] and
@@ -195,8 +206,8 @@ abstract class AbsMaterialPanel (
 
         /** @return an [ItemViewHolder] for this [Body] */
         @Suppress("UNCHECKED_CAST")
-        open fun <VH: ItemViewHolder<*>> createViewHolder(itemView: View ) =
-                ItemViewHolder( itemView,this ) as VH
+        open fun <VH: ItemViewHolder<*>> createViewHolder( itemView: View, closePanel: () -> Unit ) =
+                ItemViewHolder( itemView,this, closePanel ) as VH
 
         /** A builder-style function for update [Body.items] */
         fun items( items: List<PanelItem> ) = thisRef.apply { this@BaseBody.items = items }
@@ -244,11 +255,11 @@ abstract class AbsMaterialPanel (
  * A function for map [BasePanelItem]s from a [List] of generic [PanelItem]s.
  * @return [List] of [PanelItem]
  */
-inline fun List<PanelItem>.mapBasePanelItems( mapper: (BasePanelItem) -> Unit ) =
+private inline fun List<PanelItem>.mapBasePanelItems( mapper: (BasePanelItem) -> Unit ) =
         this.map { ( it as? BasePanelItem )?.apply { mapper( this ) } ?: it }
 
 /** Call [Collection.forEach] only for [BasePanelItem]s in a [List] of [PanelItem]s */
-inline fun List<PanelItem>.forEachBasePanelItem( block: (BasePanelItem) -> Unit ) {
+private inline fun List<PanelItem>.forEachBasePanelItem( block: (BasePanelItem) -> Unit ) {
     forEach { ( it as? BasePanelItem )?.run( block ) }
 }
 

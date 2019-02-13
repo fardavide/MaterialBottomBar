@@ -70,12 +70,8 @@ interface NavSelection<T>: Param<T> {
             thisRef.apply { this@NavSelection.onItemNavigation = onItemNavigationListener }
 }
 
-/**
- * A typealias for a lambda that take an OPTIONAL [NavDestination] Id and an OPTIONAL [NavParams]
- * and return [Unit]
- */
-internal typealias OnItemNavigationListener =
-        ( directions: NavDirections?, navParams: NavParams? ) -> Unit
+/** A typealias for a lambda that take a [NavParams] and return [Unit] */
+internal typealias OnItemNavigationListener = ( navParams: NavParams ) -> Unit
 
 /** A typealias for a [Pair] of destinationId [Int] and an OPTIONAL bundle [Bundle] */
 internal typealias NavParams = Pair<Int, Bundle?>

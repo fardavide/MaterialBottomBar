@@ -1,122 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="studio.forface.demo.DemoActivity"
 
-    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="studio.forface.demo.PanelsDemoActivity">
 
-    android:background="#EEEEEE">
-
-<!--    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title="Toolbar"/>
-
-    </com.google.android.material.appbar.AppBarLayout>-->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_gravity="top"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/panelsDemoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Panels Demo"
+        app:layout_constraintBottom_toTopOf="@+id/navigationDemoButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/switchFab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="Switch Fab position"
-
-            app:layout_constraintBottom_toTopOf="@+id/hideFab"
-            app:layout_constraintEnd_toEndOf="@+id/hideFab"
-            app:layout_constraintStart_toStartOf="@+id/hideFab"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="spread_inside" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/hideFab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="Hide Fab on scroll"
-
-            app:layout_constraintBottom_toTopOf="@+id/hideBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switchFab" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/hideBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="Hide Bar on scroll"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hideFab" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <studio.forface.materialbottombar.appbar.MaterialBottomAppBar
-        android:id="@+id/bar"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom"
-
-        app:hideOnScroll="true"
-        app:hideFabOnScroll="true"
-        app:backgroundTint="@android:color/holo_red_light"
-        app:navigationIcon="@drawable/ic_menu_black_24dp"
-
-        app:fabAnimationMode="slide"
-        app:fabAlignmentMode="center"
-        app:fabCradleRoundedCornerRadius="16dp"
-
-        app:leftCornerRadius="24dp"
-        app:leftCornerStyle="round"
-        app:rightCornerRadius="24dp"
-        app:rightCornerStyle="cut"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="120dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/navigationDemoButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Navigation Demo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/panelsDemoButton" />
 
-        app:fabSize="normal"
-        app:layout_anchor="@id/bar"
-
-        app:hideOnScroll="true"/>
-
-</studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
