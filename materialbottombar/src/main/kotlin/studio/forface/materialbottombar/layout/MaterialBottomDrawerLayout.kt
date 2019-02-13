@@ -291,7 +291,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         removePanel( id )
 
         // If is drawer, save the new drawerPanelId.
-        if ( isDrawer ) { drawerPanelId = id }
+        if ( isDrawer ) drawerPanelId = id
 
         // Create a new PanelView of the given panel, add it to the layout, set its height to
         // WRAP_CONTENT and the y at the end of the layout (height). Then save the new PanelView

@@ -191,7 +191,7 @@ abstract class AbsMaterialPanel (
         override var onItemClick: OnItemClickListener = { _, _ ->  }
 
         /** A [Boolean] representing whether the Panel must be closed when an item in clicked */
-        var closeOnClick = false
+        var closeOnClick = true
 
         /**
          * A [List] of [PanelItem] for the body. On Set: [Observable.setChanged] and

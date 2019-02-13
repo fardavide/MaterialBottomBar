@@ -29,66 +29,6 @@
 
         android:layout_gravity="top"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/switchFab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="Switch Fab position"
-
-            app:layout_constraintBottom_toTopOf="@+id/hideFab"
-            app:layout_constraintEnd_toEndOf="@+id/hideFab"
-            app:layout_constraintStart_toStartOf="@+id/hideFab"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="spread_inside" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/hideFab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="Hide Fab on scroll"
-
-            app:layout_constraintBottom_toTopOf="@+id/hideBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switchFab" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/hideBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="Hide Bar on scroll"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hideFab" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <studio.forface.materialbottombar.appbar.MaterialBottomAppBar
         android:id="@+id/bar"
         android:layout_width="match_parent"

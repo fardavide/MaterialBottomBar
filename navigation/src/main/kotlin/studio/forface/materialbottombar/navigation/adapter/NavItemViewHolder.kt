@@ -23,8 +23,7 @@ class NavItemViewHolder(
 
     /** @see ItemViewHolder.itemClickListener */
     override val itemClickListener: (BasePanelItem<*>) -> (View) -> Unit get() = { item -> {
-        // Trigger the click callback
-        panelBody.onItemClick( item.id, title )
+        handleBaseClicks( item )
         // Close Panel with a delay for let the ripple animation finish first
         Handler().postDelayed( SELECTION_DELAY_MS ) {
             if ( panelBody.closeOnClick ) closePanel()

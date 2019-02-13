@@ -10,6 +10,7 @@ import studio.forface.materialbottombar.panels.MaterialPanel
 import studio.forface.materialbottombar.panels.items.*
 import studio.forface.materialbottombar.panels.params.titleStringRes
 import studio.forface.materialbottombar.panels.params.titleText
+import kotlin.random.Random
 
 /**
  * @author Davide Giuseppe Farella.
@@ -78,48 +79,52 @@ abstract class AbsPanelBuilder<
     }
 
     /** Crate a [PrimaryPanelItem] and add to the receiver [Body] */
-    fun <B: BaseBody> B.primaryItem( f: P.() -> Unit ) {
+    fun <B: BaseBody> B.primaryItem( f: P.() -> Unit ): P {
         val item = allPrimaryBodyItem.clone()
+        item.id = Random.nextInt()
         item.f()
         items = items + item
+        return item
     }
 
     /** Crate a [PrimaryPanelItem] with the given [titleText] and add to the receiver [Body] */
-    fun <B: BaseBody> B.primaryItem( titleText: CharSequence, f: P.() -> Unit ) {
-        primaryItem {
+    fun <B: BaseBody> B.primaryItem( titleText: CharSequence, f: (P.() -> Unit)? = null ): P {
+        return primaryItem {
             this.titleText = titleText
-            f()
+            f?.let { it() }
         }
     }
 
     /** Crate a [PrimaryPanelItem] with the given [titleStringRes] and add to the receiver [Body] */
-    fun <B: BaseBody> B.primaryItem( @StringRes titleStringRes: Int, f: P.() -> Unit ) {
-        primaryItem {
+    fun <B: BaseBody> B.primaryItem( @StringRes titleStringRes: Int, f: (P.() -> Unit)? = null ): P {
+        return primaryItem {
             this.titleStringRes = titleStringRes
-            f()
+            f?.let { it() }
         }
     }
 
     /** Crate a [SecondaryPanelItem] and add to the receiver [Body] */
-    open fun <B: BaseBody> B.secondaryItem( f: S.() -> Unit ) {
+    open fun <B: BaseBody> B.secondaryItem( f: S.() -> Unit ): S {
         val item = allSecondaryBodyItem.clone()
+        item.id = Random.nextInt()
         item.f()
         items = items + item
+        return item
     }
 
     /** Crate a [SecondaryPanelItem] with the given [titleText] and add to the receiver [Body] */
-    fun <B: BaseBody> B.secondaryItem( titleText: CharSequence, f: S.() -> Unit ) {
-        secondaryItem {
+    fun <B: BaseBody> B.secondaryItem( titleText: CharSequence, f: (S.() -> Unit)? = null ): S {
+        return secondaryItem {
             this.titleText = titleText
-            f()
+            f?.let { it() }
         }
     }
 
     /** Crate a [SecondaryPanelItem] with the given [titleStringRes] and add to the receiver [Body] */
-    fun <B: BaseBody> B.secondaryItem( @StringRes titleStringRes: Int, f: S.() -> Unit ) {
-        secondaryItem {
+    fun <B: BaseBody> B.secondaryItem( @StringRes titleStringRes: Int, f: (S.() -> Unit)? = null ): S {
+        return secondaryItem {
             this.titleStringRes = titleStringRes
-            f()
+            f?.let { it() }
         }
     }
 }

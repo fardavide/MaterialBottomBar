@@ -27,7 +27,7 @@ open class ItemViewHolder<B: AbsMaterialPanel.BaseBody<*>>(
 ): RecyclerView.ViewHolder( itemView ) {
 
     /** @return a [CharSequence] title of the item, read directly from TextView for simplicity */
-    protected val title: CharSequence get() = itemView.item_title.text
+    private val title: CharSequence get() = itemView.item_title.text
 
     /** Bind the given [PanelItem] */
     fun bind( panelItem: PanelItem ) {
@@ -48,7 +48,7 @@ open class ItemViewHolder<B: AbsMaterialPanel.BaseBody<*>>(
 
             panelBody.applySelectionTo( itemView, panelItem.selected )
 
-            itemView.isEnabled = panelItem.selectable
+            //itemView.isEnabled = panelItem.selectable
             itemView.setOnClickListener( itemClickListener( panelItem ) )
             itemView.item_button
                     .setOnClickListener( buttonItemClickListener( panelItem.buttonItem ) )
@@ -57,16 +57,24 @@ open class ItemViewHolder<B: AbsMaterialPanel.BaseBody<*>>(
 
     /** @return a [View.OnClickListener] for the given [BasePanelItem] */
     protected open val itemClickListener: (BasePanelItem<*>) -> (View) -> Unit get() = { item -> {
-        // Trigger the click action to panelBody
-        panelBody.onItemClick( item.id, title )
+        handleBaseClicks( item )
         // Close Panel and set the item selected in panelBody with a delay for let the ripple
         // animation finish first
         Handler().postDelayed( SELECTION_DELAY_MS ) {
             if ( panelBody.closeOnClick ) closePanel()
-            item.selected = true
+            item.selected = item.selectable
             panelBody.setSelected( item.id )
         }
     } }
+
+    /** Trigger the click actions to the [item] itself and to [panelBody] */
+    protected fun handleBaseClicks( item: BasePanelItem<*> ) {
+        // Trigger the click action to the item
+        @Suppress("UNCHECKED_CAST")
+        ( item as BasePanelItem<BasePanelItem<*>> ).onClick( item )
+        // Trigger the click action to panelBody
+        panelBody.onItemClick( item.id, title )
+    }
 
     /** @return a [View.OnClickListener] for the given [ButtonItem] */
     private val buttonItemClickListener: (ButtonItem) -> (View) -> Unit get() = { buttonItem -> {

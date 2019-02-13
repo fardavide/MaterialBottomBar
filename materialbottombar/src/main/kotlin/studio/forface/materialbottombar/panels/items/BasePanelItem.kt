@@ -4,13 +4,15 @@ import studio.forface.materialbottombar.panels.items.extra.BadgeItem
 import studio.forface.materialbottombar.panels.items.extra.ButtonItem
 import studio.forface.materialbottombar.panels.holders.*
 import studio.forface.materialbottombar.panels.params.*
+import kotlin.random.Random
 
 abstract class BasePanelItem<T: PanelItem>: PanelItem,
-        Title<T>,
+        Badge<T>,
+        Clickable<T>,
         Icon<T>,
         Identifier<T>,
-        Badge<T>,
         PanelButton<T>,
+        Title<T>,
         Cloneable
 {
     abstract val iconMarginStartDp: Float
@@ -26,12 +28,13 @@ abstract class BasePanelItem<T: PanelItem>: PanelItem,
     override var iconColorHolder =      ColorHolder()
     override var iconSizeHolder =       SizeHolder()
 
-    override var id = Int.MIN_VALUE
+    override var onClick: (T) -> Unit = {}
+    override var id = Random.nextInt()
 
     var selectable = true
     var selected = false
 
-    fun selectable(selectable: Boolean = true ) =
+    fun selectable( selectable: Boolean = true ) =
             apply { this.selectable = selectable }
 
     override var badgeItem =  BadgeItem()

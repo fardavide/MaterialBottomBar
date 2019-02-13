@@ -97,7 +97,7 @@ class PanelView @JvmOverloads constructor (
     private fun buildBody( body: AbsMaterialPanel.IBody? ) =
             when( body ) {
 
-                is AbsMaterialPanel.Body -> LayoutInflater.from( context )
+                is AbsMaterialPanel.BaseBody<*> -> LayoutInflater.from( context )
                         .inflate( R.layout.drawer_body,this, false )
                         as RecyclerView
 

@@ -16,6 +16,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="studio.forface.demo.DemoActivity"/>
+
     </application>
 
 </manifest>

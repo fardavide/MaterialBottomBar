@@ -37,6 +37,7 @@ dependencies {
 
     implementation deps.android.appCompat
     implementation deps.android.constraintLayout
+    implementation deps.android.ktx
     implementation deps.android.material
 
     implementation deps.kotlin.stdlib
