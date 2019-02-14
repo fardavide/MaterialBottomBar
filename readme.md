@@ -4,11 +4,9 @@
 
 #### [Documentation link](https://4face-studi0.github.io/MaterialBottomBar/)
 
+### Dsl ready
 
-
-#### Dsl ready
-
-#### Navigation Component support coming soon
+### Navigation Component ready
 
 
 
