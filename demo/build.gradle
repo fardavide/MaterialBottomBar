@@ -39,6 +39,8 @@ dependencies {
     implementation deps.android.constraintLayout
     implementation deps.android.ktx
     implementation deps.android.material
+    implementation deps.android.navigationFragment
+    implementation deps.android.navigationUi
 
     implementation deps.kotlin.stdlib
 

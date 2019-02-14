@@ -1,5 +1,6 @@
 package studio.forface.demo
 
+import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,8 +13,11 @@ class DemoActivity: AppCompatActivity() {
         super.onCreate( savedInstanceState )
         setContentView( R.layout.activity_demo )
 
-        panelsDemoButton.setOnClickListener {
-            startActivity( Intent(this, PanelsDemoActivity::class.java ) )
-        }
+        panelsDemoButton.setOnClickListener { startActivity<PanelsDemoActivity>() }
+        navigationDemoButton.setOnClickListener { startActivity<NavigationDemoActivity>() }
     }
+}
+
+private inline fun <reified A: AppCompatActivity> ContextWrapper.startActivity() {
+    startActivity( Intent(this, A::class.java ) )
 }

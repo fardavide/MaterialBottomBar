@@ -296,7 +296,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         // Create a new PanelView of the given panel, add it to the layout, set its height to
         // WRAP_CONTENT and the y at the end of the layout (height). Then save the new PanelView
         // into the panel and save the panel in the panels map.
-        val panelView = PanelView(this, materialPanel)
+        val panelView = PanelView(this, materialPanel )
         addView( panelView )
         panelView.layoutParams.height = CoordinatorLayout.LayoutParams.WRAP_CONTENT
         panelView.y = height.toFloat()
@@ -344,7 +344,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     private fun setBody( body: AbsMaterialPanel.IBody?, panelView: PanelView ) {
         panelView.setBody( body )
-        ( body as? AbsMaterialPanel.Body )?.let {
+        ( body as? AbsMaterialPanel.BaseBody<*> )?.let {
             if ( body.selectionColorHolder.resolveColor( context ) == null) {
                 val color = draggingPanelHeaderColor ?: Color.GRAY
                 body.selectionColor( color )

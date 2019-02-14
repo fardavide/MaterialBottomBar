@@ -5,8 +5,8 @@ buildscript {
     ext.buildVersion = [
             major:      1,
             minor:      1,
-            channel:    1, // 0: build, 1: alpha, 2: beta, 3: RC, 4: stable
-            patch:      4,
+            channel:    2, // 0: build, 1: alpha, 2: beta, 3: RC, 4: stable
+            patch:      1,
             build:      0
     ]
 

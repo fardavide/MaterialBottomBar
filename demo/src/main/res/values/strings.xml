@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Demo</string>
+
+    <!-- Menu -->
+    <string name="menu_movie_channels">Movie Channels</string>
+    <string name="menu_my_playlists">My Playlists</string>
+    <string name="menu_my_epgs">My EPGs</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_tv_channels">Tv Channels</string>
 </resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    app:startDestination="@id/tvsFragment"
+    android:id="@+id/nav_graph">
+
+    <fragment
+        android:id="@+id/tvsFragment"
+        android:name="studio.forface.demo.TvsFragment"
+        android:label="TvsFragment"
+        tools:layout="@layout/fragment_tvs"/>
+
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="studio.forface.demo.MoviesFragment"
+        android:label="MoviesFragment"
+        tools:layout="@layout/fragment_movies"/>
+
+    <fragment
+        android:id="@+id/playlistsFragment"
+        android:name="studio.forface.demo.PlaylistsFragment"
+        android:label="PlaylistsFragment"
+        tools:layout="@layout/fragment_playlists" />
+
+    <fragment
+        android:id="@+id/epgsFragment"
+        android:name="studio.forface.demo.EpgsFragment"
+        android:label="EpgsFragment"
+        tools:layout="@layout/fragment_epgs" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="studio.forface.demo.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings" />
+
+
+    <action
+        android:id="@+id/action_to_TvsFragment"
+        app:destination="@id/tvsFragment" />
+
+    <action
+        android:id="@+id/action_to_MoviesFragment"
+        app:destination="@id/moviesFragment" />
+
+    <action
+        android:id="@+id/action_to_PlaylistFragment"
+        app:destination="@id/playlistsFragment" />
+
+    <action
+        android:id="@+id/action_to_EpgsFragment"
+        app:destination="@id/epgsFragment" />
+
+    <action
+        android:id="@+id/action_to_SettingsFragment"
+        app:destination="@id/settingsFragment" />
+</navigation>

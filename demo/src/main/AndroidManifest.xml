@@ -5,18 +5,19 @@
     <application tools:ignore="GoogleAppIndexingWarning"
         android:allowBackup="true"
         android:fullBackupContent="true"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         android:icon="@mipmap/ic_launcher_square"
         android:roundIcon="@mipmap/ic_launcher_circle">
 
-        <activity android:name="studio.forface.demo.PanelsDemoActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" >
+        <activity android:name="studio.forface.demo.DemoActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name="studio.forface.demo.DemoActivity"/>
+        <activity android:name="studio.forface.demo.PanelsDemoActivity"/>
+        <activity android:name="studio.forface.demo.NavigationDemoActivity"/>
 
     </application>
 

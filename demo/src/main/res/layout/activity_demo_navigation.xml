@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="studio.forface.demo.PanelsDemoActivity"
+
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="#EEEEEE">
+
+    <fragment android:id="@+id/nav_host"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
+
+    <studio.forface.materialbottombar.appbar.MaterialBottomAppBar
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+
+        app:hideOnScroll="true"
+        app:hideFabOnScroll="true"
+        app:backgroundTint="@android:color/white"
+        app:navigationIcon="@drawable/ic_hamburger"
+
+        app:fabAnimationMode="slide"
+        app:fabAlignmentMode="center"
+        app:fabCradleRoundedCornerRadius="16dp"
+
+        app:leftCornerRadius="24dp"
+        app:leftCornerStyle="round"
+        app:rightCornerRadius="24dp"
+        app:rightCornerStyle="round"/>
+
+</studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout>

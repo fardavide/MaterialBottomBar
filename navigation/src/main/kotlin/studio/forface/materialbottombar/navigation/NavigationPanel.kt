@@ -4,12 +4,14 @@ package studio.forface.materialbottombar.navigation
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import androidx.core.os.postDelayed
 import androidx.navigation.*
 import studio.forface.materialbottombar.navigation.adapter.NavItemViewHolder
 import studio.forface.materialbottombar.panels.AbsMaterialPanel
 import studio.forface.materialbottombar.panels.adapter.ItemViewHolder
+import studio.forface.materialbottombar.panels.items.BasePanelItem
 
 /** An interface for Panels that implement Android's `Navigation` */
 interface NavigationPanel {
@@ -65,11 +67,7 @@ abstract class AbsMaterialNavPanel(
         private var navChangeListener: NavChange = { _, destination, _ ->
             // Set the item selected with a delay for let the ripple animation finish first
             Handler().postDelayed( SELECTION_DELAY_MS ) {
-                setSelected {
-                    val item = it as? NavItem<*> ?: return@setSelected false
-                    val itemDestinationId = item.navDestinationId ?: item.navDirections?.actionId
-                    itemDestinationId == destination.id
-                }
+                setSelected { destination.id == destination.actionDestinationIdOf( it ) }
             }
         }
 
@@ -83,7 +81,12 @@ abstract class AbsMaterialNavPanel(
         /** @see NavSelection.onItemNavigation */
         override var onItemNavigation: OnItemNavigationListener = { navParams ->
             navController?.let { controller ->
-                if ( navParams.destinationId != controller.currentDestination?.id )
+                val currentDestination = controller.currentDestination
+                // If `null`, set 0 since `null` will depends by a `null` `currentDestination`, so
+                // in that case `currentDestination?.id` would be equal to `nextDestinationId`
+                val nextDestinationId = currentDestination?.actionDestinationIdOf( navParams ) ?: 0
+
+                if ( currentDestination?.id != nextDestinationId )
                     controller.navigate( navParams.destinationId, navParams.bundle )
             }
         }
@@ -102,6 +105,21 @@ abstract class AbsMaterialNavPanel(
         /** Remove [navChangeListener] from [navController] */
         internal fun removeNavListener() {
             navController?.removeOnDestinationChangedListener( navChangeListener )
+        }
+
+        /** @see NavDestination.getAction */
+        private fun NavDestination.actionDestinationIdOf( destinationId: Int ) =
+                getAction( destinationId )?.destinationId
+
+        /** @see NavDestination.getAction using a [NavParams] */
+        private fun NavDestination.actionDestinationIdOf( navParams: NavParams ) =
+                actionDestinationIdOf( navParams.destinationId )
+
+        /** @see NavDestination.getAction using a [BasePanelItem] */
+        private fun NavDestination.actionDestinationIdOf( item: BasePanelItem<*> ): Int? {
+            val navItem = item as? NavItem<*>
+            return navItem?.navDirections?.actionId
+                    ?: navItem?.navDestinationId?.let { actionDestinationIdOf( it ) }
         }
     }
 }
