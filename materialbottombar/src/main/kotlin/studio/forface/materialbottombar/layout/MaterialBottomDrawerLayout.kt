@@ -38,7 +38,10 @@ import studio.forface.materialbottombar.view.PanelView
 import java.util.*
 import kotlin.collections.set
 
-
+/**
+ * @author Davide Giuseppe Farella
+ * A [CoordinatorLayout] that can contains a custom [MaterialBottomAppBar] with [MaterialPanel]s
+ */
 class MaterialBottomDrawerLayout @JvmOverloads constructor (
         context: Context, val attrs: AttributeSet? = null, val defStyleAttr: Int = 0
 ) : CoordinatorLayout( context, attrs, defStyleAttr ) {
@@ -145,7 +148,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     var drawer: AbsMaterialPanel?
         get() = panels[drawerPanelId]
         set( value ) =
-            value?.let { addPanel( it, drawerPanelId,true ) }
+            value?.let { setPanel(drawerPanelId, it, true) }
                     ?: removePanel( drawerPanelId )
 
 
@@ -161,7 +164,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     /**
      * GET a new ID for [drawerPanel].
-     * The user cannot get or set the [drawerPanelId], so if the user [addPanel] with the same ID,
+     * The user cannot get or set the [drawerPanelId], so if the user [setPanel] with the same ID,
      * we need to get a new one for the [drawerPanel] that is not contained in the keys of
      * [panels] Map.
      */
@@ -263,20 +266,25 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     /* ========================================================================================== */
 
-    /**
-     * @see addPanel
-     */
+    /** @see setPanel */
+    @Deprecated("Use `setPanel` or `set` operator. This will be removed in the next " +
+            "release", ReplaceWith("setPanel") )
     fun addPanel( materialPanel: AbsMaterialPanel, id: Int ) {
-        addPanel( materialPanel, id,false )
+        setPanel(id, materialPanel, false)
+    }
+
+    /** @see setPanel */
+    fun setPanel( id: Int, materialPanel: AbsMaterialPanel ) {
+        setPanel( id, materialPanel,false )
     }
 
     /**
-     * Adds a new [AbsMaterialPanel] to [panels].
+     * Set a new [AbsMaterialPanel] to [panels], other panels with the same [id] will be removed.
      * @param materialPanel the [AbsMaterialPanel] to add.
      * @param id the ID of the [materialPanel].
      * @param isDrawer whether the [materialPanel] is the main drawer.
      */
-    private fun addPanel( materialPanel: AbsMaterialPanel, id: Int, isDrawer: Boolean ) {
+    private fun setPanel( id: Int, materialPanel: AbsMaterialPanel, isDrawer: Boolean ) {
         // If the panel is not a drawer and the id is the same as drawerPanel and the drawer is
         // not null: Save the drawer in a temporary val, get a new ID for the drawer and
         // set the drawer in the new allocation into panels map.
@@ -310,7 +318,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             observe { newPanel, change -> when( change ) {
                 AbsMaterialPanel.Change.HEADER ->       { setHeader( newPanel.header, panelView ) }
                 AbsMaterialPanel.Change.BODY ->         { setBody(   newPanel.body,   panelView ) }
-                AbsMaterialPanel.Change.PANEL_VIEW->    { addPanel(  newPanel, id, isDrawer     ) }
+                AbsMaterialPanel.Change.PANEL_VIEW->    { setPanel(id, newPanel, isDrawer) }
             } }
 
             // Set the Header and the Body into the layout.

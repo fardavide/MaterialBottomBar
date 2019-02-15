@@ -17,6 +17,7 @@ import studio.forface.materialbottombar.dsl.drawer
 import studio.forface.materialbottombar.dsl.panel
 import studio.forface.materialbottombar.panels.items.extra.Badge
 import studio.forface.materialbottombar.panels.params.*
+import studio.forface.materialbottombar.set
 
 private const val IMAGE_URL = "https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg"
 
@@ -37,8 +38,8 @@ class PanelsDemoActivity: AppCompatActivity() {
         applySettings()
 
         drawerLayout.drawer = fancyDrawer
-        drawerLayout.addPanel( sortPanel, PANEL_SORT_ID )
-        drawerLayout.addPanel( settingsPanel, PANEL_SETTINGS_ID )
+        drawerLayout[PANEL_SORT_ID] = sortPanel
+        drawerLayout[PANEL_SETTINGS_ID] = settingsPanel
     }
 
     private val settingsPanel get() = panel {
@@ -227,7 +228,7 @@ class PanelsDemoActivity: AppCompatActivity() {
         bar.hideFabOnScroll = settings.hideFabOnScroll
         if ( resetSettingsPanel )
             Handler().postDelayed(200 ) {
-                drawerLayout.addPanel( settingsPanel, PANEL_SETTINGS_ID )
+                drawerLayout[PANEL_SETTINGS_ID] = settingsPanel
             }
     }
 }
