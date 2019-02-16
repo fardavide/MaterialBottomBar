@@ -270,7 +270,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     @Deprecated("Use `setPanel` or `set` operator. This will be removed in the next " +
             "release", ReplaceWith("setPanel") )
     fun addPanel( materialPanel: AbsMaterialPanel, id: Int ) {
-        setPanel(id, materialPanel, false)
+        setPanel(id, materialPanel, false )
     }
 
     /** @see setPanel */
