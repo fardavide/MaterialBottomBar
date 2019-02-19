@@ -12,4 +12,10 @@
         android:src="@drawable/ic_playlist"
         tools:ignore="ContentDescription" />
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:hint="Test behaviour with soft keyboard" />
+
 </FrameLayout>

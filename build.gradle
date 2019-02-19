@@ -6,7 +6,7 @@ buildscript {
             major:      1,
             minor:      1,
             channel:    2, // 0: build, 1: alpha, 2: beta, 3: RC, 4: stable
-            patch:      2,
+            patch:      3,
             build:      0
     ]
 
@@ -70,7 +70,7 @@ buildscript {
             targetSdk:                  28,
             sourceCompat:               JavaVersion.VERSION_1_8,
             targetCompat:               JavaVersion.VERSION_1_8,
-            buildTools:                 '3.5.0-alpha03',
+            buildTools:                 '3.5.0-alpha04',
 
             kotlin:                     '1.3.20',
             kotlinCoroutines:           '1.0.0',
@@ -106,7 +106,7 @@ buildscript {
             ktx:                "androidx.core:core-ktx:$versions.ktx",
             material:           "com.google.android.material:material:$versions.material",
             navigationFragment: "android.arch.navigation:navigation-fragment-ktx:$versions.navigation",
-            navigationUi: "android.arch.navigation:navigation-ui-ktx:$versions.navigation"
+            navigationUi:       "android.arch.navigation:navigation-ui-ktx:$versions.navigation"
         ],
         kotlin: [
             coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.kotlinCoroutines",

@@ -310,7 +310,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
             if ( targetParent is PanelView ) return
 
             if ( dyConsumed > 0 )       slideDown( child )
-            else if ( dyConsumed < 0)   slideUp(child)
+            else if ( dyConsumed < 0)   slideUp( child )
         }
 
         /**
@@ -362,9 +362,9 @@ class MaterialBottomAppBar @JvmOverloads constructor (
 
         /** @see BottomAppBar.Behavior.slideUp */
         override fun slideUp( child: BottomAppBar ) {
-            child.material.run {
+            with( child.material ) {
                 if ( currentState != 2 ) super.slideUp( child )
-                fab?.show()
+                if ( hideFabOnScroll ) fab?.show()
             }
         }
 

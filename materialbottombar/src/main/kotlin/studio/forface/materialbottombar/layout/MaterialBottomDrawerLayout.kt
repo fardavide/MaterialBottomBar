@@ -25,7 +25,6 @@ import com.google.android.material.animation.AnimationUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.internal.Experimental
 import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.android.synthetic.main.drawer_header.view.*
 import studio.forface.materialbottombar.appbar.MaterialBottomAppBar
@@ -267,7 +266,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /* ========================================================================================== */
 
     /** @see setPanel */
-    @Deprecated("Use `setPanel` or `set` operator. This will be removed in the next " +
+    @Deprecated("Use `setPanel` or `set` operator. This will be removed in the next " + // TODO
             "release", ReplaceWith("setPanel") )
     fun addPanel( materialPanel: AbsMaterialPanel, id: Int ) {
         setPanel(id, materialPanel, false )
@@ -430,9 +429,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     /* ========================================================================================== */
 
-    /**
-     * The [MotionEvent.getY] of the last [MotionEvent.ACTION_DOWN].
-     */
+    /** The [MotionEvent.getY] of the last [MotionEvent.ACTION_DOWN] */
     private var downY = 0f
 
     /**
@@ -441,14 +438,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     private var bottomBarDownY = 0f
 
-    /**
-     * Whether the [bottomAppBar] is being dragged.
-     */
+    /** Whether the [bottomAppBar] is being dragged */
     private var draggingBar = false
 
-    /**
-     * The timestamp of the last [MotionEvent.ACTION_DOWN].
-     */
+    /** The timestamp of the last [MotionEvent.ACTION_DOWN] */
     private var downEventTimestamp = 0L
 
     /**
@@ -639,8 +632,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
 
     /** EXPERIMENTAL: Set true for auto-hide [bottomAppBar] when a soft keyboard is open / visible */
-    @Experimental
-    var hideBottomAppBarOnSoftKeyboard = false
+    var hideBottomAppBarOnSoftKeyboard = true
 
     /** The [Rect] that will receive the [getWindowVisibleDisplayFrame] */
     private val rect = Rect()
@@ -676,7 +668,11 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     private fun onSoftKeyboardStateChange( open: Boolean ) {
         bottomAppBar?.let {
-            if ( open ) it.hide(true ) else it.show()
+            if ( open ) it.hide(true )
+            else {
+                closePanel()
+                it.show()
+            }
         }
     }
 }
