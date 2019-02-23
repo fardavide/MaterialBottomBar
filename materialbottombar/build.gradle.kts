@@ -6,11 +6,6 @@ plugins {
 
 android { applyAndroidConfig() }
 
-//dokka { TODO
-//    outputFormat = 'html'
-//    outputDirectory = "$buildDir/javadoc"
-//}
-
 dependencies {
     api( Libs.kotlin )
 
