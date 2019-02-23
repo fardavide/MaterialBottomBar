@@ -1,0 +1,16 @@
+$dokka.format:html
+$dokka.linkExtension:html
+$dokka.location:studio.forface.materialbottombar.utils$getColorCompat(android.content.Context, kotlin.Int)studio.forface.materialbottombar.utils/android.content.-context/get-color-compat.html
+$dokka.location:studio.forface.materialbottombar.utils$times(kotlin.collections.List((studio.forface.materialbottombar.utils.times.T)), kotlin.Int)studio.forface.materialbottombar.utils/kotlin.collections.-list/times.html
+studio.forface.materialbottombar
+studio.forface.materialbottombar.appbar
+studio.forface.materialbottombar.dsl
+studio.forface.materialbottombar.layout
+studio.forface.materialbottombar.panels
+studio.forface.materialbottombar.panels.adapter
+studio.forface.materialbottombar.panels.holders
+studio.forface.materialbottombar.panels.items
+studio.forface.materialbottombar.panels.items.extra
+studio.forface.materialbottombar.panels.params
+studio.forface.materialbottombar.utils
+studio.forface.materialbottombar.view

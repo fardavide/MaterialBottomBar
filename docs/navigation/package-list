@@ -1,0 +1,8 @@
+$dokka.format:html
+$dokka.linkExtension:html
+$dokka.location:studio.forface.materialbottombar.navigation$setupWithNavController(androidx.appcompat.widget.Toolbar, androidx.navigation.NavController, kotlin.Array((studio.forface.materialbottombar.navigation.NavigationPanel)))studio.forface.materialbottombar.navigation/androidx.appcompat.widget.-toolbar/setup-with-nav-controller.html
+$dokka.location:studio.forface.materialbottombar.navigation$setupWithNavController(androidx.appcompat.widget.Toolbar, androidx.navigation.NavController, studio.forface.materialbottombar.navigation.MaterialNavPanel)studio.forface.materialbottombar.navigation/androidx.appcompat.widget.-toolbar/setup-with-nav-controller.html
+$dokka.location:studio.forface.materialbottombar.navigation$setupWithNavController(studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout, androidx.navigation.NavController)studio.forface.materialbottombar.navigation/studio.forface.materialbottombar.layout.-material-bottom-drawer-layout/setup-with-nav-controller.html
+studio.forface.materialbottombar.navigation
+studio.forface.materialbottombar.navigation.adapter
+studio.forface.materialbottombar.navigation.dsl
