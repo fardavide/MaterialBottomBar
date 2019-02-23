@@ -1,9 +1,10 @@
 import com.android.build.gradle.TestedExtension
 
 @Suppress("unused")
-fun TestedExtension.applyAndroidConfig() {
+fun TestedExtension.applyAndroidConfig( appId: String? = null ) {
     compileSdkVersion( Project.targetSdk )
     defaultConfig {
+        appId?.let { applicationId = it }
         minSdkVersion( Project.minSdk )
         targetSdkVersion( Project.targetSdk )
         versionCode = Project.versionCode

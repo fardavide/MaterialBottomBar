@@ -670,7 +670,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         bottomAppBar?.let {
             if ( open ) it.hide(true )
             else {
-                closePanel()
+                setViewsY( bottomBarInitialY )
                 it.show()
             }
         }
