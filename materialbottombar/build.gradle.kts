@@ -2,7 +2,6 @@ plugins {
     id("com.android.library" )
     id("kotlin-android" )
     id("kotlin-android-extensions" )
-    id("org.jetbrains.dokka-android" )
 }
 
 android { applyAndroidConfig() }
@@ -21,4 +20,5 @@ dependencies {
     implementation( Libs.Android.material )
 }
 
+applyDokka()
 publish("materialbottombar" )

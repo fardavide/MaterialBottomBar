@@ -1,6 +1,5 @@
 @file:Suppress("MayBeConstant")
 
-import com.android.build.gradle.TestedExtension
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.kotlin.dsl.DependencyHandlerScope
