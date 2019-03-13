@@ -1,4 +1,4 @@
-@file:Suppress("PropertyName", "MemberVisibilityCanBePrivate")
+@file:Suppress("PropertyName", "MemberVisibilityCanBePrivate", "unused")
 
 package studio.forface.materialbottombar.dsl
 
@@ -21,6 +21,7 @@ import kotlin.random.Random
  *
  * Inherit from [DslBuilder]
  */
+@MaterialBottomBarDsl
 abstract class AbsPanelBuilder<
         B: IBody,
         P: AbsPrimaryPanelItem<P>,
@@ -132,6 +133,7 @@ abstract class AbsPanelBuilder<
 typealias BaseBody = AbsMaterialPanel.BaseBody<*>
 
 /** An [AbsPanelBuilder] for [MaterialPanel]s that can have a [MaterialPanel.CustomBody] */
+@MaterialBottomBarDsl
 class CustomBodyPanelBuilder @PublishedApi internal constructor(
         wrapToContent: Boolean
 ): AbsPanelBuilder<

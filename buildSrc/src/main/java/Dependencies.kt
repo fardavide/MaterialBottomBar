@@ -38,14 +38,15 @@ object Versions {
     val dokka =                         "0.9.17"
     val mockk =                         "1.9"
 
-    val android_constraint_layout =      "2.0.0-alpha3"
+    val android_constraint_layout =     "2.0.0-alpha3"
     val android_espresso =              "3.1.1"
-    val android_glide =                 "4.9.0"
+    //val android_glide =                 "4.9.0"
     val android_gradle_plugin =         "3.3.1"
     val android_ktx =                   "1.0.1"
     val android_material =              "1.1.0-alpha03"
     val android_navigation =            "1.0.0-rc01"
     val android_test_runner =           "1.1.1"
+    val android_theia =                 "0.3-alpha-1"
 
     val publishing_bintray_plugin =     "1.8.4"
     val publishing_maven_plugin =       "2.1"
@@ -67,8 +68,8 @@ object Libs {
     object Android {
         val constraint_layout =                 "androidx.constraintlayout:constraintlayout:${Versions.android_constraint_layout}"
         val espresso =                          "androidx.test.espresso:espresso-core:${Versions.android_espresso}"
-        val glide =                             "com.github.bumptech.glide:glide:${Versions.android_glide}"
-        val glide_compiler =                    "com.github.bumptech.glide:compiler:${Versions.android_glide}"
+        //val glide =                             "com.github.bumptech.glide:glide:${Versions.android_glide}"
+        //val glide_compiler =                    "com.github.bumptech.glide:compiler:${Versions.android_glide}"
         val gradle_plugin =                     "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"
         val ktx =                               "androidx.core:core-ktx:${Versions.android_ktx}"
         val material =                          "com.google.android.material:material:${Versions.android_material}"
@@ -76,6 +77,7 @@ object Libs {
         val navigation_ui =                     "android.arch.navigation:navigation-ui-ktx:${Versions.android_navigation}"
         val support_annotations =               "com.android.support:support-annotations:28.0.0"
         val test_runner =                       "com.android.support.test:runner:${Versions.android_test_runner}"
+        val theia =                             "studio.forface.theia:theia:${Versions.android_theia}"
     }
 
     /* Publishing */

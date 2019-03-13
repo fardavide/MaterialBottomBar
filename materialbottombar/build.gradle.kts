@@ -10,9 +10,9 @@ dependencies {
     api( Libs.kotlin )
 
     implementation( Libs.Android.constraint_layout )
-    implementation( Libs.Android.glide )
     api( Libs.Android.ktx )
     implementation( Libs.Android.material )
+    implementation( Libs.Android.theia )
 }
 
 applyDokka()

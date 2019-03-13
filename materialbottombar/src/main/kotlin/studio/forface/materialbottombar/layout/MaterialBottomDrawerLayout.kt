@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.android.synthetic.main.drawer_header.view.*
 import studio.forface.materialbottombar.appbar.MaterialBottomAppBar
+import studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout.Fly
 import studio.forface.materialbottombar.panels.AbsMaterialPanel
 import studio.forface.materialbottombar.panels.MaterialPanel
 import studio.forface.materialbottombar.panels.adapter.PanelBodyAdapter
@@ -44,6 +45,9 @@ import kotlin.collections.set
 class MaterialBottomDrawerLayout @JvmOverloads constructor (
         context: Context, val attrs: AttributeSet? = null, val defStyleAttr: Int = 0
 ) : CoordinatorLayout( context, attrs, defStyleAttr ) {
+
+
+    /* ===================================== C O R E ============================================ */
 
     /**
      * The minimum dragging distance after the Layout intercept the [MotionEvent].
@@ -95,19 +99,16 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     private val bottomBarInitialY by retryIfDefaultLazy( height.toFloat() ) { bottomAppBar?.y }
 
-    /**
-     * GET whether the [bottomAppBar] is at its initial state ( [Gravity.BOTTOM] ).
-     */
+    /** @return whether the [bottomAppBar] is at its initial state ( [Gravity.BOTTOM] ) */
     private val isBarInInitialState get() = bottomAppBar?.y == bottomBarInitialY
 
-    /**
-     * A [MutableMap] composed by the Panel ID and the [MaterialPanel].
-     */
+    /** A [MutableMap] composed by the Panel ID and the [MaterialPanel] */
     var panels = mutableMapOf<Int, AbsMaterialPanel>()
 
-    /**
-     * The [PanelView] that is currently being dragged by the user.
-     */
+    /** The id of [MaterialPanel] that is currently being dragged by the user */
+    private var draggingPanelId: Int? = null
+
+    /** The [PanelView] that is currently being dragged by the user */
     private var draggingPanelView: PanelView? = null
 
     /**
@@ -151,14 +152,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                     ?: removePanel( drawerPanelId )
 
 
-    /**
-     * The ID of the [drawerPanel]
-     */
+    /** The ID of the [drawerPanel] */
     private var drawerPanelId = 0
 
-    /**
-     * The [AbsMaterialPanel] which represent the [drawer] [AbsMaterialPanel.panelView].
-     */
+    /** The [AbsMaterialPanel] which represent the [drawer] [AbsMaterialPanel.panelView] */
     val drawerPanel get() = panels[drawerPanelId]?.panelView
 
     /**
@@ -174,9 +171,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         return newId
     }
 
-    /**
-     * The [Animator] for [topAppBar].
-     */
+    /** The [Animator] for [topAppBar] */
     var toolbarAnimator: ViewPropertyAnimator? = null
 
     /**
@@ -236,22 +231,23 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         }
     }
 
-    /**
-     * The [Animator].
-     */
+    /** The [Animator] */
     private var viewsAnimator: Animator? = null
 
-    /* ========================================================================================== */
+    /* ===================================== I N I T ============================================ */
 
     init {
 
         doOnPreDraw {
+
+            // Set navigation click listener to open the drawer, if any
             bottomAppBar?.setNavigationOnClickListener {
                 drawer ?: return@setNavigationOnClickListener
                 grabPanel( drawerPanelId )
                 flyBar( Fly.MATCH_PANEL )
             }
 
+            // Set Y and header's height for each panelView's
             panels.forEach { val panelView = it.value.panelView
                 panelView?.y = height.toFloat()
                 bottomAppBar?.height?.let { barHeight ->
@@ -263,18 +259,46 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         }
     }
 
-    /* ========================================================================================== */
+    /* =================================== P A N E L S ========================================== */
+
+    /**
+     * A lambda that will be invoked when a [MaterialPanel] changes its [Fly] state.
+     * It will invoke [panelStateChangeListener] and, if needed, [panelOpenChangeListener] and
+     * [panelCloseChangeListener]
+     */
+    private val panelStateChangeListenerInvoker: PanelRelativeStateChangeListener =
+            { panelId, oldState, newState ->
+                if ( oldState != newState ) {
+                    panelStateChangeListener( panelId, newState )
+                    if ( oldState == Fly.BOTTOM ) panelOpenChangeListener( panelId )
+                    if ( newState == Fly.BOTTOM ) panelCloseChangeListener( panelId )
+                }
+            }
+
+    /** A lambda that will be invoked when a [MaterialPanel] changes its [Fly] state */
+    var panelStateChangeListener: PanelStateChangeListener = { _, _ -> }
+
+    /**
+     * A lambda that will be invoked when a [MaterialPanel] changes its [Fly] state from
+     * [Fly.BOTTOM] to any other
+     */
+    internal var panelOpenChangeListener: PanelChangeListener = {}
+
+    /**
+     * A lambda that will be invoked when a [MaterialPanel] changes its [Fly] state to [Fly.BOTTOM]
+     */
+    internal var panelCloseChangeListener: PanelChangeListener = {}
 
     /** @see setPanel */
-    @Deprecated("Use `setPanel` or `set` operator. This will be removed in the next " + // TODO
+    @Deprecated("Use `setPanel` or `set` operator. This will be removed in the next " + // TODO remove in 1.2
             "release", ReplaceWith("setPanel") )
     fun addPanel( materialPanel: AbsMaterialPanel, id: Int ) {
-        setPanel(id, materialPanel, false )
+        setPanel( id, materialPanel, false )
     }
 
     /** @see setPanel */
     fun setPanel( id: Int, materialPanel: AbsMaterialPanel ) {
-        setPanel( id, materialPanel,false )
+        setPanel( id, materialPanel, false )
     }
 
     /**
@@ -303,7 +327,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         // Create a new PanelView of the given panel, add it to the layout, set its height to
         // WRAP_CONTENT and the y at the end of the layout (height). Then save the new PanelView
         // into the panel and save the panel in the panels map.
-        val panelView = PanelView(this, materialPanel )
+        val panelView = PanelView( this, materialPanel )
         addView( panelView )
         panelView.layoutParams.height = CoordinatorLayout.LayoutParams.WRAP_CONTENT
         panelView.y = height.toFloat()
@@ -313,11 +337,11 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         // Attach an observer to the panel.
         // If the Header or the Body changes, set them into the layout,
         // if the PanelView, re-set the panel.
-        materialPanel.run {
+        with( materialPanel ) {
             observe { newPanel, change -> when( change ) {
                 AbsMaterialPanel.Change.HEADER ->       { setHeader( newPanel.header, panelView ) }
                 AbsMaterialPanel.Change.BODY ->         { setBody(   newPanel.body,   panelView ) }
-                AbsMaterialPanel.Change.PANEL_VIEW->    { setPanel(id, newPanel, isDrawer) }
+                AbsMaterialPanel.Change.PANEL_VIEW->    { setPanel( id, newPanel, isDrawer ) }
             } }
 
             // Set the Header and the Body into the layout.
@@ -395,17 +419,11 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         flyBar( Fly.MATCH_PANEL )
     }
 
-    /**
-     * @see closePanel
-     */
+    /** @see closePanel */
     fun closeDrawer() { closePanel() }
 
-    /**
-     * Close the current open or grabbed [PanelView].
-     */
-    fun closePanel() {
-        flyBar( Fly.BOTTOM )
-    }
+    /** Close the current open or grabbed [PanelView] */
+    fun closePanel() { flyBar( Fly.BOTTOM ) }
 
     /**
      * Grab a [PanelView] to be dragged by the user.
@@ -413,6 +431,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      * grabbed.
      */
     private fun grabPanel( id: Int ) {
+        draggingPanelId = id
         val draggingPanel = panels[id]
 
         // Store the PanelView.
@@ -427,7 +446,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                         ?.contentView?.background as? ColorDrawable )?.color
     }
 
-    /* ========================================================================================== */
+    /* ================================= D R A G G I N G ======================================== */
 
     /** The [MotionEvent.getY] of the last [MotionEvent.ACTION_DOWN] */
     private var downY = 0f
@@ -442,38 +461,50 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private var draggingBar = false
 
     /** The timestamp of the last [MotionEvent.ACTION_DOWN] */
-    private var downEventTimestamp = 0L
+    private var downEventTimestamp = 0L // TODO currently updated but not used
 
     /**
      * The timestamp of the last [MotionEvent.ACTION_DOWN] consumed by the dragging of
      * [bottomAppBar].
      */
-    private var consumedEventTimestamp = 0L
+    private var consumedEventTimestamp = 0L // TODO currently updated but not used
 
+    /**
+     * @return whether the [MotionEvent] should be intercepted
+     * `true` of if is [MotionEvent.ACTION_UP] or [MotionEvent.ACTION_CANCEL] and Y between
+     * [downY] and [MotionEvent.getY] exceed [MIN_INTERCEPT_DRAG_THRESHOLD]
+     */
     override fun onInterceptTouchEvent( event: MotionEvent ): Boolean {
         val actionDown = event.action == MotionEvent.ACTION_DOWN
         val actionUp = event.action == MotionEvent.ACTION_UP ||
                 event.action == MotionEvent.ACTION_CANCEL
 
+        // Is this event.y or last event.y in bottomBarRange
         val inRange = downY in bottomBarRange || event.y in bottomBarRange
 
+        // If actionDown update downY and downEventTimestamp
         if ( actionDown ) {
             downY = event.y
             downEventTimestamp = System.currentTimeMillis()
         }
 
+        // Get direction and check if draggingPanelRecyclerView should scroll
         val direction = downY.compareTo( event.y )
         val shouldScrollDrawerRecyclerView =
                 event.action == MotionEvent.ACTION_MOVE && bottomAppBar!!.y < 1 &&
                         draggingPanelRecyclerView?.canScrollVertically( direction ) ?: false
 
+        // If draggingPanelRecyclerView should NOT scroll and this event.y or last event.y is in
+        // bottomBarRange, call onTouchEvent
         if ( ! shouldScrollDrawerRecyclerView && inRange ) {
             if ( onTouchEvent( event ) )
                 consumedEventTimestamp = System.currentTimeMillis()
 
+        // If this event.y or last event.y is NOT in bottomBarRange, close the panel
         } else if ( ! inRange )
             flyBar( Fly.BOTTOM )
 
+        // If is actionUp, INTERCEPT if and movement exceed the MIN_INTERCEPT_DRAG_THRESHOLD
         if ( actionUp ) {
             val moved = Math.abs( downY - event.y ) > MIN_INTERCEPT_DRAG_THRESHOLD
 
@@ -481,19 +512,25 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             return moved
         }
 
+        // Don't INTERCEPT by default
         return false
     }
 
+    /** @return whether an event has been consumed */
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent( event: MotionEvent ): Boolean {
 
+        // Get direction and check if draggingPanelRecyclerView should scroll
         val direction = downY.compareTo( event.y )
         val shouldScrollDrawerRecyclerView =
                 event.action == MotionEvent.ACTION_MOVE && bottomAppBar!!.y < 1 &&
                         draggingPanelRecyclerView?.canScrollVertically( direction ) ?: false
 
+        // If draggingPanelRecyclerView should scroll, return `false` and don't consume any other
+        // event
         if ( shouldScrollDrawerRecyclerView ) return false
 
+        // Consume an event regarding the current action.
         return when( event.action ) {
             MotionEvent.ACTION_DOWN -> onDown( event )
             MotionEvent.ACTION_MOVE -> onMove( event )
@@ -502,132 +539,214 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         }
     }
 
+    /** If there is a [drawer], grab [MaterialBottomAppBar] for move */
     private fun grabBar() {
+        // return if no drawer available
         drawer ?: return
+
+        // If bar is in initial state, store if fab is visible and grab drawer's panel
         if ( isBarInInitialState ) {
             hasFab = fab?.isVisible == true
-            grabPanel(drawerPanelId)
+            grabPanel( drawerPanelId )
         }
+        // Store that is dragging bar
         draggingBar = true
     }
-    private fun releaseBar( event: MotionEvent ) = bottomAppBar?.let {
+
+    /**
+     * Release the [MaterialBottomAppBar]. Opposite as [grabBar].
+     *
+     * @param event the current [MotionEvent] for define the behaviour of the [bottomAppBar]. Where
+     * should it [flyBar]
+     *
+     * @return `true` if any event is consumed ( basically if [bottomAppBar] is NOT `null` )
+     */
+    private fun releaseBar( event: MotionEvent ): Boolean {
+        if ( bottomAppBar == null ) return false
+
         if ( draggingBar ) {
+            // Store that is NOT dragging bar
             draggingBar = false
 
+            // Check if a minimum movement has been made for fly the bar to the dragging direction
+            // of let it fly back fto its old position
             val inThreshold = Math.abs( event.y - downY ) > MIN_FLY_DRAG_THRESHOLD
 
+            // If inThreshold fly the bar in the dragging direction
             if ( inThreshold ) {
                 val isDraggingUp = event.y < downY
 
                 val fly = if ( ! isDraggingUp ) Fly.BOTTOM
-                else if ( it.y < matchPanelY ) Fly.TOP
+                else if ( bottomAppBar!!.y < matchPanelY ) Fly.TOP
                 else Fly.MATCH_PANEL
 
                 flyBar( fly )
 
+            // If NOT inThreshold fly the bar to its old position
             } else flyBar( lastFly )
+        }
+        // Return that the event has been consumed
+        return true
+    }
 
-            true
-
-        } else true
-
-    } ?: false
-
+    /**
+     * Drag the [bottomAppBar] withing [MotionEvent].
+     * Limits are `0f` ( the top of the [MaterialBottomDrawerLayout] ) and [bottomBarInitialY]
+     *
+     * @see setViewsY
+     */
     private fun dragBar( y: Float ) = bottomAppBar?.let {
         val toY = ( bottomBarDownY - ( downY - y ) )
-                .coerceAtLeast(0f )
+                .coerceAtLeast( 0f )
                 .coerceAtMost( bottomBarInitialY )
         setViewsY( toY )
     }
 
+    /**
+     * Handle [MotionEvent.ACTION_DOWN]. If [MotionEvent.getY] is in [bottomBarRange], store
+     * [MaterialBottomAppBar.getY]
+     *
+     * @return `true` if [MotionEvent.getY] is in [bottomBarRange]
+     */
     private fun onDown( event: MotionEvent ) = if ( event.y in bottomBarRange ) {
         bottomBarDownY = bottomAppBar?.y ?: 0f
         true
     } else false
 
-
+    /**
+     * Handle [MotionEvent.ACTION_MOVE].
+     * @return:
+     * * If is [draggingBar], [dragBar] to [MotionEvent.getY] and return `true`
+     * * else if [downY] is in [bottomBarRange], [grabBar] and return `true`
+     * * else return `false`
+     */
     private fun onMove( event: MotionEvent ) = when {
         draggingBar -> { dragBar( event.y ); true }
         downY in bottomBarRange -> { grabBar(); true }
         else -> false
     }
 
+    /** Enum for the possible directions of [flyBar] */
     enum class Fly { TOP, BOTTOM, MATCH_PANEL }
+
+    /** Keep track of the direction of the last [flyBar] */
     private var lastFly = Fly.BOTTOM
+
+    /**
+     * Fly [bottomAppBar], if not null, to the requested [Fly] direction
+     * @see animateViewsY
+     */
     private fun flyBar( fly: Fly ) {
+        bottomAppBar ?: return
+
+        // Call panelStateChangeListenerInvoker
+        panelStateChangeListenerInvoker( draggingPanelId!!, lastFly, fly )
+
+        // Store the requested Fly as lastFly
         lastFly = fly
-        bottomAppBar?.let {
-            val toY = when( fly ) {
-                Fly.TOP ->          0f
-                Fly.BOTTOM ->       bottomBarInitialY
-                Fly.MATCH_PANEL -> matchPanelY
-            }
-            animateViewsY( toY )
+
+        val toY = when( fly ) {
+            Fly.TOP ->          0f
+            Fly.BOTTOM ->       bottomBarInitialY
+            Fly.MATCH_PANEL ->  matchPanelY
         }
+        animateViewsY( toY )
     }
 
+    /** Whether [fab] is visible on [bottomBarInitialY] */
     private var hasFab = fab?.isVisible
+
+    /** Animate [bottomAppBar] and [draggingPanelView] to the requested [toY] */
     private fun animateViewsY( toY: Float ) {
+        // Cancel the current viewsAnimator, if any
         viewsAnimator?.cancel()
 
+        // Get the starting point of bottomAppBar.y
         val fromY = bottomAppBar!!.y
         if ( fromY == bottomBarInitialY ) hasFab = fab?.isVisible == true
+        // Calculate the duration of the animation
+        val animationDuration = Math.abs( fromY - toY ) / 2
 
-        val duration = Math.abs( fromY - toY ) / 2
+        // Create the animation, start it and set to viewsAnimator. On end set viewsAnimator to null
         viewsAnimator = ValueAnimator.ofFloat( fromY, toY ).apply {
-            addUpdateListener {
-                setViewsY( it.animatedValue as Float )
-            }
-            this.duration = duration.toLong()
-        }
+            duration = animationDuration.toLong()
 
-        viewsAnimator!!.doOnEnd { viewsAnimator = null }
-        viewsAnimator!!.start()
+            addUpdateListener { setViewsY( it.animatedValue as Float ) }
+
+            doOnEnd { viewsAnimator = null }
+            start()
+        }
     }
 
-    @SuppressLint("ResourceType")
+    /**
+     * Set [bottomAppBar] and [draggingPanelView] to the requested [y] and apply the needed params
+     * ( color, alpha, shape, etc )
+     *
+     * Do nothing if [y] is less than 0f, since we don't want the [View]s to go above the current
+     * [MaterialBottomDrawerLayout]
+     */
     private fun setViewsY( y: Float ) {
         if ( y < 0f ) return
 
-        bottomAppBar!!.y = y
+        // Create a non-null reference to bottomAppBar
+        val bottomAppBar = bottomAppBar ?: throw AssertionError()
+
+        // Set views' y
+        bottomAppBar.y = y
         draggingPanelView?.y = y
 
-        val height = height - bottomAppBar!!.height
+        // Store a reference to the available height where the views can be moved, it's represented
+        // by the layout's height minus the bottomAppBar's height
+        val availableHeight = height - bottomAppBar.height
 
-        //val totalPercentage =   1f / ( height / y )
-        val topPercentage =     1f / ( matchPanelY / y.coerceAtMost( matchPanelY ) )
-        val bottomPercentage =  1f / ( ( height - matchPanelY ) / ( y - matchPanelY )
-                .coerceAtLeast(0f ) )
+        // A percentage representing the position of Y relatively to the space that goes from the
+        // top of this layout ( 0 ) to the point where the bottomAppBar would be on Fly.MATCH_PANEL
+        // state ( matchPanelY )
+        val topPercentage = 1f / ( matchPanelY / y.coerceAtMost( matchPanelY ) )
 
-        bottomAppBar!!.cornersInterpolation =   topPercentage
+        // A percentage representing the position of Y relatively to the space that goes from point
+        // where the bottomAppBar would be on Fly.MATCH_PANEL state ( matchPanelY ) the bottom
+        // ( availableHeight )
+        val bottomPercentage =  1f / ( ( availableHeight - matchPanelY ) / ( y - matchPanelY )
+                .coerceAtLeast( 0f ) )
 
+        // Set bottomAppBar's cornersInterpolation according to topPercentage
+        bottomAppBar.cornersInterpolation = topPercentage
+
+        // Blend the bottomAppBar's color according to bottomPercentage
         bottomBarInitialColor?.let { blendFrom ->
             val blendTo = draggingPanelHeaderColor ?: blendFrom
             val blend = ColorUtils.blendARGB(
                     blendFrom, blendTo, 1f - bottomPercentage
             )
-            ColorHolder( color = blend ).applyToBackground( bottomAppBar!! )
+            ColorHolder( color = blend ).applyToBackground( bottomAppBar )
         }
 
+        // If bottomAppBar is in its initial position, set all the panels' Y to availableHeight,
+        // scroll draggingPanelRecyclerView to 0 and set the bottomAppBar's menu visible.
+        // Else just hide the bottomAppBar's menu
         if ( isBarInInitialState ) {
-            panels.forEach { it.value.panelView?.y = height.toFloat() }
+            panels.forEach { it.value.panelView?.y = availableHeight.toFloat() }
             draggingPanelRecyclerView?.scrollToPosition( 0 )
 
-            bottomAppBar!!.menu.setGroupVisible( 0, true )
+            bottomAppBar.menu.setGroupVisible( 0, true )
+
         } else {
-            bottomAppBar!!.menu.setGroupVisible( 0, false )
+            bottomAppBar.menu.setGroupVisible( 0, false )
         }
 
-        //drawerHeaderColorHolder?.applyToBackground( bottomAppBar!! )
-        bottomAppBar!!.children.forEach {
+        // Set bottomAppBar's children alpha and enabled state
+        bottomAppBar.children.forEach {
             it.alpha = bottomPercentage
             it.isClickable =   isBarInInitialState
             it.isEnabled =     isBarInInitialState
         }
-        draggingPanelView?.fadeHeader(1f - bottomPercentage, ! isBarInInitialState )
+        // Set draggingPanelView's children alpha and enabled state
+        draggingPanelView?.fadeHeader( 1f - bottomPercentage, ! isBarInInitialState )
 
         hasFab ?: return
-        fab?.show(isBarInInitialState && hasFab!! )
+        // Show fab if isBarInInitialState and hasFab, else hide it
+        fab?.show( isBarInInitialState && hasFab!! )
     }
 
 
@@ -641,8 +760,8 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private var isSoftKeyboardOpen = false
 
     /**
-     * Here we will [MaterialBottomAppBar.show] or [MaterialBottomAppBar.hide] whether if the
-     * soft keyboard is show or not.
+     * [MaterialBottomAppBar.show] or [MaterialBottomAppBar.hide] whether if the soft keyboard is
+     * show or not.
      * We will compare the display height to the visible frame height for understand if the
      * soft keyboard is shown.
      */
@@ -668,7 +787,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     private fun onSoftKeyboardStateChange( open: Boolean ) {
         bottomAppBar?.let {
-            if ( open ) it.hide(true )
+            if ( open ) it.hide( true )
             else {
                 setViewsY( bottomBarInitialY )
                 it.show()
@@ -676,3 +795,15 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         }
     }
 }
+
+/** Typealias for a lambda that receives a [MaterialPanel]s id */
+typealias PanelChangeListener = ( panelId: Int ) -> Unit
+
+/** Typealias for a lambda that receives a [MaterialPanel]s id [Int] and a [Fly] state */
+typealias PanelStateChangeListener = ( panelId: Int, state: Fly ) -> Unit
+
+/**
+ * Typealias for a lambda that receives a [MaterialPanel]s id [Int], the old [Fly] state and the
+ * new [Fly] state */
+private typealias PanelRelativeStateChangeListener =
+        ( panelId: Int, oldState: Fly, newState: Fly ) -> Unit

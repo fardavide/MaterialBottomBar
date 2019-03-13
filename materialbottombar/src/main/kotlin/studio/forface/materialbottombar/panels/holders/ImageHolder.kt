@@ -6,14 +6,17 @@ import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestBuilder
-import com.bumptech.glide.request.RequestOptions
+import androidx.core.net.toFile
+import studio.forface.theia.TheiaParams
+import studio.forface.theia.TheiaParams.Shape
+import studio.forface.theia.dsl.invoke
+import studio.forface.theia.dsl.theia
+import studio.forface.theia.toImageSource
 import java.io.File
 
-enum class ImageShape( val requestOptions: RequestOptions ) {
-    ROUND  ( RequestOptions.circleCropTransform() ),
-    SQUARE ( RequestOptions.centerInsideTransform() )
+enum class ImageShape( internal val theiaShape: TheiaParams.Shape ) {
+    ROUND  ( Shape.Round ),
+    SQUARE ( Shape.Square )
 }
 
 class ImageHolder internal constructor(
@@ -27,17 +30,18 @@ class ImageHolder internal constructor(
     internal var imageShape = ImageShape.SQUARE
 
     fun applyTo( imageView: ImageView ) {
-        val glide = Glide.with( imageView )
-        var requestBuilder: RequestBuilder<Drawable>? = null
-        kotlin.run {
-            bitmap?.let {   requestBuilder = glide.load( it ); return@run }
-            drawable?.let { requestBuilder = glide.load( it ); return@run }
-            file?.let {     requestBuilder = glide.load( it ); return@run }
-            res?.let {      requestBuilder = glide.load( it ); return@run }
-            uri?.let {      requestBuilder = glide.load( it ); return@run }
-            url?.let {      requestBuilder = glide.load( it ); return@run }
+        imageView.theia {
+            image = when {
+                bitmap   != null -> bitmap.toImageSource()
+                drawable != null -> drawable.toImageSource()
+                file     != null -> file.toImageSource()
+                res      != null -> res.toImageSource( imageView.resources )
+                uri      != null -> uri.toFile().toImageSource()
+                url      != null -> url.toImageSource()
+                else -> return@theia
+            }
+            shape = imageShape.theiaShape
         }
-        requestBuilder?.apply( imageShape.requestOptions )?.into( imageView )
     }
 
     fun applyToOrHide( imageView: ImageView ) {
