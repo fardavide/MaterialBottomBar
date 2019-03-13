@@ -639,8 +639,8 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private fun flyBar( fly: Fly ) {
         bottomAppBar ?: return
 
-        // Call panelStateChangeListenerInvoker
-        panelStateChangeListenerInvoker( draggingPanelId!!, lastFly, fly )
+        // Keep a reference to lastFly before it's been changed
+        val oldFly = lastFly
 
         // Store the requested Fly as lastFly
         lastFly = fly
@@ -651,6 +651,11 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             Fly.MATCH_PANEL ->  matchPanelY
         }
         animateViewsY( toY )
+
+        // Call panelStateChangeListenerInvoker after the animation
+        viewsAnimator?.doOnEnd {
+            panelStateChangeListenerInvoker( draggingPanelId!!, oldFly, fly )
+        }
     }
 
     /** Whether [fab] is visible on [bottomBarInitialY] */
