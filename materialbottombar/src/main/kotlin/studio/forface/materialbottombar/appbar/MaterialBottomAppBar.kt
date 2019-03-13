@@ -42,7 +42,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
      * Get ( [DrawableCompat.getAlpha] ) and Set ( [View.setAlpha] ) on [getBackground]
      * On Set, also call [MaterialShapeDrawable.invalidateSelf] of [materialShapeDrawable]
      */
-    var backgroundAlpha: Int
+    internal var backgroundAlpha: Int
         get() = DrawableCompat.getAlpha( background )
         set( value ) {
             background.alpha = value
@@ -58,7 +58,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
      * Set: se the [StaticCornerTreatment.fixedInterpolation] of [leftCorner] and [rightCorner] and
      * also call [MaterialShapeDrawable.invalidateSelf] of [materialShapeDrawable]
      */
-    var cornersInterpolation: Float
+    internal var cornersInterpolation: Float
         get() = leftCorner.fixedInterpolation
         set( value ) {
             leftCorner.fixedInterpolation = value
@@ -199,7 +199,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
     }
 
     /** Flat or un-flat the corners whether [flat] is true or false  */
-    fun flatCorners( flat: Boolean = true ) {
+    internal fun flatCorners( flat: Boolean = true ) {
         val ( from, to ) = if ( flat ) 1f to 0f else 0f to 1f
         val animator = ValueAnimator.ofFloat( from, to )
 
@@ -275,7 +275,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
     }
 
     /** Unf-lat the corners. Call [flatCorners] with false as flat param */
-    fun unFlatCorners() {
+    internal fun unFlatCorners() {
         flatCorners(false )
     }
 
