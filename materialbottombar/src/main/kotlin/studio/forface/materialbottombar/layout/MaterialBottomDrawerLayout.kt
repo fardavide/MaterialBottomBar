@@ -25,9 +25,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.android.synthetic.main.drawer_header.view.*
 import studio.forface.materialbottombar.appbar.MaterialBottomAppBar
+import studio.forface.materialbottombar.dsl.MaterialDrawer
+import studio.forface.materialbottombar.dsl.MaterialPanel
 import studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout.Fly
 import studio.forface.materialbottombar.panels.AbsMaterialPanel
-import studio.forface.materialbottombar.panels.MaterialPanel
 import studio.forface.materialbottombar.panels.adapter.PanelBodyAdapter
 import studio.forface.materialbottombar.panels.holders.ColorHolder
 import studio.forface.materialbottombar.utils.*
@@ -145,7 +146,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 ?: ( draggingPanelView?.body as? ViewGroup )?.findChildType()
 
     /** @return The Drawer Menu */
-    var drawer: AbsMaterialPanel?
+    var drawer: MaterialDrawer?
         get() = panels[drawerPanelId]
         set( value ) =
             if ( value != null ) setPanel( drawerPanelId, value, true )
@@ -179,6 +180,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      * Hide the [topAppBar], if any.
      *
      * @param doOnAnimationEnd the lambda to execute the the animation end.
+     * Default is empty lambda
      *
      *
      * @see [BottomAppBar.Behavior.slideDown] for duration and interpolator.
@@ -272,9 +274,13 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      * @param delay the delay in millisec from the end of [hideToolbar] and the start of
      * [showToolbar]
      *
-     * @param doAfterHide the lambda to execute the [hideToolbar] the animation end.
+     * @param doAfterHide the lambda to execute the [hideToolbar] the animation ends
+     * Default is an empty lambda
+     * @see [ViewPropertyAnimator.withEndAction]
      *
-     * @param doAfterShow the lambda to execute the [showToolbar] the animation end.
+     * @param doAfterShow the lambda to execute the [showToolbar] the animation ends
+     * Default is an empty lambda
+     * @see [ViewPropertyAnimator.withEndAction]
      *
      *
      * @see hideToolbar
@@ -391,22 +397,29 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /** @see setPanel */
     @Deprecated("Use `setPanel` or `set` operator. This will be removed in the next " + // TODO remove in 1.2
             "release", ReplaceWith("setPanel") )
-    fun addPanel( materialPanel: AbsMaterialPanel, id: Int ) {
-        setPanel( id, materialPanel, false )
-    }
-
-    /** @see setPanel */
-    fun setPanel( id: Int, materialPanel: AbsMaterialPanel ) {
+    fun addPanel( materialPanel: MaterialPanel, id: Int ) {
         setPanel( id, materialPanel, false )
     }
 
     /**
-     * Set a new [AbsMaterialPanel] to [panels], other panels with the same [id] will be removed.
-     * @param materialPanel the [AbsMaterialPanel] to add.
+     * Set a new [MaterialPanel] to [panels], other panels with the same [id] will be removed.
+     *
+     * For set a [MaterialDrawer] use [drawer]
+     *
+     * @param materialPanel the [MaterialPanel] to add.
+     * @param id the ID of the [materialPanel].
+     */
+    fun setPanel( id: Int, materialPanel: MaterialPanel ) {
+        setPanel( id, materialPanel, false )
+    }
+
+    /**
+     * Set a new [MaterialPanel] to [panels], other panels with the same [id] will be removed.
+     * @param materialPanel the [MaterialPanel] to add.
      * @param id the ID of the [materialPanel].
      * @param isDrawer whether the [materialPanel] is the main drawer.
      */
-    private fun setPanel( id: Int, materialPanel: AbsMaterialPanel, isDrawer: Boolean ) {
+    private fun setPanel( id: Int, materialPanel: MaterialPanel, isDrawer: Boolean ) {
         // If the panel is not a drawer and the id is the same as drawerPanel and the drawer is
         // not null: Save the drawer in a temporary val, get a new ID for the drawer and
         // set the drawer in the new allocation into panels map.
@@ -492,9 +505,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     }
 
     /**
-     * Remove a [AbsMaterialPanel] from [panels] and its relative [AbsMaterialPanel.panelView] from
+     * Remove a [MaterialPanel] from [panels] and its relative [AbsMaterialPanel.panelView] from
      * the layout.
-     * @param id
+     *
+     * @param id the ID of the [MaterialPanel] to remove
      */
     fun removePanel( id: Int ) {
         panels[id]?.let {
@@ -505,13 +519,18 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     }
 
     /**
+     * Open a [PanelView] with ID [drawerPanelId]
      * @see openPanel
      */
     fun openDrawer() { openPanel( drawerPanelId ) }
 
     /**
-     * Open a [PanelView] with the given ID: [grabPanel] and [flyBar].
-     * @param id the ID of the AbsMaterialPanel to open.
+     * Open a [PanelView] with the given [id]
+     *
+     * @param id the ID of the [MaterialPanel] to open.
+     *
+     * @see grabPanel
+     * @see flyBar
      */
     fun openPanel( id: Int ) {
         grabPanel( id )

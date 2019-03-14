@@ -21,23 +21,53 @@ operator fun MaterialBottomDrawerLayout.set( id: Int, materialPanel: MaterialPan
 /**
  * Execute a [callback] when a [MaterialPanel] changes its [Fly] state
  * It sets [MaterialBottomDrawerLayout.panelStateChangeListener]
+ *
+ * @param once if `true` reset the [MaterialBottomDrawerLayout.panelStateChangeListener] after the
+ * first invocation
+ * Default is `false`
  */
-fun MaterialBottomDrawerLayout.doOnPanelState( callback: PanelStateChangeListener ) {
-    panelStateChangeListener = callback
+fun MaterialBottomDrawerLayout.doOnPanelState(
+        once: Boolean = false,
+        callback: PanelStateChangeListener
+) {
+    panelStateChangeListener = { id, state ->
+        callback( id, state )
+        if ( once ) panelStateChangeListener = { _, _ -> }
+    }
 }
 
 /**
  * Execute a [callback] when a [MaterialPanel] changes its [Fly] state from [Fly.BOTTOM]
  * It sets [MaterialBottomDrawerLayout.panelOpenChangeListener]
+ *
+ * @param once if `true` reset the [MaterialBottomDrawerLayout.panelOpenChangeListener] after the
+ * first invocation
+ * Default is `false`
  */
-fun MaterialBottomDrawerLayout.doOnPanelOpen( callback: PanelChangeListener ) {
-    panelOpenChangeListener = callback
+fun MaterialBottomDrawerLayout.doOnPanelOpen(
+        once: Boolean = false,
+        callback: PanelChangeListener
+) {
+    panelOpenChangeListener = {
+        callback( it )
+        if ( once ) panelOpenChangeListener = {}
+    }
 }
 
 /**
  * Execute a [callback] when a [MaterialPanel] changes its [Fly] state to [Fly.BOTTOM]
  * It sets [MaterialBottomDrawerLayout.panelCloseChangeListener]
+ *
+ * @param once if `true` reset the [MaterialBottomDrawerLayout.panelCloseChangeListener] after the
+ * first invocation
+ * Default is `false`
  */
-fun MaterialBottomDrawerLayout.doOnPanelClose( callback: PanelChangeListener ) {
-    panelCloseChangeListener = callback
+fun MaterialBottomDrawerLayout.doOnPanelClose(
+        once: Boolean = false,
+        callback: PanelChangeListener
+) {
+    panelCloseChangeListener = {
+        callback( it )
+        if ( once ) panelCloseChangeListener = {}
+    }
 }
