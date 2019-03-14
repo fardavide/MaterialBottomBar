@@ -227,22 +227,54 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         return super.getHideOnScroll()
     }
 
-    /** @see MaterialBottomAppBar.Behavior.hide */
-    fun hide( withFab: Boolean = false , doOnAnimationEnd: () -> Unit = {} ) {
-        layoutBehavior?.hide(this, withFab, doOnAnimationEnd )
+    /**
+     * Hide the [BottomAppBar] and the relative [FloatingActionButton] if [withFab] is `true`
+     **
+     * @param withFab a [Boolean] representing whether the [FloatingActionButton] needs to be
+     * hidden
+     * Default is `false`
+     * @see MaterialBottomAppBar.fab
+     *
+     * @param doOnAnimationEnd a lambda that will be executed when the animation ends
+     * Default is an empty lambda
+     * @see [ViewPropertyAnimator.withEndAction]
+     *
+     *
+     * @see MaterialBottomAppBar.Behavior.hide
+     */
+    inline fun hide( withFab: Boolean = false , crossinline doOnAnimationEnd: () -> Unit = {} ) {
+        layoutBehavior?.hide( this, withFab, doOnAnimationEnd )
     }
 
     /**
-     * Call sequentially [MaterialBottomAppBar.Behavior.hide] and
-     * [MaterialBottomAppBar.Behavior.show]
+     * Hide and Show the [BottomAppBar] and the relative [FloatingActionButton], if [withFab] is
+     * `true`
      *
-     * @param doAfterHide the action to be executed after the bar is hidden
-     * @param doAfterShow the action to be executed after the bar is show again
+     * @param withFab a [Boolean] representing whether the [FloatingActionButton] needs to be
+     * hidden
+     * Default is `false`
+     * @see MaterialBottomAppBar.fab
+     *
+     * @param delay [Long] delay is milliseconds before start to show the [BottomAppBar], after
+     * it's been hidden
+     * Default is 150 ms
+     *
+     * @param doAfterHide a lambda that will be executed when the **hide** animation ends
+     * Default is an empty lambda
+     * @see [ViewPropertyAnimator.withEndAction]
+     *
+     * @param doAfterShow a lambda that will be executed when the **show** animation ends
+     * Default is an empty lambda
+     * @see [ViewPropertyAnimator.withEndAction]
+     *
+     *
+     * @see MaterialBottomAppBar.Behavior.hide
+     * @see MaterialBottomAppBar.Behavior.show
      */
-    fun hideAndShow(
+    inline fun hideAndShow(
             withFab: Boolean = false, delay: Long = 150,
-            doAfterHide: () -> Unit = {},
-            doAfterShow: () -> Unit = {}
+            crossinline doAfterHide: () -> Unit = {},
+            crossinline doAfterShow: () -> Unit = {}
     ) {
         hide( withFab ) {
             doAfterHide()
@@ -269,9 +301,18 @@ class MaterialBottomAppBar @JvmOverloads constructor (
         super.setHideOnScroll( hide )
     }
 
-    /** @see MaterialBottomAppBar.Behavior.show */
-    fun show( doOnAnimationEnd: () -> Unit = {} ) {
-        layoutBehavior?.show(this, doOnAnimationEnd )
+    /**
+     * Show the [BottomAppBar] and the relative [FloatingActionButton]
+     **
+     * @param doOnAnimationEnd a lambda that will be executed when the animation ends
+     * Default is an empty lambda
+     * @see [ViewPropertyAnimator.withEndAction]
+     *
+     *
+     * @see MaterialBottomAppBar.Behavior.show
+     */
+    inline fun show( crossinline doOnAnimationEnd: () -> Unit = {} ) {
+        layoutBehavior?.show( this, doOnAnimationEnd )
     }
 
     /** Unf-lat the corners. Call [flatCorners] with false as flat param */
@@ -290,13 +331,15 @@ class MaterialBottomAppBar @JvmOverloads constructor (
          * Get the [ViewPropertyAnimator] via reflection from
          * [HideBottomViewOnScrollBehavior.currentAnimator]
          */
-        private val currentAnimator by reflection<ViewPropertyAnimator?>( superclassLevel = 2 )
+        @PublishedApi
+        internal val currentAnimator by reflection<ViewPropertyAnimator?>( superclassLevel = 2 )
 
         /** Get an [Int] via reflection from [HideBottomViewOnScrollBehavior.currentState] */
         private val currentState by reflection<Int>( superclassLevel = 2 )
 
         /** Cast a [BottomAppBar] as [MaterialBottomAppBar] */
-        private val BottomAppBar.material get() = this as MaterialBottomAppBar
+        @PublishedApi
+        internal inline val BottomAppBar.material get() = this as MaterialBottomAppBar
 
         /** @see HideBottomViewOnScrollBehavior.onNestedScroll */
         @Suppress("OverridingDeprecatedMember")
@@ -327,7 +370,10 @@ class MaterialBottomAppBar @JvmOverloads constructor (
          * @see [currentAnimator]
          * @see [ViewPropertyAnimator.withEndAction]
          */
-        fun hide( child: BottomAppBar, withFab: Boolean, doOnAnimationEnd: () -> Unit ) {
+        inline fun hide(
+                child: BottomAppBar, withFab: Boolean,
+                crossinline doOnAnimationEnd: () -> Unit
+        ) {
             if ( withFab ) child.material.run {
                 val oldHideFabOnScroll = hideFabOnScroll
                 hideBarOnScroll = true
@@ -335,7 +381,7 @@ class MaterialBottomAppBar @JvmOverloads constructor (
                 hideBarOnScroll = oldHideFabOnScroll
 
             } else super.slideDown( child )
-            currentAnimator?.withEndAction( doOnAnimationEnd )
+            currentAnimator?.withEndAction { doOnAnimationEnd() }
         }
 
         /** @see BottomAppBar.Behavior.slideDown */
@@ -355,9 +401,9 @@ class MaterialBottomAppBar @JvmOverloads constructor (
          * @see [currentAnimator]
          * @see [ViewPropertyAnimator.withEndAction]
          */
-        fun show( child: BottomAppBar, doOnAnimationEnd: () -> Unit ) {
+        inline fun show( child: BottomAppBar, crossinline doOnAnimationEnd: () -> Unit ) {
             slideUp( child )
-            currentAnimator?.withEndAction( doOnAnimationEnd )
+            currentAnimator?.withEndAction { doOnAnimationEnd() }
         }
 
         /** @see BottomAppBar.Behavior.slideUp */

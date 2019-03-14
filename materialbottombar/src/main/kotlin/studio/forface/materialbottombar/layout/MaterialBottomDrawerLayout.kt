@@ -15,10 +15,7 @@ import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.graphics.ColorUtils
-import androidx.core.view.children
-import androidx.core.view.doOnNextLayout
-import androidx.core.view.doOnPreDraw
-import androidx.core.view.isVisible
+import androidx.core.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.animation.AnimationUtils
@@ -67,7 +64,6 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     val bottomAppBar    get() = findChildType<MaterialBottomAppBar>()
     val fab             get() = findChildType<FloatingActionButton>()
-    @Suppress("RemoveExplicitTypeArguments")
     val topAppBar       get() = findChildType<AppBarLayout>()
 
     /**
@@ -102,8 +98,12 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /** @return whether the [bottomAppBar] is at its initial state ( [Gravity.BOTTOM] ) */
     private val isBarInInitialState get() = bottomAppBar?.y == bottomBarInitialY
 
-    /** A [MutableMap] composed by the Panel ID and the [MaterialPanel] */
-    var panels = mutableMapOf<Int, AbsMaterialPanel>()
+    /**
+     * A [MutableMap] composed by the Panel ID and the [MaterialPanel]
+     * This value is public since needed from **navigation** extension, but should NOT be modified
+     * directly.
+     */
+    val panels = mutableMapOf<Int, AbsMaterialPanel>()
 
     /** The id of [MaterialPanel] that is currently being dragged by the user */
     private var draggingPanelId: Int? = null
@@ -148,15 +148,15 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     var drawer: AbsMaterialPanel?
         get() = panels[drawerPanelId]
         set( value ) =
-            value?.let { setPanel(drawerPanelId, it, true) }
-                    ?: removePanel( drawerPanelId )
+            if ( value != null ) setPanel( drawerPanelId, value, true )
+            else removePanel( drawerPanelId )
 
 
     /** The ID of the [drawerPanel] */
     private var drawerPanelId = 0
 
     /** The [AbsMaterialPanel] which represent the [drawer] [AbsMaterialPanel.panelView] */
-    val drawerPanel get() = panels[drawerPanelId]?.panelView
+    private val drawerPanel get() = panels[drawerPanelId]?.panelView
 
     /**
      * GET a new ID for [drawerPanel].
@@ -172,63 +172,162 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     }
 
     /** The [Animator] for [topAppBar] */
-    var toolbarAnimator: ViewPropertyAnimator? = null
+    @PublishedApi
+    internal var toolbarAnimator: ViewPropertyAnimator? = null
 
     /**
-     * Run [hideToolbar] and then [showToolbar].
-     * @param delay the delay in millisec from the end of [hideToolbar] and the start of
-     * [showToolbar]
-     * @param doAfterHide the lambda to execute the [hideToolbar] the animation end.
-     * @param doAfterShow the lambda to execute the [showToolbar] the animation end.
-     */
-    inline fun hideAndShowToolbar(
-            delay: Long = 150,
-            crossinline doAfterHide: () -> Unit = {},
-            crossinline doAfterShow: () -> Unit = {}
-    ) {
-        hideToolbar { doAfterHide(); postDelayed( { showToolbar( doAfterShow ) }, delay ) }
-    }
-
-    /**
-     * Start [ViewPropertyAnimator] that hide the [topAppBar]
+     * Hide the [topAppBar], if any.
+     *
      * @param doOnAnimationEnd the lambda to execute the the animation end.
+     *
+     *
      * @see [BottomAppBar.Behavior.slideDown] for duration and interpolator.
      */
     inline fun hideToolbar( crossinline doOnAnimationEnd: () -> Unit = {} ) {
+        // Create a non-null reference to topAppBar
+        val topAppBar = topAppBar ?: return
+
         toolbarAnimator?.let {
             it.cancel()
-            topAppBar?.clearAnimation()
+            topAppBar.clearAnimation()
         }
-        topAppBar?.run {
-            toolbarAnimator = animate().translationY( -height.toFloat() )
-                    .setInterpolator( AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR )
-                    .setDuration( 175 )
-                    .withEndAction {
-                        toolbarAnimator = null
-                        doOnAnimationEnd()
-                    }
-        }
+        toolbarAnimator = topAppBar.animate().translationY( -topAppBar.height.toFloat() )
+                .setInterpolator( AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR )
+                .setDuration( 175 )
+                .withEndAction {
+                    toolbarAnimator = null
+                    doOnAnimationEnd()
+                }
     }
 
     /**
-     * Start [ViewPropertyAnimator] that show the [topAppBar]
+     * Hide [bottomAppBar] and [topAppBar], if available.
+     *
+     * @param withFab a [Boolean] representing whether the [FloatingActionButton] needs to be
+     * hidden
+     * Default is `false`
+     * @see MaterialBottomAppBar.fab
+     *
+     * @param doOnAnimationEnd a lambda that will be executed when the animation ends
+     * Default is an empty lambda
+     * @see [ViewPropertyAnimator.withEndAction]
+     *
+     *
+     * @see MaterialBottomAppBar.hide
+     * @see hideToolbar
+     */
+    inline fun hideBars( withFab: Boolean = false, crossinline doOnAnimationEnd: () -> Unit = {} ) {
+        bottomAppBar?.hide( withFab, doOnAnimationEnd )
+        // If bottomAppBar is null execute doOnAnimationEnd on hideToolbar, else skip it for do not
+        // execute it twice
+        hideToolbar { if ( bottomAppBar == null ) doOnAnimationEnd() }
+    }
+
+    /**
+     * Show the [topAppBar], if any.
+     *
      * @param doOnAnimationEnd the lambda to execute the the animation end.
+     * Default is an empty lambda
+     *
+     *
      * @see [BottomAppBar.Behavior.slideUp] for duration and interpolator.
      */
     inline fun showToolbar( crossinline doOnAnimationEnd: () -> Unit = {} ) {
+        // Create a non-null reference to topAppBar
+        val topAppBar = topAppBar ?: return
+
         toolbarAnimator?.let {
             it.cancel()
-            topAppBar?.clearAnimation()
+            topAppBar.clearAnimation()
         }
-        topAppBar?.run {
-            toolbarAnimator = animate().translationY(0f )
-                    .setInterpolator( AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR )
-                    .setDuration( 225 )
-                    .withEndAction {
-                        toolbarAnimator = null
-                        doOnAnimationEnd()
-                    }
-        }
+        toolbarAnimator = topAppBar.animate().translationY( 0f )
+                .setInterpolator( AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR )
+                .setDuration( 225 )
+                .withEndAction {
+                    toolbarAnimator = null
+                    doOnAnimationEnd()
+                }
+    }
+
+    /**
+     * Show [bottomAppBar] and [topAppBar], if available.
+     *
+     * @param doOnAnimationEnd a lambda that will be executed when the animation ends
+     * Default is an empty lambda
+     * @see [ViewPropertyAnimator.withEndAction]
+     *
+     *
+     * @see MaterialBottomAppBar.show
+     * @see showToolbar
+     */
+    inline fun showBars( crossinline doOnAnimationEnd: () -> Unit = {} ) {
+        bottomAppBar?.show( doOnAnimationEnd )
+        // If bottomAppBar is null execute doOnAnimationEnd on showToolbar, else skip it for do not
+        // execute it twice
+        showToolbar { if ( bottomAppBar == null ) doOnAnimationEnd() } }
+
+    /**
+     * Hide and the show the [topAppBar], if any.
+     *
+     * @param delay the delay in millisec from the end of [hideToolbar] and the start of
+     * [showToolbar]
+     *
+     * @param doAfterHide the lambda to execute the [hideToolbar] the animation end.
+     *
+     * @param doAfterShow the lambda to execute the [showToolbar] the animation end.
+     *
+     *
+     * @see hideToolbar
+     * @see showToolbar
+     */
+    fun hideAndShowToolbar( // TODO try to inline
+            delay: Long = 150,
+            doAfterHide: () -> Unit = {},
+            doAfterShow: () -> Unit = {}
+    ) {
+        hideToolbar { doAfterHide(); postDelayed( delay) { showToolbar( doAfterShow ) } }
+    }
+
+    /**
+     * Hide and Show [topAppBar] and [bottomAppBar] ( and the relative [FloatingActionButton], if
+     * [withFab] is `true` ), if available.
+     *
+     * @param withFab a [Boolean] representing whether the [FloatingActionButton] needs to be
+     * hidden
+     * Default is `false`
+     * @see MaterialBottomAppBar.fab
+     *
+     * @param delay [Long] delay is milliseconds before start to show the [topAppBar] and
+     * [bottomAppBar], after they have been hidden
+     * Default is 150 ms
+     *
+     * @param doAfterHide a lambda that will be executed when the **hide** animation ends
+     * Default is an empty lambda
+     * @see [ViewPropertyAnimator.withEndAction]
+     *
+     * @param doAfterShow a lambda that will be executed when the **show** animation ends
+     * Default is an empty lambda
+     * @see [ViewPropertyAnimator.withEndAction]
+     *
+     *
+     * @see MaterialBottomAppBar.hideAndShow
+     * @see hideAndShowToolbar
+     */
+    inline fun hideAndShowBars(
+            withFab: Boolean = false, delay: Long = 150,
+            crossinline doAfterHide: () -> Unit = {},
+            crossinline doAfterShow: () -> Unit = {}
+    ) {
+        bottomAppBar?.hideAndShow( withFab, delay, doAfterHide, doAfterShow )
+        hideAndShowToolbar(
+                delay = delay,
+                // If bottomAppBar is null execute doAfterHide on showToolbar, else skip it for do
+                // not execute it twice
+                doAfterHide = { if ( bottomAppBar == null ) doAfterHide() },
+                // If bottomAppBar is null execute doAfterShow on showToolbar, else skip it for do
+                // not execute it twice
+                doAfterShow = { if ( bottomAppBar == null ) doAfterShow() }
+        )
     }
 
     /** The [Animator] */
