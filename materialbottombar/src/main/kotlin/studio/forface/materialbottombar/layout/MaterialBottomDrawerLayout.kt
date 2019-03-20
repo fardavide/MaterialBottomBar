@@ -170,14 +170,14 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /** A [View] with a black background that will work as a shadow for the open [PanelView] */
     private val panelShadowView = View( context ).apply {
         setBackgroundColor( Color.BLACK )
-        visibility = View.GONE
+        visibility = View.INVISIBLE
         elevationCompat = 9999f
     }
 
     /** A [View] with a black background that will work as a shadow for [bottomAppBar] */
     private val barShadowView = View( context ).apply {
         setBackgroundColor( Color.BLACK )
-        visibility = View.GONE
+        visibility = View.INVISIBLE
     }
 
     /**
@@ -787,12 +787,11 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private var lastFly = Fly.BOTTOM
 
     /**
-     * Fly [bottomAppBar], if not null and [fly] is different from [lastFly], to the requested
-     * [Fly] direction
+     * Fly [bottomAppBar], if not null, to the requested [Fly] direction
      * @see animateViewsY
      */
     private fun flyBar( fly: Fly ) {
-        if ( bottomAppBar == null || fly == lastFly ) return
+        if ( bottomAppBar == null ) return
 
         // Keep a reference to lastFly before it's been changed
         val oldFly = lastFly
@@ -902,14 +901,14 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         // * set all the panels' Y to availableHeight
         // * scroll draggingPanelRecyclerView to 0
         // * set the bottomAppBar's menu visible
-        // * set GONE to shadowPanelView and barShadowView
+        // * set INVISIBLE to shadowPanelView and barShadowView
         // Else hide the bottomAppBar's menu and set VISIBLE to shadowPanelView and barShadowView
         if ( isBarInInitialState ) {
             panels.forEach { it.value.panelView?.y = availableHeight.toFloat() }
             draggingPanelRecyclerView?.scrollToPosition(0 )
             bottomAppBar.menu.setGroupVisible(0,true )
-            panelShadowView.visibility = View.GONE
-            barShadowView.visibility = View.GONE
+            panelShadowView.visibility = View.INVISIBLE
+            barShadowView.visibility = View.INVISIBLE
 
         } else {
             bottomAppBar.menu.setGroupVisible(0,false )
