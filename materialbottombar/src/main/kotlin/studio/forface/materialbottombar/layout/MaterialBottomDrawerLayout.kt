@@ -47,6 +47,9 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     /* ===================================== C O R E ============================================ */
 
+    /** A [Float] representing the maximum alpha that [panelShadowView] can have */
+    private val MAX_SHADOW_ALPHA = 0.5f
+
     /**
      * The minimum dragging distance after the Layout intercept the [MotionEvent].
      * If the minimum distance has been consumed from the [MotionEvent.ACTION_DOWN] to the
@@ -63,9 +66,14 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     private val MIN_FLY_DRAG_THRESHOLD by lazy { height / 10 }
 
-    val bottomAppBar    get() = findChildType<MaterialBottomAppBar>()
-    val fab             get() = findChildType<FloatingActionButton>()
-    val topAppBar       get() = findChildType<AppBarLayout>()
+    /** @return an OPTIONAL child [MaterialBottomAppBar] if any */
+    val bottomAppBar get() = findChildType<MaterialBottomAppBar>()
+
+    /** @return an OPTIONAL child [FloatingActionButton] if any */
+    val fab get() = findChildType<FloatingActionButton>()
+
+    /** @return an OPTIONAL child [AppBarLayout] if any */
+    val topAppBar get() = findChildType<AppBarLayout>()
 
     /**
      * The [bottomAppBar] background color
@@ -158,6 +166,12 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     /** The [AbsMaterialPanel] which represent the [drawer] [AbsMaterialPanel.panelView] */
     private val drawerPanel get() = panels[drawerPanelId]?.panelView
+
+    /** A [View] with a black background that will work as a shadow for the open [PanelView] */
+    private val panelShadowView = View( context ).apply {
+        setBackgroundColor( Color.BLACK )
+        visibility = View.GONE
+    }
 
     /**
      * GET a new ID for [drawerPanel].
@@ -342,6 +356,12 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     /* ===================================== I N I T ============================================ */
 
     init {
+
+        // Add panelShadowView as MATCH_PARENT
+        addView( panelShadowView, CoordinatorLayout.LayoutParams(
+                CoordinatorLayout.LayoutParams.MATCH_PARENT,
+                CoordinatorLayout.LayoutParams.MATCH_PARENT
+        ) )
 
         doOnPreDraw {
 
@@ -534,7 +554,9 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     fun openPanel( id: Int ) {
         grabPanel( id )
-        flyBar( Fly.MATCH_PANEL )
+        draggingPanelView?.doOnPreDraw {
+            flyBar( Fly.MATCH_PANEL )
+        }
     }
 
     /** @see closePanel */
@@ -619,7 +641,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
                 consumedEventTimestamp = System.currentTimeMillis()
 
         // If this event.y or last event.y is NOT in bottomBarRange, close the panel
-        } else if ( ! inRange )
+        } else if ( ! inRange && lastFly != Fly.BOTTOM )
             flyBar( Fly.BOTTOM )
 
         // If is actionUp, INTERCEPT if and movement exceed the MIN_INTERCEPT_DRAG_THRESHOLD
@@ -751,11 +773,12 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private var lastFly = Fly.BOTTOM
 
     /**
-     * Fly [bottomAppBar], if not null, to the requested [Fly] direction
+     * Fly [bottomAppBar], if not null and [fly] is different from [lastFly], to the requested
+     * [Fly] direction
      * @see animateViewsY
      */
     private fun flyBar( fly: Fly ) {
-        bottomAppBar ?: return
+        if ( bottomAppBar == null || fly == lastFly ) return
 
         // Keep a reference to lastFly before it's been changed
         val oldFly = lastFly
@@ -828,34 +851,49 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         val topPercentage = 1f / ( matchPanelY / y.coerceAtMost( matchPanelY ) )
 
         // A percentage representing the position of Y relatively to the space that goes from point
-        // where the bottomAppBar would be on Fly.MATCH_PANEL state ( matchPanelY ) the bottom
+        // where the bottomAppBar would be on Fly.MATCH_PANEL state ( matchPanelY ) to the bottom
         // ( availableHeight )
         val bottomPercentage =  1f / ( ( availableHeight - matchPanelY ) / ( y - matchPanelY )
                 .coerceAtLeast( 0f ) )
 
+        // A percentage representing the position of Y relatively to the space that goes the bottom
+        // ( availableHeight ) to the point  where the bottomAppBar would be on Fly.MATCH_PANEL
+        // state ( matchPanelY ). Basically the opposite of bottomPercentage
+        val bottomToTopBottomPercentage = 1f - bottomPercentage
+
         // Set bottomAppBar's cornersInterpolation according to topPercentage
         bottomAppBar.cornersInterpolation = topPercentage
+
+        // Set the shadowPanelView alpha according to to bottomPercentage and relatively to
+        // MAX_SHADOW_ALPHA
+        // full alpha ( 1f ) : MAX_SHADOW_ALPHA = bottomToTopBottomPercentage : requested alpha
+        panelShadowView.alpha = ( MAX_SHADOW_ALPHA * bottomToTopBottomPercentage ) / 1f
 
         // Blend the bottomAppBar's color according to bottomPercentage
         bottomBarInitialColor?.let { blendFrom ->
             val blendTo = draggingPanelHeaderColor ?: blendFrom
             val blend = ColorUtils.blendARGB(
-                    blendFrom, blendTo, 1f - bottomPercentage
+                    blendFrom, blendTo, bottomToTopBottomPercentage
             )
             ColorHolder( color = blend ).applyToBackground( bottomAppBar )
         }
 
-        // If bottomAppBar is in its initial position, set all the panels' Y to availableHeight,
-        // scroll draggingPanelRecyclerView to 0 and set the bottomAppBar's menu visible.
-        // Else just hide the bottomAppBar's menu
+        // If bottomAppBar is in its initial position:
+        // * set all the panels' Y to availableHeight
+        // * scroll draggingPanelRecyclerView to 0
+        // * set the bottomAppBar's menu visible
+        // * set GONE to shadowPanelView
+
+        // Else hide the bottomAppBar's menu and set VISIBLE to shadowPanelView
         if ( isBarInInitialState ) {
             panels.forEach { it.value.panelView?.y = availableHeight.toFloat() }
-            draggingPanelRecyclerView?.scrollToPosition( 0 )
-
-            bottomAppBar.menu.setGroupVisible( 0, true )
+            draggingPanelRecyclerView?.scrollToPosition(0 )
+            bottomAppBar.menu.setGroupVisible(0, true )
+            panelShadowView.visibility = View.GONE
 
         } else {
-            bottomAppBar.menu.setGroupVisible( 0, false )
+            bottomAppBar.menu.setGroupVisible(0, false )
+            panelShadowView.visibility = View.VISIBLE
         }
 
         // Set bottomAppBar's children alpha and enabled state

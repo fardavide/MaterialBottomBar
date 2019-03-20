@@ -150,7 +150,7 @@ class CustomBodyPanelBuilder @PublishedApi internal constructor(
     }
 
     /** Create a [CustomBody] for the [MaterialPanel] */
-    fun customBody( contentView: View, f: CustomBody.() -> Unit ) {
+    fun customBody( contentView: View, f: CustomBody.() -> Unit = {} ) {
         val body = CustomBody( contentView )
         body.f()
         _body = body
