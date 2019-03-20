@@ -76,37 +76,42 @@ class PanelView @JvmOverloads constructor (
         background.layoutParams.height = LinearLayout.LayoutParams.MATCH_PARENT
     }
 
-    private fun buildHeader( layout: MaterialBottomDrawerLayout, header: AbsMaterialPanel.IHeader? )  =
-            when ( header ) {
+    private fun buildHeader(
+            layout: MaterialBottomDrawerLayout,
+            header: AbsMaterialPanel.IHeader?
+    ): View {
+        return when ( header ) {
 
-                is AbsMaterialPanel.BaseHeader<*> -> LayoutInflater.from( context )
-                        .inflate( R.layout.drawer_header,this, false )
-                        .apply {
-                            header_shadow.elevationCompat = 14f
-                            elevationCompat = 8f
-                            header_close.setOnClickListener { layout.closePanel() }
-                        } as ConstraintLayout
+            is AbsMaterialPanel.BaseHeader<*> -> LayoutInflater.from( context )
+                    .inflate( R.layout.drawer_header,this,false )
+                    .apply {
+                        header_shadow.elevationCompat = 14f
+                        elevationCompat = 8f
+                        header_close.setOnClickListener { layout.closePanel() }
+                    } as ConstraintLayout
 
-                is AbsMaterialPanel.CustomHeader -> header.contentView
+            is AbsMaterialPanel.CustomHeader -> header.contentView
 
-                null -> View( context )
+            null -> View( context )
 
-                else -> throw IllegalStateException( "header is instance of $header" )
-            }
+            else -> throw IllegalStateException( "header is instance of $header" )
+        }
+    }
 
-    private fun buildBody( body: AbsMaterialPanel.IBody? ) =
-            when( body ) {
+    private fun buildBody( body: AbsMaterialPanel.IBody? ): View {
+        return when( body ) {
 
-                is AbsMaterialPanel.BaseBody<*> -> LayoutInflater.from( context )
-                        .inflate( R.layout.drawer_body,this, false )
-                        as RecyclerView
+            is AbsMaterialPanel.BaseBody<*> -> LayoutInflater.from( context )
+                    .inflate( R.layout.drawer_body,this,false )
+                    as RecyclerView
 
-                is AbsMaterialPanel.CustomBody -> body.contentView
+            is AbsMaterialPanel.CustomBody -> body.contentView
 
-                null -> View( context )
+            null -> View( context )
 
-                else -> throw IllegalStateException( "body is instance of $body" )
-            }
+            else -> throw IllegalStateException( "body is instance of $body" )
+        }
+    }
 
     private fun buildBackground() = View( context ).apply {
         setBackgroundColor( Color.WHITE )

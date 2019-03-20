@@ -171,6 +171,13 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private val panelShadowView = View( context ).apply {
         setBackgroundColor( Color.BLACK )
         visibility = View.GONE
+        elevationCompat = 9999f
+    }
+
+    /** A [View] with a black background that will work as a shadow for [bottomAppBar] */
+    private val barShadowView = View( context ).apply {
+        setBackgroundColor( Color.BLACK )
+        visibility = View.GONE
     }
 
     /**
@@ -357,13 +364,20 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     init {
 
-        // Add panelShadowView as MATCH_PARENT
-        addView( panelShadowView, CoordinatorLayout.LayoutParams(
+        // Add panelShadowView and barShadowView as MATCH_PARENT ( barShadowView's height will be
+        // changed to match bottomAppBar's height )
+        fun matchParentParams() = CoordinatorLayout.LayoutParams(
                 CoordinatorLayout.LayoutParams.MATCH_PARENT,
                 CoordinatorLayout.LayoutParams.MATCH_PARENT
-        ) )
+        )
+        addView( panelShadowView, matchParentParams() )
+        addView( barShadowView, matchParentParams() )
+
 
         doOnPreDraw {
+
+            // Set the height of barShadowView as same as bottomAppBar's one, if any, else 0
+            barShadowView.layoutParams.height = bottomAppBar?.height ?: 0
 
             // Set navigation click listener to open the drawer, if any
             bottomAppBar?.setNavigationOnClickListener {
@@ -839,6 +853,8 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
         // Set views' y
         bottomAppBar.y = y
+        panelShadowView.y = y - panelShadowView.height
+        barShadowView.y = y
         draggingPanelView?.y = y
 
         // Store a reference to the available height where the views can be moved, it's represented
@@ -858,16 +874,20 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
         // A percentage representing the position of Y relatively to the space that goes the bottom
         // ( availableHeight ) to the point  where the bottomAppBar would be on Fly.MATCH_PANEL
-        // state ( matchPanelY ). Basically the opposite of bottomPercentage
-        val bottomToTopBottomPercentage = 1f - bottomPercentage
+        // state ( matchPanelY ). Basically the opposite of bottomPercentage.
+        // Minimum allowed value is 0.0000001f
+        val bottomToTopBottomPercentage = ( 1f - bottomPercentage )
+                .coerceAtLeast(0.0000001f )
 
         // Set bottomAppBar's cornersInterpolation according to topPercentage
         bottomAppBar.cornersInterpolation = topPercentage
 
-        // Set the shadowPanelView alpha according to to bottomPercentage and relatively to
-        // MAX_SHADOW_ALPHA
+        // Set the shadowPanelView and barShadowView alphas according to to bottomPercentage and
+        // relatively to  MAX_SHADOW_ALPHA
         // full alpha ( 1f ) : MAX_SHADOW_ALPHA = bottomToTopBottomPercentage : requested alpha
-        panelShadowView.alpha = ( MAX_SHADOW_ALPHA * bottomToTopBottomPercentage ) / 1f
+        val shadowAlpha = ( MAX_SHADOW_ALPHA * bottomToTopBottomPercentage ) / 1f
+        panelShadowView.alpha = shadowAlpha
+        barShadowView.alpha = shadowAlpha
 
         // Blend the bottomAppBar's color according to bottomPercentage
         bottomBarInitialColor?.let { blendFrom ->
@@ -882,18 +902,19 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
         // * set all the panels' Y to availableHeight
         // * scroll draggingPanelRecyclerView to 0
         // * set the bottomAppBar's menu visible
-        // * set GONE to shadowPanelView
-
-        // Else hide the bottomAppBar's menu and set VISIBLE to shadowPanelView
+        // * set GONE to shadowPanelView and barShadowView
+        // Else hide the bottomAppBar's menu and set VISIBLE to shadowPanelView and barShadowView
         if ( isBarInInitialState ) {
             panels.forEach { it.value.panelView?.y = availableHeight.toFloat() }
             draggingPanelRecyclerView?.scrollToPosition(0 )
-            bottomAppBar.menu.setGroupVisible(0, true )
+            bottomAppBar.menu.setGroupVisible(0,true )
             panelShadowView.visibility = View.GONE
+            barShadowView.visibility = View.GONE
 
         } else {
-            bottomAppBar.menu.setGroupVisible(0, false )
+            bottomAppBar.menu.setGroupVisible(0,false )
             panelShadowView.visibility = View.VISIBLE
+            barShadowView.visibility = View.VISIBLE
         }
 
         // Set bottomAppBar's children alpha and enabled state
@@ -903,7 +924,7 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             it.isEnabled =     isBarInInitialState
         }
         // Set draggingPanelView's children alpha and enabled state
-        draggingPanelView?.fadeHeader( 1f - bottomPercentage, ! isBarInInitialState )
+        draggingPanelView?.fadeHeader(1f - bottomPercentage, ! isBarInInitialState )
 
         hasFab ?: return
         // Show fab if isBarInInitialState and hasFab, else hide it
