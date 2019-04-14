@@ -41,14 +41,23 @@ class ColorHolder internal constructor(
         color?.let { DrawableCompat.setTint( button.drawable, color ) }
     }
 
-    fun applyToImageView( imageView: ImageView  ) {
+    /** Apply `this` [ColorHolder] to the given [ImageView] */
+    fun applyToImageView(imageView: ImageView) {
         val color = resolveColor( imageView.context )
-        color?.let { imageView.setColorFilter( it ) }
+        // Set color or defaultColorFilter if not null
+        if ( color != null ) imageView.setColorFilter( color )
+        else imageView.clearColorFilter()
     }
 
-    fun applyToTextView( textView: TextView  ) {
+    /**
+     * Apply `this` [ColorHolder] to the given [TextView]
+     * @param defaultColor an OPTIONAL [ColorInt] to use al fallback
+     */
+    fun applyToTextView( textView: TextView, @ColorInt defaultColor: Int? = null ) {
         val color = resolveColor( textView.context )
-        color?.let { textView.setTextColor( it ) }
+        // Set color or defaultColor if not null
+        if ( color != null ) textView.setTextColor( color )
+        else if ( defaultColor != null ) textView.setTextColor( defaultColor )
     }
 
     fun resolveColor( context: Context ) = when {

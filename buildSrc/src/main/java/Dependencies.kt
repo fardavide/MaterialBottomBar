@@ -17,6 +17,7 @@ val ScriptHandlerScope.classpathDependencies: DependencyHandlerScope.() -> Unit 
     classpath( kotlin("gradle-plugin", Versions.kotlin ) )
     classpath( Libs.dokka )
     classpath( Libs.Android.gradle_plugin )
+    classpath( Libs.Android.navigation_plugin )
     classpath( Libs.Publishing.bintray_plugin )
     classpath( Libs.Publishing.maven_plugin )
 }
@@ -38,15 +39,15 @@ object Versions {
     val dokka =                         "0.9.17"
     val mockk =                         "1.9"
 
-    val android_constraint_layout =     "2.0.0-alpha3"
+    val android_constraint_layout =     "2.0.0-alpha4"
     val android_espresso =              "3.1.1"
     //val android_glide =                 "4.9.0"
     val android_gradle_plugin =         "3.3.1"
-    val android_ktx =                   "1.0.1"
+    val android_ktx =                   "1.1.0-alpha05"
     val android_material =              "1.1.0-alpha03"
-    val android_navigation =            "1.0.0-rc01"
+    val android_navigation =            "2.0.0"
     val android_test_runner =           "1.1.1"
-    val android_theia =                 "0.3-alpha-1"
+    val android_theia =                 "0.3-alpha-2"
 
     val publishing_bintray_plugin =     "1.8.4"
     val publishing_maven_plugin =       "2.1"
@@ -73,8 +74,9 @@ object Libs {
         val gradle_plugin =                     "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"
         val ktx =                               "androidx.core:core-ktx:${Versions.android_ktx}"
         val material =                          "com.google.android.material:material:${Versions.android_material}"
-        val navigation_fragment =               "android.arch.navigation:navigation-fragment-ktx:${Versions.android_navigation}"
-        val navigation_ui =                     "android.arch.navigation:navigation-ui-ktx:${Versions.android_navigation}"
+        val navigation_fragment =               "androidx.navigation:navigation-fragment-ktx:${Versions.android_navigation}"
+        val navigation_plugin =                 "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.android_navigation}"
+        val navigation_ui =                     "androidx.navigation:navigation-ui-ktx:${Versions.android_navigation}"
         val support_annotations =               "com.android.support:support-annotations:28.0.0"
         val test_runner =                       "com.android.support.test:runner:${Versions.android_test_runner}"
         val theia =                             "studio.forface.theia:theia:${Versions.android_theia}"

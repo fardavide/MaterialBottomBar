@@ -102,7 +102,10 @@ class PanelsDemoActivity: AppCompatActivity() {
 
             /* SETUP */
             selectedItem = 1
-            selectionColor = Color.RED
+            selectionBackgroundColor = Color.TRANSPARENT
+            selectionRippleColor = Color.RED
+            selectionTitleColor = Color.RED
+            selectionIconColor = Color.RED
             selectionCornerRadiusDp = 16f
             onItemClick = { id, title ->
                 Toast.makeText(

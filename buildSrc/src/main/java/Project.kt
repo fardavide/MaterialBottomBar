@@ -11,9 +11,9 @@ object Project {
 
     /* Version */
     private val major:      Int =       1
-    private val minor:      Int =       1
+    private val minor:      Int =       2
     private val channel:    Channel =   Beta
-    private val patch:      Int =       11
+    private val patch:      Int =       1
     private val build:      Int =       1
 
     /* Publishing */
@@ -66,11 +66,14 @@ object Project {
      * @throws IllegalArgumentException
      * @see preconditions
      */
+    @Suppress("ConstantConditionIf")
     private val versionNameSuffix: String get() {
         preconditions()
 
-        val number = if ( build > 0 ) buildNumber else patch
-        return "${channel.suffix}${channelNumberString( number )}"
+        val ( suffix, number ) =
+                if ( build > 0 ) Build.suffix to buildNumber
+                else channel.suffix to patch
+        return "$suffix${channelNumberString( number )}"
     }
 
     /** @return the [Int] number for the build, needed only if [channel] is [Build] */
@@ -103,14 +106,14 @@ object Project {
             if ( build > 0 ) throw  IllegalArgumentException( "'Stable channel' can't have a `build number` greater " +
                     "than 0, increase the 'minor' for the next build" )
         } else {
-            if ( patch < 1 ) throw  IllegalArgumentException( "A `patch number` greater than 0, is required for " +
-                    "'${channel.suffix.replace( "-", "" )}' channel" )
+            if ( build < 1 && patch < 1 ) throw  IllegalArgumentException( "A `patch number` greater than 0, is " +
+                    "required for '${channel.suffix.replace( "-", "" )}' channel" )
         }
     }
 
     /** A sealed class for the Channel of the Version of the App */
     @Suppress("unused")
-    sealed class Channel(val value: Int, val suffix: String ) {
+    sealed class Channel( val value: Int, val suffix: String ) {
         object Build :      Channel( 0, "-build" )
         object Alpha :      Channel( 1, "-alpha" )
         object Beta :       Channel( 2, "-beta" )

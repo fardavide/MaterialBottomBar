@@ -134,9 +134,12 @@ abstract class AbsMaterialPanel (
         }
 
         /** @see Icon.applyIconTo */
-        override fun applyIconTo( imageView: ImageView, applyOrHide: Boolean ) {
+        override fun applyIconTo(
+                imageView: ImageView,
+                applyOrHide: Boolean /*= false */
+        ) {
             if ( ! hasCustomShape ) iconImageHolder.imageShape = ImageShape.ROUND
-            super.applyIconTo( imageView,true )
+            super.applyIconTo( imageView, applyOrHide = true )
         }
     }
 
@@ -183,8 +186,14 @@ abstract class AbsMaterialPanel (
             const val SELECTION_DELAY_MS = 200L
         }
 
-        /** @see Selection.selectionColorHolder */
-        override var selectionColorHolder = ColorHolder()
+        /** @see Selection.selectionBackgroundColorHolder */
+        override var selectionBackgroundColorHolder = ColorHolder()
+        /** @see Selection.selectionIconColorHolder */
+        override var selectionIconColorHolder = ColorHolder()
+        /** @see Selection.selectionRippleColorHolder */
+        override var selectionRippleColorHolder = ColorHolder()
+        /** @see Selection.selectionTitleColorHolder */
+        override var selectionTitleColorHolder = ColorHolder()
         /** @see Selection.selectionCornerRadiusSizeHolder */
         override var selectionCornerRadiusSizeHolder = SizeHolder( dp = Drawables.CORNER_RADIUS_SOFT )
         /** @see Selection.onItemClick */

@@ -24,11 +24,11 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
+import studio.forface.materialbottombar.bottomappbar.R
 import studio.forface.materialbottombar.utils.dpToPixels
 import studio.forface.materialbottombar.utils.findChildType
 import studio.forface.materialbottombar.utils.reflection
 import studio.forface.materialbottombar.view.PanelView
-import studio.forface.materialbottombar.bottomappbar.R
 
 /**
  * @author Davide Giuseppe Farella

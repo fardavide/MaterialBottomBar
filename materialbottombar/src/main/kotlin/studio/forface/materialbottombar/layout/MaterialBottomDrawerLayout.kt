@@ -31,6 +31,8 @@ import studio.forface.materialbottombar.layout.MaterialBottomDrawerLayout.Fly
 import studio.forface.materialbottombar.panels.AbsMaterialPanel
 import studio.forface.materialbottombar.panels.adapter.PanelBodyAdapter
 import studio.forface.materialbottombar.panels.holders.ColorHolder
+import studio.forface.materialbottombar.panels.params.selectionBackgroundColor
+import studio.forface.materialbottombar.panels.params.selectionRippleColor
 import studio.forface.materialbottombar.utils.*
 import studio.forface.materialbottombar.view.PanelView
 import java.util.*
@@ -522,11 +524,16 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
     private fun setBody( body: AbsMaterialPanel.IBody?, panelView: PanelView ) {
         panelView.setBody( body )
         ( body as? AbsMaterialPanel.BaseBody<*> )?.let {
-            if ( body.selectionColorHolder.resolveColor( context ) == null) {
-                val color = draggingPanelHeaderColor ?: Color.GRAY
-                body.selectionColor( color )
-            }
 
+            // Set a placeholder color for Selection's Background and Selection's Ripple, reflecting
+            // draggingPanelHeaderColor or Color.GRAY, if original value is null
+            val placeholderColor = draggingPanelHeaderColor ?: Color.GRAY
+            body.selectionBackgroundColor =
+                    body.selectionBackgroundColorHolder.resolveColor( context ) ?: placeholderColor
+            body.selectionRippleColor =
+                    body.selectionRippleColorHolder.resolveColor( context ) ?: placeholderColor
+
+            // Set RecyclerView
             val bodyRecyclerView = panelView.body as RecyclerView
             bodyRecyclerView.layoutManager = LinearLayoutManager( context )
             val adapter = PanelBodyAdapter( body ) { closePanel() }

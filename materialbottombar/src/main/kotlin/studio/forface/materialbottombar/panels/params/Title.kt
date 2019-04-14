@@ -30,12 +30,15 @@ interface Title<T>: Param<T> {
     /** A reference to [TextStyleHolder] for the Style of the Title */
     var titleTextStyleHolder: TextStyleHolder
 
-    /** Apply the [Title] to the given [TextView] */
-    fun applyTitleTo( textView: TextView ) {
+    /**
+     * Apply the [Title] to the given [TextView]
+     * @param defaultColor an OPTIONAL [ColorInt] to use al fallback
+     */
+    fun applyTitleTo( textView: TextView, @ColorInt defaultColor: Int? = null ) {
         titleTextHolder.        applyTo( textView )
         titleTextStyleHolder.   applyTo( textView )
         titleTextSizeHolder.    applyTo( textView )
-        titleColorHolder.       applyToTextView( textView )
+        titleColorHolder.       applyToTextView( textView, defaultColor )
     }
 
     /**

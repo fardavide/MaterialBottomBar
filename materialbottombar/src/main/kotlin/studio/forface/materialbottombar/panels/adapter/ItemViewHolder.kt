@@ -2,14 +2,11 @@ package studio.forface.materialbottombar.panels.adapter
 
 import android.os.Handler
 import android.view.View
-import androidx.annotation.RestrictTo
-import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.core.os.postDelayed
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.drawer_item_base.view.*
 import studio.forface.materialbottombar.panels.AbsMaterialPanel
 import studio.forface.materialbottombar.panels.AbsMaterialPanel.BaseBody.Companion.SELECTION_DELAY_MS
-import studio.forface.materialbottombar.panels.MaterialPanel
 import studio.forface.materialbottombar.panels.items.BasePanelItem
 import studio.forface.materialbottombar.panels.items.PanelItem
 import studio.forface.materialbottombar.panels.items.extra.ButtonItem
@@ -31,27 +28,27 @@ open class ItemViewHolder<B: AbsMaterialPanel.BaseBody<*>>(
 
     /** Bind the given [PanelItem] */
     fun bind( panelItem: PanelItem ) {
+        with( itemView ) {
 
-        // Only handle BasePanelItem since its supertypes don't need to be bind ( e.g. Divider )
-        if ( panelItem is BasePanelItem<*> ) {
-            itemView.item_icon.alpha = panelItem.iconAlpha
-            itemView.item_icon.constraintParams!!.marginStart =
-                    dpToPixels( panelItem.iconMarginStartDp ).toInt()
-            itemView.item_title.constraintParams!!.marginStart =
-                    dpToPixels( panelItem.iconMarginEndDp ).toInt()
+            // Only handle BasePanelItem since its supertypes don't need to be bind ( e.g. Divider )
+            if (panelItem is BasePanelItem<*>) {
+                item_icon.alpha = panelItem.iconAlpha
+                item_icon.constraintParams!!.marginStart = dpToPixels(panelItem.iconMarginStartDp).toInt()
+                item_title.constraintParams!!.marginStart = dpToPixels(panelItem.iconMarginEndDp).toInt()
 
-            panelItem.applyTitleTo(    itemView.item_title )
-            panelItem.applyIconTo(     itemView.item_icon,true )
+                panelItem.applyTitleTo( item_title )
+                panelItem.applyIconTo( item_icon,true )
 
-            panelItem.applyBadgeTo(    itemView.item_badge )
-            panelItem.applyButtonTo(   itemView.item_button )
+                panelItem.applyBadgeTo( item_badge )
+                panelItem.applyButtonTo( item_button )
 
-            panelBody.applySelectionTo( itemView, panelItem.selected )
+                panelBody.applySelectionTo(this, item_icon, item_title, panelItem.selected )
 
-            //itemView.isEnabled = panelItem.selectable
-            itemView.setOnClickListener( itemClickListener( panelItem ) )
-            itemView.item_button
-                    .setOnClickListener( buttonItemClickListener( panelItem.buttonItem ) )
+                //itemView.isEnabled = panelItem.selectable
+                itemView.setOnClickListener( itemClickListener( panelItem ) )
+                itemView.item_button
+                        .setOnClickListener( buttonItemClickListener( panelItem.buttonItem ) )
+            }
         }
     }
 

@@ -3,11 +3,10 @@ package studio.forface.materialbottombar.panels.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import studio.forface.materialbottombar.panels.MaterialPanel
-import studio.forface.materialbottombar.panels.items.BasePanelItem
-import studio.forface.materialbottombar.panels.items.Divider
 import studio.forface.materialbottombar.bottomappbar.R
 import studio.forface.materialbottombar.panels.AbsMaterialPanel
+import studio.forface.materialbottombar.panels.items.BasePanelItem
+import studio.forface.materialbottombar.panels.items.Divider
 
 /**
  * @author Davide Giuseppe Farella

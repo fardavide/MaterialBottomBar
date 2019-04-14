@@ -4,8 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.activity_demo_panels.*
+import studio.forface.materialbottombar.demo.NavGraphDirections.Companion.actionToEpgsFragment
+import studio.forface.materialbottombar.demo.NavGraphDirections.Companion.actionToMoviesFragment
+import studio.forface.materialbottombar.demo.NavGraphDirections.Companion.actionToPlaylistFragment
+import studio.forface.materialbottombar.demo.NavGraphDirections.Companion.actionToSettingsFragment
+import studio.forface.materialbottombar.demo.NavGraphDirections.Companion.actionToTvsFragment
 import studio.forface.materialbottombar.demo.R
-import studio.forface.materialbottombar.dsl.drawer
 import studio.forface.materialbottombar.navigation.dsl.navDrawer
 import studio.forface.materialbottombar.panels.params.*
 
@@ -33,13 +37,13 @@ class NavigationDemoActivity: AppCompatActivity() {
                 // Tv Channels
                 primaryItem( R.string.menu_tv_channels ) {
                     iconResource = R.drawable.ic_tv
-                    navDestinationId = R.id.action_to_TvsFragment
+                    navDirections = actionToTvsFragment()
                 }
 
                 // Movie Channels
                 primaryItem( R.string.menu_movie_channels ) {
                     iconResource = R.drawable.ic_movie
-                    navDestinationId = R.id.action_to_MoviesFragment
+                    navDirections = actionToMoviesFragment()
                 }
 
                 // Divider
@@ -48,13 +52,13 @@ class NavigationDemoActivity: AppCompatActivity() {
                 // My Playlists
                 primaryItem( R.string.menu_my_playlists ) {
                     iconResource = R.drawable.ic_playlist
-                    navDestinationId = R.id.action_to_PlaylistFragment
+                    navDirections = actionToPlaylistFragment()
                 }
 
                 // My EPGs
                 primaryItem( R.string.menu_my_epgs ) {
                     iconResource = R.drawable.ic_epg
-                    navDestinationId = R.id.action_to_EpgsFragment
+                    navDirections = actionToEpgsFragment()
                 }
 
                 // Divider

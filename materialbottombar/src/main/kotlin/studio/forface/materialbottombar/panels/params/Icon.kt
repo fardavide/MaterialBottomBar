@@ -40,7 +40,7 @@ interface Icon<T>: Param<T> {
         if ( applyOrHide ) iconImageHolder.applyToOrHide( imageView )
         else iconImageHolder.applyTo( imageView )
 
-        iconColorHolder.applyToImageView( imageView )
+        iconColorHolder.applyToImageView(imageView)
         iconSizeHolder.applyTo( imageView )
     }
 

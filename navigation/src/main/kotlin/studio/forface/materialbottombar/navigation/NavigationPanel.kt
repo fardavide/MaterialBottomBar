@@ -1,4 +1,4 @@
-@file:Suppress("FunctionName")
+@file:Suppress("FunctionName", "unused")
 
 package studio.forface.materialbottombar.navigation
 
@@ -42,8 +42,8 @@ interface NavigationPanel {
  * Implements [NavigationPanel]
  */
 abstract class AbsMaterialNavPanel(
-        header: AbsMaterialPanel.IHeader?,
-        body: AbsMaterialNavPanel.Body?,
+        header: IHeader?,
+        body: Body?,
         wrapToContent: Boolean
 ): AbsMaterialPanel( header, body, wrapToContent ), NavigationPanel {
 
@@ -52,10 +52,10 @@ abstract class AbsMaterialNavPanel(
     }
 
     /** @see NavigationPanel.navBody */
-    override val navBody get() = body as AbsMaterialNavPanel.Body?
+    override val navBody get() = body as Body?
 
     /** @see NavigationPanel.oldNavBody */
-    override var oldNavBody: AbsMaterialNavPanel.Body? = null
+    override var oldNavBody: Body? = null
 
     /** An implementation of [AbsMaterialPanel.BaseBody] for [AbsMaterialNavPanel] */
     class Body(
@@ -67,7 +67,11 @@ abstract class AbsMaterialNavPanel(
         private var navChangeListener: NavChange = { _, destination, _ ->
             // Set the item selected with a delay for let the ripple animation finish first
             Handler().postDelayed( SELECTION_DELAY_MS ) {
-                setSelected { destination.id == destination.actionDestinationIdOf( it ) }
+                val thisItemId = destination.id
+                setSelected {
+                    val foundItemId = destination.actionDestinationIdOf( it )
+                    thisItemId == foundItemId
+                }
             }
         }
 
@@ -118,8 +122,9 @@ abstract class AbsMaterialNavPanel(
         /** @see NavDestination.getAction using a [BasePanelItem] */
         private fun NavDestination.actionDestinationIdOf( item: BasePanelItem<*> ): Int? {
             val navItem = item as? NavItem<*>
-            return navItem?.navDirections?.actionId
-                    ?: navItem?.navDestinationId?.let { actionDestinationIdOf( it ) }
+            val navDirectionsId = navItem?.navDirections?.actionId?.let { actionDestinationIdOf( it ) }
+            val navDestinationId = navItem?.navDestinationId?.let { actionDestinationIdOf( it ) }
+            return navDirectionsId ?: navDestinationId
         }
     }
 }
@@ -138,7 +143,6 @@ fun MaterialNavPanel(
 ) = object : AbsMaterialNavPanel( header, body, wrapToContent ) {}
 
 /** A set of constructors for Header and Body of [AbsMaterialNavPanel] for Panel */
-@Suppress("unused")
 object MaterialNavPanel {
     fun Header() = AbsMaterialPanel.Header()
     fun Body() = AbsMaterialNavPanel.Body()
@@ -153,7 +157,6 @@ fun MaterialNavDrawer(
 ) = object : AbsMaterialNavPanel( header, body, wrapToContent ) {}
 
 /** A set of constructors for Header and Body of [AbsMaterialNavPanel] for Drawer */
-@Suppress("unused")
 object MaterialNavDrawer {
     fun Header() = AbsMaterialPanel.Header()
     fun Body() = AbsMaterialNavPanel.Body()

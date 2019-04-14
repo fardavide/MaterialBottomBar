@@ -1,8 +1,10 @@
 package studio.forface.materialbottombar.panels.items
 
+import android.widget.TextView
+import androidx.annotation.ColorInt
+import studio.forface.materialbottombar.panels.holders.*
 import studio.forface.materialbottombar.panels.items.extra.BadgeItem
 import studio.forface.materialbottombar.panels.items.extra.ButtonItem
-import studio.forface.materialbottombar.panels.holders.*
 import studio.forface.materialbottombar.panels.params.*
 import kotlin.random.Random
 
@@ -15,6 +17,10 @@ abstract class BasePanelItem<T: PanelItem>: PanelItem,
         Title<T>,
         Cloneable
 {
+
+    /** A default [ColorInt] for Title, it's needed for revert the selection */
+    private var defaultTitleColor: Int? = null
+
     abstract val iconMarginStartDp: Float
     abstract val iconMarginEndDp: Float
     abstract val iconAlpha: Float
@@ -40,4 +46,14 @@ abstract class BasePanelItem<T: PanelItem>: PanelItem,
     override var badgeItem =  BadgeItem()
     override var buttonItem = ButtonItem()
     override var buttonStyle = ButtonStyle.COLOR
+
+    /**
+     * Override of [Title.applyTitleTo] for keep track of the default textColor of the given
+     * [TextView]
+     */
+    override fun applyTitleTo( textView: TextView, @ColorInt defaultColor: Int? /* = null */ ) {
+        if ( defaultTitleColor == null )
+            defaultTitleColor = textView.currentTextColor
+        super.applyTitleTo( textView,defaultColor ?: defaultTitleColor )
+    }
 }

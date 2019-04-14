@@ -1,6 +1,8 @@
 package studio.forface.materialbottombar.panels.items.extra
 
-import studio.forface.materialbottombar.panels.holders.*
+import studio.forface.materialbottombar.panels.holders.SizeHolder
+import studio.forface.materialbottombar.panels.holders.TextSizeHolder
+import studio.forface.materialbottombar.panels.holders.TextStyleHolder
 import studio.forface.materialbottombar.panels.params.Param
 
 /**
