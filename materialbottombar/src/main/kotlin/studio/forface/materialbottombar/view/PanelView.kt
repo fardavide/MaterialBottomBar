@@ -1,7 +1,6 @@
 package studio.forface.materialbottombar.view
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +37,7 @@ class PanelView @JvmOverloads constructor (
 
     fun init( layout: MaterialBottomDrawerLayout, panel: AbsMaterialPanel ) {
         wrapToContent = panel.wrapToContent
-        orientation = LinearLayout.VERTICAL
+        orientation = VERTICAL
         y = layout.height.toFloat()
 
         setHeader( layout, panel.header )
@@ -66,14 +65,14 @@ class PanelView @JvmOverloads constructor (
         if ( this::body.isInitialized ) removeView( body )
         body = buildBody( panelBody )
         addView( body,1 )
-        body.layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT
+        body.layoutParams.width = LayoutParams.MATCH_PARENT
     }
 
     private fun setBackground() {
         if ( this::background.isInitialized ) removeView( background )
         background = buildBackground()
         addView( background,2 )
-        background.layoutParams.height = LinearLayout.LayoutParams.MATCH_PARENT
+        background.layoutParams.height = LayoutParams.MATCH_PARENT
     }
 
     private fun buildHeader(
@@ -114,7 +113,7 @@ class PanelView @JvmOverloads constructor (
     }
 
     private fun buildBackground() = View( context ).apply {
-        setBackgroundColor( Color.WHITE )
+        background = body.background
         elevationCompat = 1f
         isEnabled = true
         isClickable = true
