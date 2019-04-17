@@ -171,15 +171,16 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
     /** A [View] with a black background that will work as a shadow for the open [PanelView] */
     private val panelShadowView = View( context ).apply {
+        //setOnClickListener { closePanel() }
         setBackgroundColor( Color.BLACK )
-        visibility = View.INVISIBLE
+        alpha = 0f
         elevationCompat = 9999f
     }
 
     /** A [View] with a black background that will work as a shadow for [bottomAppBar] */
     private val barShadowView = View( context ).apply {
         setBackgroundColor( Color.BLACK )
-        visibility = View.INVISIBLE
+        alpha = 0f
     }
 
     /**
@@ -914,13 +915,12 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
             panels.forEach { it.value.panelView?.y = availableHeight.toFloat() }
             draggingPanelRecyclerView?.scrollToPosition(0 )
             bottomAppBar.menu.setGroupVisible(0,true )
-            panelShadowView.visibility = View.INVISIBLE
-            barShadowView.visibility = View.INVISIBLE
-
+            panelShadowView.isClickable = false
+            panelShadowView.alpha = 0f
+            barShadowView.alpha = 0f
         } else {
-            bottomAppBar.menu.setGroupVisible(0,false )
-            panelShadowView.visibility = View.VISIBLE
-            barShadowView.visibility = View.VISIBLE
+            bottomAppBar.menu.setGroupVisible(0, false )
+            panelShadowView.isClickable = true
         }
 
         // Set bottomAppBar's children alpha and enabled state

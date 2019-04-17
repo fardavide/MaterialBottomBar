@@ -9,7 +9,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="#EEEEEE">
+    android:background="#EEEEEE"
+    android:animateLayoutChanges="true">
 
     <fragment android:id="@+id/nav_host"
         android:name="androidx.navigation.fragment.NavHostFragment"

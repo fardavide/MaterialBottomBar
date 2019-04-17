@@ -4,8 +4,9 @@ import Project.Channel.*
 import org.gradle.api.JavaVersion
 
 /**
- * @author Davide Giuseppe Farella.
- * An object containing params for the Library.
+ * An object containing params for the Library
+ *
+ * @author Davide Giuseppe Farella
  */
 object Project {
 
@@ -13,7 +14,7 @@ object Project {
     private val major:      Int =       1
     private val minor:      Int =       2
     private val channel:    Channel =   Beta
-    private val patch:      Int =       3
+    private val patch:      Int =       4
     private val build:      Int =       1
 
     /* Publishing */
