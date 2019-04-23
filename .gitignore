@@ -68,3 +68,5 @@ fastlane/readme.md
 
 
 *.html
+.DS_Store
+navigation/.DS_Store
