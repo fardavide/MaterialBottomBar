@@ -116,7 +116,10 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
      */
     val panels = mutableMapOf<Int, AbsMaterialPanel>()
 
-    /** The id of [MaterialPanel] that is currently being dragged by the user */
+    /**
+     * The id of [MaterialPanel] that is currently being dragged by the user
+     * It can be `null` only before a [MaterialPanel] has been grabbed
+     */
     private var draggingPanelId: Int? = null
 
     /** The [PanelView] that is currently being dragged by the user */
@@ -816,7 +819,12 @@ class MaterialBottomDrawerLayout @JvmOverloads constructor (
 
         // Call panelStateChangeListenerInvoker after the animation
         viewsAnimator?.doOnEnd {
-            panelStateChangeListenerInvoker( draggingPanelId!!, oldFly, fly )
+            // A fly can be launched before a panel has been grabbed, so in that case
+            // draggingPanelId will be `null` and we don't need to call
+            // panelStateChangeListenerInvoker
+            draggingPanelId?.let { panelId ->
+                panelStateChangeListenerInvoker( panelId, oldFly, fly )
+            }
         }
     }
 

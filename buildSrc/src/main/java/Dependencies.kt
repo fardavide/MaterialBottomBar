@@ -35,19 +35,19 @@ fun DependencyHandler.applyAndroidTests() {
 }
 
 object Versions {
-    val kotlin =                        "1.3.21"
-    val dokka =                         "0.9.17"
-    val mockk =                         "1.9"
+    val kotlin =                        "1.3.30"
+    val dokka =                         "0.9.18"
+    val mockk =                         "1.9.3"
 
     val android_constraint_layout =     "2.0.0-alpha4"
     val android_espresso =              "3.1.1"
     //val android_glide =                 "4.9.0"
     val android_gradle_plugin =         "3.3.1"
     val android_ktx =                   "1.1.0-alpha05"
-    val android_material =              "1.1.0-alpha03"
+    val android_material =              "1.1.0-alpha05"
     val android_navigation =            "2.0.0"
     val android_test_runner =           "1.1.1"
-    val android_theia =                 "0.3-alpha-2"
+    val android_theia =                 "0.3-alpha-6"
 
     val publishing_bintray_plugin =     "1.8.4"
     val publishing_maven_plugin =       "2.1"

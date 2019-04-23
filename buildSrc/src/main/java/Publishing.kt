@@ -45,7 +45,7 @@ fun KotlinBuildScript.publish( artifact: String ) = Project.let { p ->
                 mavenInstaller {
                     pom.project {
                         withGroovyBuilder {
-                            "packaging"(    "aar" )
+                            "packaging"(                "aar" )
                             "groupId"(                  p.groupId )
                             "artifactId"(               artifact )
                             "name"(                     artifact )
@@ -54,20 +54,20 @@ fun KotlinBuildScript.publish( artifact: String ) = Project.let { p ->
                             "licenses" {
                                 "license" {
                                     "name"(             p.licenseName )
-                                    "url"(      p.licenseUrl )
+                                    "url"(              p.licenseUrl )
                                 }
                             }
                             "developers" {
                                 "developer" {
                                     "id"(               p.developerId )
                                     "name"(             p.developerName )
-                                    "email"(    p.developerEmail )
+                                    "email"(            p.developerEmail )
                                 }
                             }
                             "scm" {
                                 "connection"(           p.gitUrl )
                                 "developerConnection"(  p.gitUrl )
-                                "url"(          p.siteUrl )
+                                "url"(                  p.siteUrl )
                             }
                         }
                     }
