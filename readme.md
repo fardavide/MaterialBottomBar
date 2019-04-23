@@ -12,7 +12,13 @@
 
 ## Wiki
 
-**[Full wiki here!](https://github.com/4face-studi0/MaterialBottomBar/wiki)**
+### [Full wiki](https://github.com/4face-studi0/MaterialBottomBar/wiki)
+
+## Docs
+
+### [MaterialBottomBar Doc](https://4face-studi0.github.io/MaterialBottomBar/materialbottombar/)
+
+### [Navigation Doc](https://4face-studi0.github.io/MaterialBottomBar/navigation/)
 
 ## Setup
 
